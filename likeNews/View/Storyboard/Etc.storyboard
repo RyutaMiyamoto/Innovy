@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="O2Y-WR-2yC">
+    <device id="retina4_0" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--設定-->
+        <scene sceneID="qrf-0h-aik">
+            <objects>
+                <viewController automaticallyAdjustsScrollViewInsets="NO" id="GUW-XR-Kon" customClass="EtcViewController" customModule="likeNews" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="FYn-iP-1Yx"/>
+                        <viewControllerLayoutGuide type="bottom" id="zTg-jm-owr"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="PNE-mJ-gGW">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="bjm-db-sc5">
+                                <rect key="frame" x="0.0" y="64" width="320" height="455"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="GUW-XR-Kon" id="cNA-hD-631"/>
+                                    <outlet property="delegate" destination="GUW-XR-Kon" id="DLi-sq-159"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="bjm-db-sc5" firstAttribute="leading" secondItem="PNE-mJ-gGW" secondAttribute="leading" id="FLo-Y7-7Px"/>
+                            <constraint firstAttribute="trailing" secondItem="bjm-db-sc5" secondAttribute="trailing" id="aPc-TD-6Fq"/>
+                            <constraint firstItem="zTg-jm-owr" firstAttribute="top" secondItem="bjm-db-sc5" secondAttribute="bottom" id="bZ8-st-NN5"/>
+                            <constraint firstItem="bjm-db-sc5" firstAttribute="top" secondItem="FYn-iP-1Yx" secondAttribute="bottom" id="znQ-fk-Mic"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="設定" id="994-2u-e5l"/>
+                    <connections>
+                        <outlet property="tableView" destination="bjm-db-sc5" id="l5M-2i-NC3"/>
+                        <segue destination="1rc-U4-BS0" kind="show" identifier="SpeechSetting" id="bxh-6D-xVu"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="W0s-un-Ru4" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="465" y="171.12676056338029"/>
+        </scene>
+        <!--SpeechSetting-->
+        <scene sceneID="EOP-Zy-agJ">
+            <objects>
+                <viewControllerPlaceholder storyboardName="SpeechSetting" id="1rc-U4-BS0" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="EWU-Vo-0Xa"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="PxD-mB-lvc" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1034" y="171"/>
+        </scene>
+        <!--設定-->
+        <scene sceneID="osw-e1-60G">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="O2Y-WR-2yC" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="設定" image="NewsTopTabEtc" id="X1o-1B-diZ"/>
+                    <toolbarItems/>
+                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="ESQ-WU-HhH">
+                        <rect key="frame" x="0.0" y="20" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <textAttributes key="titleTextAttributes">
+                            <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
+                            <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
+                        </textAttributes>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="GUW-XR-Kon" kind="relationship" relationship="rootViewController" id="Bfn-EE-UO6"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="YnJ-dt-jv8" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-259" y="171"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="NewsTopTabEtc" width="23" height="6"/>
+    </resources>
+</document>

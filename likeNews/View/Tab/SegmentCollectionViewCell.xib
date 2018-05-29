@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_0" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="SegmentCollectionViewCell" id="gTV-IL-0wX" customClass="SegmentCollectionViewCell" customModule="likeNews" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="200" height="54"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="200" height="54"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xW0-SB-BYb" userLabel="背景">
+                        <rect key="frame" x="0.0" y="0.0" width="200" height="54"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QKf-Mt-gKB" userLabel="区切り線（左）">
+                                <rect key="frame" x="0.0" y="2" width="1" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="1" id="0rx-wv-4ph"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Z8c-02-4Pe" userLabel="区切り線（右）">
+                                <rect key="frame" x="199" y="2" width="1" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="1" id="bnk-KL-i4O"/>
+                                </constraints>
+                            </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ff1-Rv-isF" userLabel="タイトル">
+                                <rect key="frame" x="40" y="16" width="120" height="22"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="22" id="0st-bD-vG3"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
+                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="Z8c-02-4Pe" firstAttribute="top" secondItem="xW0-SB-BYb" secondAttribute="top" constant="2" id="9Cm-qD-dA1"/>
+                            <constraint firstItem="Ff1-Rv-isF" firstAttribute="leading" secondItem="xW0-SB-BYb" secondAttribute="leading" constant="40" id="I6M-fI-adN"/>
+                            <constraint firstAttribute="bottom" secondItem="Z8c-02-4Pe" secondAttribute="bottom" constant="2" id="YWH-mG-OF8"/>
+                            <constraint firstItem="QKf-Mt-gKB" firstAttribute="top" secondItem="xW0-SB-BYb" secondAttribute="top" constant="2" id="dwW-LD-wiR"/>
+                            <constraint firstItem="Ff1-Rv-isF" firstAttribute="centerY" secondItem="xW0-SB-BYb" secondAttribute="centerY" id="kDs-Ld-7jH"/>
+                            <constraint firstItem="QKf-Mt-gKB" firstAttribute="leading" secondItem="xW0-SB-BYb" secondAttribute="leading" id="lOq-sK-p7g"/>
+                            <constraint firstAttribute="bottom" secondItem="QKf-Mt-gKB" secondAttribute="bottom" constant="2" id="p9v-cW-CfF"/>
+                            <constraint firstAttribute="trailing" secondItem="Z8c-02-4Pe" secondAttribute="trailing" id="qQz-lo-Me3"/>
+                            <constraint firstAttribute="trailing" secondItem="Ff1-Rv-isF" secondAttribute="trailing" constant="40" id="r8Q-wD-06J"/>
+                            <constraint firstAttribute="height" constant="54" id="ymm-DI-T7F"/>
+                        </constraints>
+                    </view>
+                </subviews>
+            </view>
+            <constraints>
+                <constraint firstItem="xW0-SB-BYb" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="OcQ-n2-0sG"/>
+                <constraint firstItem="xW0-SB-BYb" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="TLA-wN-zkc"/>
+                <constraint firstAttribute="bottom" secondItem="xW0-SB-BYb" secondAttribute="bottom" id="aLu-ul-m5m"/>
+                <constraint firstAttribute="trailing" secondItem="xW0-SB-BYb" secondAttribute="trailing" id="chk-SU-q3d"/>
+            </constraints>
+            <size key="customSize" width="208" height="44"/>
+            <connections>
+                <outlet property="backView" destination="xW0-SB-BYb" id="7Bb-67-hVt"/>
+                <outlet property="titleLabel" destination="Ff1-Rv-isF" id="JWa-kL-RvU"/>
+            </connections>
+            <point key="canvasLocation" x="-1" y="71"/>
+        </collectionViewCell>
+    </objects>
+</document>

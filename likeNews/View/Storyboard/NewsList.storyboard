@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="y9v-GV-LBO">
+    <device id="retina4_0" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--News List View Controller-->
+        <scene sceneID="VhD-ac-2RB">
+            <objects>
+                <viewController storyboardIdentifier="NewsList" id="y9v-GV-LBO" customClass="NewsListViewController" customModule="likeNews" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="EXr-fR-SlI">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="auQ-Gb-zMM">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <gestureRecognizers/>
+                        <constraints>
+                            <constraint firstItem="cUv-vY-0O3" firstAttribute="trailing" secondItem="auQ-Gb-zMM" secondAttribute="trailing" id="6ph-Cs-Gxm"/>
+                            <constraint firstItem="cUv-vY-0O3" firstAttribute="bottom" secondItem="auQ-Gb-zMM" secondAttribute="bottom" id="FS9-h5-xmt"/>
+                            <constraint firstItem="auQ-Gb-zMM" firstAttribute="top" secondItem="EXr-fR-SlI" secondAttribute="top" id="jIA-mS-k30"/>
+                            <constraint firstItem="auQ-Gb-zMM" firstAttribute="leading" secondItem="cUv-vY-0O3" secondAttribute="leading" id="jK7-3f-ys6"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="cUv-vY-0O3"/>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="WNS-lJ-q3h" appends="YES" id="cqX-hK-jye"/>
+                        </connections>
+                    </view>
+                    <navigationItem key="navigationItem" id="gyv-eT-sb7"/>
+                    <connections>
+                        <outlet property="tableView" destination="auQ-Gb-zMM" id="n2H-dv-9R1"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="9Yn-JG-XXE" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <pongPressGestureRecognizer allowableMovement="10" minimumPressDuration="0.5" id="WNS-lJ-q3h">
+                    <connections>
+                        <action selector="tableViewCellLongPress:" destination="y9v-GV-LBO" id="MWH-VQ-43W"/>
+                    </connections>
+                </pongPressGestureRecognizer>
+            </objects>
+            <point key="canvasLocation" x="148.125" y="172.18309859154931"/>
+        </scene>
+    </scenes>
+</document>

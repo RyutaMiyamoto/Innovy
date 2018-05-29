@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="zfb-cC-gw4">
+    <device id="retina4_0" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--title-->
+        <scene sceneID="va0-DM-Twi">
+            <objects>
+                <viewController automaticallyAdjustsScrollViewInsets="NO" id="3Ng-N2-Dqi" customClass="NewsClipViewController" customModule="likeNews" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="BkF-1n-hH3"/>
+                        <viewControllerLayoutGuide type="bottom" id="Ghj-Fs-TqP"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="tCx-Wa-6Z6">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="gKi-A7-F8T">
+                                <rect key="frame" x="0.0" y="64" width="320" height="455"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="3Ng-N2-Dqi" id="jhL-su-BHi"/>
+                                    <outlet property="delegate" destination="3Ng-N2-Dqi" id="bnh-Lx-xf8"/>
+                                </connections>
+                            </tableView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KK2-hB-qg4">
+                                <rect key="frame" x="0.0" y="64" width="320" height="455"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="クリップしている記事がありません。" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fGN-TB-gvY">
+                                        <rect key="frame" x="8" y="32" width="304" height="17"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="17" id="Dmo-lc-Kcv"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cdb-Hb-vUC">
+                                        <rect key="frame" x="8" y="81" width="304" height="100"/>
+                                        <subviews>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="NewsClipNonArticle" translatesAutoresizingMaskIntoConstraints="NO" id="ILJ-LF-2xY" userLabel="画像">
+                                                <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="100" id="5Ds-r1-D1J"/>
+                                                    <constraint firstAttribute="height" constant="100" id="OyP-cW-QVl"/>
+                                                </constraints>
+                                            </imageView>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7vH-rm-mw0">
+                                                <rect key="frame" x="112" y="43" width="180" height="41"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="41" id="dnh-r1-Qsx"/>
+                                                </constraints>
+                                                <string key="text">気になる記事はクリップ！
+後から記事を確認できます！！</string>
+                                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="記事画面でクリップできます。" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HSp-Dv-ek0">
+                                                <rect key="frame" x="112" y="21" width="184" height="14"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="14" id="SXN-eD-LcJ"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="12"/>
+                                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstItem="HSp-Dv-ek0" firstAttribute="top" secondItem="cdb-Hb-vUC" secondAttribute="top" constant="21" id="7Dp-gh-hzX"/>
+                                            <constraint firstItem="ILJ-LF-2xY" firstAttribute="leading" secondItem="cdb-Hb-vUC" secondAttribute="leading" id="JHD-O2-f9j"/>
+                                            <constraint firstItem="7vH-rm-mw0" firstAttribute="top" secondItem="HSp-Dv-ek0" secondAttribute="bottom" constant="8" id="MWW-tW-Y74"/>
+                                            <constraint firstAttribute="trailing" secondItem="7vH-rm-mw0" secondAttribute="trailing" constant="12" id="Y94-Ai-TQG"/>
+                                            <constraint firstAttribute="width" constant="304" id="ZM2-C7-Hcg"/>
+                                            <constraint firstAttribute="height" constant="100" id="fcx-B8-wEo"/>
+                                            <constraint firstItem="HSp-Dv-ek0" firstAttribute="leading" secondItem="ILJ-LF-2xY" secondAttribute="trailing" constant="12" id="jq4-IN-DaG"/>
+                                            <constraint firstItem="ILJ-LF-2xY" firstAttribute="top" secondItem="cdb-Hb-vUC" secondAttribute="top" id="oUw-Xq-VJl"/>
+                                            <constraint firstItem="7vH-rm-mw0" firstAttribute="leading" secondItem="ILJ-LF-2xY" secondAttribute="trailing" constant="12" id="wbG-iG-pi8"/>
+                                            <constraint firstAttribute="trailing" secondItem="HSp-Dv-ek0" secondAttribute="trailing" constant="8" id="z4x-TI-sbd"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstItem="fGN-TB-gvY" firstAttribute="top" secondItem="KK2-hB-qg4" secondAttribute="top" constant="32" id="Mm7-ch-Uwe"/>
+                                    <constraint firstItem="cdb-Hb-vUC" firstAttribute="centerX" secondItem="KK2-hB-qg4" secondAttribute="centerX" id="gDY-5y-Ui7"/>
+                                    <constraint firstAttribute="trailing" secondItem="fGN-TB-gvY" secondAttribute="trailing" constant="8" id="vJF-P4-nWr"/>
+                                    <constraint firstItem="fGN-TB-gvY" firstAttribute="leading" secondItem="KK2-hB-qg4" secondAttribute="leading" constant="8" id="yUI-jn-Jjs"/>
+                                    <constraint firstItem="cdb-Hb-vUC" firstAttribute="top" secondItem="fGN-TB-gvY" secondAttribute="bottom" constant="32" id="ypH-L3-pp9"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="gKi-A7-F8T" secondAttribute="trailing" id="DNr-VN-LXl"/>
+                            <constraint firstItem="KK2-hB-qg4" firstAttribute="leading" secondItem="tCx-Wa-6Z6" secondAttribute="leading" id="O4C-SZ-JK9"/>
+                            <constraint firstItem="Ghj-Fs-TqP" firstAttribute="top" secondItem="gKi-A7-F8T" secondAttribute="bottom" id="UgS-mb-UAd"/>
+                            <constraint firstItem="Ghj-Fs-TqP" firstAttribute="top" secondItem="KK2-hB-qg4" secondAttribute="bottom" id="VMj-qk-5LJ"/>
+                            <constraint firstItem="gKi-A7-F8T" firstAttribute="leading" secondItem="tCx-Wa-6Z6" secondAttribute="leading" id="cy8-zD-Q9Z"/>
+                            <constraint firstItem="gKi-A7-F8T" firstAttribute="top" secondItem="BkF-1n-hH3" secondAttribute="bottom" id="p0W-Dn-3f6"/>
+                            <constraint firstItem="KK2-hB-qg4" firstAttribute="top" secondItem="BkF-1n-hH3" secondAttribute="bottom" id="ph5-6O-DgS"/>
+                            <constraint firstAttribute="trailing" secondItem="KK2-hB-qg4" secondAttribute="trailing" id="rR2-lb-zn0"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="title" id="7iQ-D9-jFG"/>
+                    <connections>
+                        <outlet property="nonArticleView" destination="KK2-hB-qg4" id="zqS-Jb-gs2"/>
+                        <outlet property="tableView" destination="gKi-A7-F8T" id="ifs-dl-Hwt"/>
+                        <segue destination="TqL-xP-l7B" kind="show" identifier="ArticleDetail" id="F9F-u0-h1a"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="p9t-px-HLc" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1063.125" y="170.07042253521126"/>
+        </scene>
+        <!--クリップ-->
+        <scene sceneID="eGj-WV-7gM">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="zfb-cC-gw4" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="クリップ" image="NewsTopTabClip" id="VWn-uG-k4G"/>
+                    <toolbarItems/>
+                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="n3Y-uo-g2r">
+                        <rect key="frame" x="0.0" y="20" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <textAttributes key="titleTextAttributes">
+                            <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
+                            <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
+                        </textAttributes>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="3Ng-N2-Dqi" kind="relationship" relationship="rootViewController" id="igv-bE-PwS"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="04o-JI-k1E" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="251" y="170"/>
+        </scene>
+        <!--ArticleDetail-->
+        <scene sceneID="mAW-OP-l2I">
+            <objects>
+                <viewControllerPlaceholder storyboardName="ArticleDetail" id="TqL-xP-l7B" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="5lv-pM-FdA" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1603" y="170"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="NewsClipNonArticle" width="449" height="449"/>
+        <image name="NewsTopTabClip" width="22" height="20"/>
+    </resources>
+</document>

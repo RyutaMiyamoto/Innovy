@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="iuF-Gp-buA">
+    <device id="retina4_0" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Article Detail View Controller-->
+        <scene sceneID="nGt-MF-ZNA">
+            <objects>
+                <viewController id="iuF-Gp-buA" customClass="ArticleDetailViewController" customModule="likeNews" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="BcB-LQ-jKI"/>
+                        <viewControllerLayoutGuide type="bottom" id="GGL-ra-dJp"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="UVu-Ca-RXQ">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Pa4-uX-CFu" userLabel="ツールView">
+                                <rect key="frame" x="0.0" y="524" width="320" height="44"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Z3p-Oh-fre" userLabel="区切り線">
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="1"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="1" id="kUc-zw-fMj"/>
+                                        </constraints>
+                                    </view>
+                                    <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="xTd-uz-v7Q">
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="2"/>
+                                        <color key="tintColor" red="0.6705882352941176" green="0.53725490196078429" blue="0.82745098039215681" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="2" id="nG3-eZ-i2a"/>
+                                        </constraints>
+                                    </progressView>
+                                    <button opaque="NO" tag="100" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6FH-a5-UAy" userLabel="戻るボタン">
+                                        <rect key="frame" x="8" y="0.0" width="44" height="44"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="44" id="Agp-om-3Sx"/>
+                                            <constraint firstAttribute="height" constant="44" id="W8A-bw-ClI"/>
+                                        </constraints>
+                                        <inset key="contentEdgeInsets" minX="5" minY="5" maxX="5" maxY="5"/>
+                                        <state key="normal" image="ArticleDetailBackButton"/>
+                                        <connections>
+                                            <action selector="tapButton:" destination="iuF-Gp-buA" eventType="touchUpInside" id="2BK-4M-k2B"/>
+                                        </connections>
+                                    </button>
+                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="adP-WR-5Vk">
+                                        <rect key="frame" x="82" y="0.0" width="156" height="44"/>
+                                        <subviews>
+                                            <button opaque="NO" tag="102" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NtZ-Bv-O8D" userLabel="クリップボタン">
+                                                <rect key="frame" x="0.0" y="0.0" width="44" height="44"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="44" id="1Hb-t7-62d"/>
+                                                    <constraint firstAttribute="width" constant="44" id="N5N-Ts-CAV"/>
+                                                </constraints>
+                                                <inset key="contentEdgeInsets" minX="5" minY="5" maxX="5" maxY="5"/>
+                                                <state key="normal" image="ArticleDetailClipOnButton"/>
+                                                <connections>
+                                                    <action selector="tapButton:" destination="iuF-Gp-buA" eventType="touchUpInside" id="Wbh-kf-UWk"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" tag="103" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cL3-AU-nDG" userLabel="Twitterボタン">
+                                                <rect key="frame" x="56" y="0.0" width="44" height="44"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="44" id="ZcE-Tg-xcp"/>
+                                                    <constraint firstAttribute="width" constant="44" id="d2F-Nr-e5d"/>
+                                                </constraints>
+                                                <state key="normal" image="ArticleDetailTwitterButton"/>
+                                                <connections>
+                                                    <action selector="tapButton:" destination="iuF-Gp-buA" eventType="touchUpInside" id="ASL-SX-P5C"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" tag="101" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0f2-dc-AG7" userLabel="共有ボタン">
+                                                <rect key="frame" x="112" y="0.0" width="44" height="44"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="44" id="biu-J9-oFm"/>
+                                                    <constraint firstAttribute="width" constant="44" id="nCn-oo-9Jb"/>
+                                                </constraints>
+                                                <inset key="contentEdgeInsets" minX="5" minY="5" maxX="5" maxY="5"/>
+                                                <state key="normal" image="ArticleDetailShareButton"/>
+                                                <connections>
+                                                    <action selector="tapButton:" destination="iuF-Gp-buA" eventType="touchUpInside" id="wmf-8c-ug9"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="44" id="TId-c5-iDV"/>
+                                        </constraints>
+                                    </stackView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="Z3p-Oh-fre" secondAttribute="trailing" id="02k-Pb-L3a"/>
+                                    <constraint firstAttribute="trailing" secondItem="xTd-uz-v7Q" secondAttribute="trailing" id="5Pg-Nx-rJM"/>
+                                    <constraint firstItem="xTd-uz-v7Q" firstAttribute="leading" secondItem="Pa4-uX-CFu" secondAttribute="leading" id="6zH-9O-U9B"/>
+                                    <constraint firstItem="6FH-a5-UAy" firstAttribute="leading" secondItem="Pa4-uX-CFu" secondAttribute="leading" constant="8" id="VUz-VN-Pem"/>
+                                    <constraint firstItem="Z3p-Oh-fre" firstAttribute="top" secondItem="Pa4-uX-CFu" secondAttribute="top" id="aGQ-y8-w4b"/>
+                                    <constraint firstItem="adP-WR-5Vk" firstAttribute="centerY" secondItem="Pa4-uX-CFu" secondAttribute="centerY" id="cDw-br-cbq"/>
+                                    <constraint firstItem="xTd-uz-v7Q" firstAttribute="top" secondItem="Pa4-uX-CFu" secondAttribute="top" id="mwL-RL-u6l"/>
+                                    <constraint firstItem="adP-WR-5Vk" firstAttribute="centerX" secondItem="Pa4-uX-CFu" secondAttribute="centerX" id="n9Y-YW-UXT"/>
+                                    <constraint firstAttribute="height" constant="44" id="rQ3-i0-oQI"/>
+                                    <constraint firstItem="Z3p-Oh-fre" firstAttribute="leading" secondItem="Pa4-uX-CFu" secondAttribute="leading" id="uP4-oh-jM6"/>
+                                    <constraint firstItem="6FH-a5-UAy" firstAttribute="top" secondItem="Pa4-uX-CFu" secondAttribute="top" id="xRi-CQ-0fO"/>
+                                </constraints>
+                            </view>
+                            <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dBw-77-U88" userLabel="注目View">
+                                <rect key="frame" x="100" y="124" width="230" height="70"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ラベル" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qos-BN-FJw">
+                                        <rect key="frame" x="12" y="25.5" width="206" height="19.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="70" id="GWs-cm-Ouv"/>
+                                    <constraint firstItem="qos-BN-FJw" firstAttribute="leading" secondItem="dBw-77-U88" secondAttribute="leading" priority="999" constant="12" id="HZS-AK-Wpu"/>
+                                    <constraint firstItem="qos-BN-FJw" firstAttribute="centerY" secondItem="dBw-77-U88" secondAttribute="centerY" id="T2I-Tn-cNd"/>
+                                    <constraint firstAttribute="trailing" secondItem="qos-BN-FJw" secondAttribute="trailing" priority="999" constant="12" id="VPm-Ua-f1M"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="10"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                                </userDefinedRuntimeAttributes>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <gestureRecognizers/>
+                        <constraints>
+                            <constraint firstItem="Pa4-uX-CFu" firstAttribute="leading" secondItem="UVu-Ca-RXQ" secondAttribute="leading" id="9Tg-09-NJ5"/>
+                            <constraint firstAttribute="trailing" secondItem="Pa4-uX-CFu" secondAttribute="trailing" id="XVd-bK-V1F"/>
+                            <constraint firstItem="dBw-77-U88" firstAttribute="top" secondItem="BcB-LQ-jKI" secondAttribute="bottom" constant="60" id="k36-YW-RI6"/>
+                            <constraint firstItem="dBw-77-U88" firstAttribute="leading" secondItem="UVu-Ca-RXQ" secondAttribute="leading" constant="100" id="mbi-is-kIA"/>
+                            <constraint firstItem="GGL-ra-dJp" firstAttribute="top" secondItem="Pa4-uX-CFu" secondAttribute="bottom" id="wR9-U0-AYE"/>
+                            <constraint firstAttribute="trailing" secondItem="dBw-77-U88" secondAttribute="trailing" constant="-10" id="wdH-zh-RJj"/>
+                        </constraints>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="erG-ea-iWG" appends="YES" id="sUt-VN-12n"/>
+                        </connections>
+                    </view>
+                    <navigationItem key="navigationItem" id="x2q-vL-0br"/>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                    <connections>
+                        <outlet property="attentionLabel" destination="qos-BN-FJw" id="8ib-ao-zZb"/>
+                        <outlet property="attentionView" destination="dBw-77-U88" id="qzH-cX-ffD"/>
+                        <outlet property="attentionViewLeftMargin" destination="mbi-is-kIA" id="CIb-KK-f4p"/>
+                        <outlet property="clipButton" destination="NtZ-Bv-O8D" id="qSq-Sl-2Wn"/>
+                        <outlet property="progressView" destination="xTd-uz-v7Q" id="sq5-xd-BHv"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="7VR-Ck-Dku" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <swipeGestureRecognizer direction="right" id="erG-ea-iWG">
+                    <connections>
+                        <action selector="rightSwipeGesture:" destination="iuF-Gp-buA" id="1pr-yO-exX"/>
+                    </connections>
+                </swipeGestureRecognizer>
+            </objects>
+            <point key="canvasLocation" x="140.625" y="490.14084507042253"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="ArticleDetailBackButton" width="24" height="24"/>
+        <image name="ArticleDetailClipOnButton" width="22" height="21"/>
+        <image name="ArticleDetailShareButton" width="24" height="24"/>
+        <image name="ArticleDetailTwitterButton" width="24" height="20"/>
+    </resources>
+</document>

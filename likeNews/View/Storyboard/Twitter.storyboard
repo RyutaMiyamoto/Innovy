@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Uhj-Kc-zS1">
+    <device id="retina4_0" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Twitter View Controller-->
+        <scene sceneID="a3m-uJ-h0r">
+            <objects>
+                <viewController storyboardIdentifier="Twitter" id="NQQ-TV-rld" customClass="TwitterViewController" customModule="likeNews" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="6Ko-i3-77E">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Kda-9o-Z0S">
+                                <rect key="frame" x="0.0" y="64" width="320" height="460"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="NQQ-TV-rld" id="unv-Ax-0ne"/>
+                                    <outlet property="delegate" destination="NQQ-TV-rld" id="om8-dd-8xC"/>
+                                </connections>
+                            </tableView>
+                            <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fTE-jB-82M" userLabel="ツイート無しView">
+                                <rect key="frame" x="0.0" y="64" width="320" height="460"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EDw-0N-0Uc">
+                                        <rect key="frame" x="8" y="200" width="304" height="60"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="60" id="PsJ-Dt-1a9"/>
+                                        </constraints>
+                                        <string key="text">関連するツイートは
+ありませんでした。</string>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" red="0.29019607843137252" green="0.29019607843137252" blue="0.29019607843137252" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstItem="EDw-0N-0Uc" firstAttribute="leading" secondItem="fTE-jB-82M" secondAttribute="leading" constant="8" id="SfB-c2-UJg"/>
+                                    <constraint firstAttribute="trailing" secondItem="EDw-0N-0Uc" secondAttribute="trailing" constant="8" id="YgR-oc-W7s"/>
+                                    <constraint firstItem="EDw-0N-0Uc" firstAttribute="centerY" secondItem="fTE-jB-82M" secondAttribute="centerY" id="h8G-NG-Oud"/>
+                                </constraints>
+                            </view>
+                            <button hidden="YES" opaque="NO" tag="101" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="338-cT-pDs" userLabel="ツイートボタン">
+                                <rect key="frame" x="252" y="466" width="50" height="50"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="50" id="1Bv-Hx-vIK"/>
+                                    <constraint firstAttribute="height" constant="50" id="PhU-Qx-5jn"/>
+                                </constraints>
+                                <inset key="imageEdgeInsets" minX="12" minY="12" maxX="12" maxY="12"/>
+                                <state key="normal" title="Button" image="TwitterTweetButton"/>
+                                <connections>
+                                    <action selector="tapButton:" destination="NQQ-TV-rld" eventType="touchUpInside" id="aNg-Sc-OxT"/>
+                                </connections>
+                            </button>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ybg-8e-bdL" userLabel="ツールView">
+                                <rect key="frame" x="0.0" y="524" width="320" height="44"/>
+                                <subviews>
+                                    <button opaque="NO" tag="100" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oRd-Ur-6JK" userLabel="閉じるボタン">
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="44" id="nop-Jv-pc1"/>
+                                        </constraints>
+                                        <state key="normal" image="TwitterCloseButton"/>
+                                        <connections>
+                                            <action selector="tapButton:" destination="NQQ-TV-rld" eventType="touchUpInside" id="BLu-yR-zdc"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" red="0.33333333333333331" green="0.67450980392156867" blue="0.93333333333333335" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstItem="oRd-Ur-6JK" firstAttribute="leading" secondItem="Ybg-8e-bdL" secondAttribute="leading" id="Jpg-Sc-XL9"/>
+                                    <constraint firstItem="oRd-Ur-6JK" firstAttribute="top" secondItem="Ybg-8e-bdL" secondAttribute="top" id="Tk6-Vc-1co"/>
+                                    <constraint firstAttribute="height" constant="44" id="jMM-uR-8lD"/>
+                                    <constraint firstAttribute="trailing" secondItem="oRd-Ur-6JK" secondAttribute="trailing" id="ooG-8A-G8C"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="Kda-9o-Z0S" firstAttribute="trailing" secondItem="hNa-27-BrB" secondAttribute="trailing" id="6ut-pS-L66"/>
+                            <constraint firstItem="Ybg-8e-bdL" firstAttribute="leading" secondItem="hNa-27-BrB" secondAttribute="leading" id="7CV-Zi-S7H"/>
+                            <constraint firstItem="fTE-jB-82M" firstAttribute="top" secondItem="hNa-27-BrB" secondAttribute="top" id="DFQ-gm-BEW"/>
+                            <constraint firstItem="Ybg-8e-bdL" firstAttribute="bottom" secondItem="6Ko-i3-77E" secondAttribute="bottom" id="Y7s-8A-LGP"/>
+                            <constraint firstItem="hNa-27-BrB" firstAttribute="trailing" secondItem="338-cT-pDs" secondAttribute="trailing" constant="18" id="aZp-Yn-BTH"/>
+                            <constraint firstItem="Ybg-8e-bdL" firstAttribute="top" secondItem="fTE-jB-82M" secondAttribute="bottom" id="c6e-Wz-YuV"/>
+                            <constraint firstItem="Kda-9o-Z0S" firstAttribute="top" secondItem="hNa-27-BrB" secondAttribute="top" id="hhI-RS-l11"/>
+                            <constraint firstItem="Ybg-8e-bdL" firstAttribute="trailing" secondItem="hNa-27-BrB" secondAttribute="trailing" id="iQT-na-Aym"/>
+                            <constraint firstItem="Ybg-8e-bdL" firstAttribute="top" secondItem="Kda-9o-Z0S" secondAttribute="bottom" id="ozz-9O-XaH"/>
+                            <constraint firstItem="Kda-9o-Z0S" firstAttribute="leading" secondItem="hNa-27-BrB" secondAttribute="leading" id="uKi-tz-boV"/>
+                            <constraint firstItem="Ybg-8e-bdL" firstAttribute="top" secondItem="338-cT-pDs" secondAttribute="bottom" constant="8" id="wPO-47-JZt"/>
+                            <constraint firstItem="fTE-jB-82M" firstAttribute="trailing" secondItem="hNa-27-BrB" secondAttribute="trailing" id="xJr-nk-Y7I"/>
+                            <constraint firstItem="fTE-jB-82M" firstAttribute="leading" secondItem="hNa-27-BrB" secondAttribute="leading" id="yJJ-gy-thL"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="hNa-27-BrB"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="vCy-pr-7Y2"/>
+                    <connections>
+                        <outlet property="closeViewHeight" destination="jMM-uR-8lD" id="lxk-We-43s"/>
+                        <outlet property="nonTweetView" destination="fTE-jB-82M" id="Stl-Dr-yeB"/>
+                        <outlet property="tableView" destination="Kda-9o-Z0S" id="nmB-Qf-8yh"/>
+                        <outlet property="tweetButton" destination="338-cT-pDs" id="tb7-Ka-uLS"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="MY8-eT-pQH" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="356.25" y="34.859154929577464"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="Lf5-uz-Zgi">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Uhj-Kc-zS1" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="T1f-x8-Uyb">
+                        <rect key="frame" x="0.0" y="20" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="NQQ-TV-rld" kind="relationship" relationship="rootViewController" id="o7i-Se-2PU"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="IKQ-WF-ljh" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-392" y="35"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="TwitterCloseButton" width="44" height="24"/>
+        <image name="TwitterTweetButton" width="50" height="42"/>
+    </resources>
+</document>

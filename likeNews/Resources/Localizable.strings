@@ -1,0 +1,54 @@
+//
+//  Localizable.strings
+//  likeNews
+//
+//  Created by Ryuta Miyamoto on 2017/10/22.
+//  Copyright © 2017年 R.Miyamoto. All rights reserved.
+//
+
+// MARK: - 共通
+
+"Yes" = "はい";
+"No" = "いいえ";
+"Ok" = "OK";
+"Cancel" = "キャンセル";
+"EmptyString" = "";
+"Close" = "閉じる";
+"ArticleLongPressTitle" = "選択してください";
+"ArticleLongPressToDetail" = "詳細を見る";
+"ArticleLongPressSpeechStart" = "この位置から聞く";
+
+// MARK: - 初回のみ
+
+"InitActErrorTitle" = "通信エラー";
+"InitActErrorMessage" = "再度データをダウンロードします。電波が届いていることを確認してOKボタンを押してください。";
+
+// MARK: - 一覧
+
+// MARK: - 検索
+
+// MARK: - クリップ
+
+// MARK: - 詳細
+
+"DetailAttentionFirst" = "この記事はあなたが初めて注目しました。";
+"DetailAttentionMoreBefore" = "他に";
+"DetailAttentionMoreAfter" = "人の方が\nこの記事に注目しています！";
+"DetailOnClip" = "記事をクリップしました。";
+
+// MARK: - 読み上げ
+
+"SpeechStart" = "ニュースを読み上げます";
+"SpeechEnd" = "これでニュースの読み上げを終わります";
+"SpeechNextArticle" = "次です";
+"SpeechSettingConfirm" = "この音声でご案内します";
+
+// MARK: - その他
+
+"EtcClearCacheBeforeTitle" = "確認";
+"EtcClearCacheBeforeMessage" = "内部キャッシュをクリアします。\nよろしいですか？\nキャッシュをクリアすると内部で保持している記事画像が削除されます。";
+"EtcClearCacheAfterMessage" = "キャッシュをクリアしました。";
+
+"EtcWeatherLocationAuthorizationTitle" = "推奨";
+"EtcWeatherLocationAuthorizationMessage" = "現在地の天気を取得するには、[設定]->[イノービィ]->[位置情報]から位置情報の利用を許可してください。";
+

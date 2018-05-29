@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="qjK-w9-x5c">
+    <device id="retina4_0" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--title-->
+        <scene sceneID="UTr-tg-JKM">
+            <objects>
+                <viewController automaticallyAdjustsScrollViewInsets="NO" id="BJh-d8-T0h" customClass="UpTabViewController" customModule="likeNews" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="zol-kV-2xn"/>
+                        <viewControllerLayoutGuide type="bottom" id="dB4-bK-sqT"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="otP-wd-VvW">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" tag="1" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="tVZ-IV-FwY">
+                                <rect key="frame" x="0.0" y="64" width="320" height="54"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="54" id="Lm8-PE-RJj"/>
+                                </constraints>
+                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="QvY-kl-qNh">
+                                    <size key="itemSize" width="50" height="50"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells/>
+                                <connections>
+                                    <outlet property="dataSource" destination="BJh-d8-T0h" id="sd8-PJ-VCv"/>
+                                    <outlet property="delegate" destination="BJh-d8-T0h" id="2zp-te-1a7"/>
+                                </connections>
+                            </collectionView>
+                            <collectionView clipsSubviews="YES" tag="2" contentMode="scaleToFill" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="kXz-8s-WhR">
+                                <rect key="frame" x="0.0" y="118" width="320" height="401"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="0.0" minimumInteritemSpacing="10" id="Pja-2x-Ac8">
+                                    <size key="itemSize" width="50" height="50"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells/>
+                                <connections>
+                                    <outlet property="dataSource" destination="BJh-d8-T0h" id="y3v-DO-Ne5"/>
+                                    <outlet property="delegate" destination="BJh-d8-T0h" id="Zck-98-rxq"/>
+                                </connections>
+                            </collectionView>
+                            <button opaque="NO" alpha="0.0" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="edb-Bl-4UD">
+                                <rect key="frame" x="254" y="461" width="50" height="50"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="50" id="B7O-V8-rsc"/>
+                                    <constraint firstAttribute="height" constant="50" id="lgf-jY-sGp"/>
+                                </constraints>
+                                <inset key="imageEdgeInsets" minX="12" minY="12" maxX="12" maxY="12"/>
+                                <state key="normal" title="Button" image="CommonSpeechStop"/>
+                                <connections>
+                                    <action selector="tapSpeechStopButton:" destination="BJh-d8-T0h" eventType="touchUpInside" id="tU4-zG-yYK"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="tVZ-IV-FwY" secondAttribute="trailing" id="3Fg-K3-uYH"/>
+                            <constraint firstItem="kXz-8s-WhR" firstAttribute="top" secondItem="tVZ-IV-FwY" secondAttribute="bottom" id="Gs0-tB-xjV"/>
+                            <constraint firstItem="dB4-bK-sqT" firstAttribute="top" secondItem="edb-Bl-4UD" secondAttribute="bottom" constant="8" id="Mq3-Ii-uoB"/>
+                            <constraint firstItem="kXz-8s-WhR" firstAttribute="leading" secondItem="otP-wd-VvW" secondAttribute="leading" id="Rf5-fk-E70"/>
+                            <constraint firstItem="tVZ-IV-FwY" firstAttribute="top" secondItem="zol-kV-2xn" secondAttribute="bottom" id="UFY-mf-mhh"/>
+                            <constraint firstAttribute="trailing" secondItem="kXz-8s-WhR" secondAttribute="trailing" id="f8k-Je-jGC"/>
+                            <constraint firstItem="dB4-bK-sqT" firstAttribute="top" secondItem="kXz-8s-WhR" secondAttribute="bottom" id="fpD-J2-hNM"/>
+                            <constraint firstItem="edb-Bl-4UD" firstAttribute="trailing" secondItem="otP-wd-VvW" secondAttribute="trailingMargin" id="yj2-yd-sLm"/>
+                            <constraint firstItem="tVZ-IV-FwY" firstAttribute="leading" secondItem="otP-wd-VvW" secondAttribute="leading" id="zeO-MM-fwQ"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="title" id="eOM-kZ-QeY"/>
+                    <connections>
+                        <outlet property="mainCollectionView" destination="kXz-8s-WhR" id="ytz-qs-axi"/>
+                        <outlet property="segmentCollectionView" destination="tVZ-IV-FwY" id="Rxa-zg-HRc"/>
+                        <outlet property="speechStopButton" destination="edb-Bl-4UD" id="FXf-yZ-VPM"/>
+                        <segue destination="TWR-jg-ZHr" kind="show" identifier="ArticleDetail" id="fsw-Dn-9rD"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="vGD-s6-2kQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="813.75" y="-58.098591549295776"/>
+        </scene>
+        <!--ArticleDetail-->
+        <scene sceneID="8NI-oY-h4I">
+            <objects>
+                <viewControllerPlaceholder storyboardName="ArticleDetail" id="TWR-jg-ZHr" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="iaG-XD-81l" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1444" y="-58"/>
+        </scene>
+        <!--読む-->
+        <scene sceneID="zWQ-RC-kq6">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="qjK-w9-x5c" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="読む" image="NewsTopTabList" id="sth-9l-eE7"/>
+                    <toolbarItems/>
+                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="tn4-ov-m9b">
+                        <rect key="frame" x="0.0" y="20" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <textAttributes key="titleTextAttributes">
+                            <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
+                            <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
+                        </textAttributes>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="BJh-d8-T0h" kind="relationship" relationship="rootViewController" id="sWf-Ak-qdl"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="F6f-ht-hcO" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="13" y="-58"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="CommonSpeechStop" width="50" height="50"/>
+        <image name="NewsTopTabList" width="25" height="18"/>
+    </resources>
+</document>
