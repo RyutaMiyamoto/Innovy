@@ -30,8 +30,6 @@ class NewsSearchViewController: UIViewController, UITableViewDelegate, UITableVi
     var viewModel = NewsSearchViewModel()
     /// セルの高さ
     var heightAtIndexPath = NSMutableDictionary()
-    /// TableViewの全セル
-    var allCell: [NewsListCell] = []
     /// 記事更新
     var refreshControl: UIRefreshControl!
 
@@ -45,18 +43,14 @@ class NewsSearchViewController: UIViewController, UITableViewDelegate, UITableVi
         DispatchQueue.mainSyncSafe { [weak self] in
             guard let `self` = self else { return }
             self.viewModel.bind {
-                self.createCell()
                 self.tableView.reloadDataAfter {
                     self.refreshControl.endRefreshing()
-                    for cell in self.allCell {
-                        cell.articleImageUrl()
-                    }
                     SVProgressHUD.dismiss()
                 }
             }
         }
     }
-    
+
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
@@ -84,9 +78,9 @@ class NewsSearchViewController: UIViewController, UITableViewDelegate, UITableVi
     // MARK: - TableView Delegate & DataSource
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return allCell.count
+        return viewModel.newsListCellViewModel.count
     }
-    
+
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableViewAutomaticDimension
     }
@@ -105,20 +99,22 @@ class NewsSearchViewController: UIViewController, UITableViewDelegate, UITableVi
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = allCell[indexPath.row]
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: R.nib.newsListCell),
+            let cellViewModel = viewModel.newsListCellViewModel[safe: indexPath.row] else { return UITableViewCell() }
+        cell.viewModel = cellViewModel
+        cell.articleImageUrl()
         cell.delegate = self
-        if let viewModel = cell.viewModel, viewModel.dispType == .ad, !viewModel.isAdLoad {
+        if cellViewModel.dispType == .ad, !cellViewModel.isAdLoad {
             cell.loadAd()
         }
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let cell = allCell[indexPath.row]
-        guard let viewModel = cell.viewModel else { return }
+        guard let cell = tableView.cellForRow(at: indexPath) as? NewsListCell, let viewModel = cell.viewModel else { return }
         performSegue(withIdentifier: R.segue.newsSearchViewController.articleDetail.identifier, sender: viewModel.sourceArticle)
     }
-    
+
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if  tableView.contentOffset.y + tableView.frame.size.height > tableView.contentSize.height && tableView.isDragging &&
             viewModel.newsList.count > viewModel.numReadOfPage * viewModel.page  {
@@ -185,17 +181,6 @@ class NewsSearchViewController: UIViewController, UITableViewDelegate, UITableVi
             guard let `self` = self else { return }
             self.nonArticleView.isHidden = self.viewModel.isNonArticleViewHidden
         })
-    }
-    
-    /// 全セルを作成
-    func createCell() {
-        allCell = []
-        for cellViewModel in viewModel.newsListCellViewModel {
-            // 通常記事
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: R.nib.newsListCell) else { return }
-            cell.viewModel = cellViewModel
-            allCell.append(cell)
-        }
     }
     
     /// 表示されている記事の既読状態更新

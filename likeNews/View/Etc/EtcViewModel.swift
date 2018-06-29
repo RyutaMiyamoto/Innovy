@@ -26,7 +26,7 @@ class EtcViewModel {
     enum CellViewType: Int, EnumEnumerable {
         /// 天気情報
         case weather = 0
-        ///　お問い合わせ
+        /// お問い合わせ
         case inquiry
         /// キャッシュクリア
         case cacheClear

@@ -107,7 +107,7 @@ class NewsListCell: UITableViewCell {
     }
     
     /// セル情報セット
-    func setCellInfo(){
+    func setCellInfo() {
         guard let viewModel = viewModel else { return }
         DispatchQueue.mainSyncSafe { [weak self] in
             guard let `self` = self else { return }
@@ -122,9 +122,10 @@ class NewsListCell: UITableViewCell {
                 // 広告ビューと広告明示にクリックイベントを追加
                 nativeAd.activateAdView(self, withPrLabel: self.sourceLabel)
             }
+            self.setSpeechState(state: viewModel.isSpeechNow)
         }
     }
-    
+
     /// スピーチ状態をセットする
     ///
     /// - Parameter state: スピーチ状態（true:読み上げ中、false:読んでいない）
