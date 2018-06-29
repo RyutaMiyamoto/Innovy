@@ -53,6 +53,7 @@
 		90EDD8BB1FF63CE800B7F5BA /* UIColor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90EDD8BA1FF63CE800B7F5BA /* UIColor+.swift */; };
 		90EDD8BD1FF63EC700B7F5BA /* SpeechSettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90EDD8BC1FF63EC700B7F5BA /* SpeechSettingViewModel.swift */; };
 		9D6B1D29C97F0E6677BA87A7 /* Pods_likeNewsTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 857F5861FF44E59CA703C13F /* Pods_likeNewsTests.framework */; };
+		C10FC3B420E6FAD2003550B5 /* Array+.swift in Sources */ = {isa = PBXBuildFile; fileRef = C10FC3B320E6FAD2003550B5 /* Array+.swift */; };
 		D37070B80132B425D7EE641C /* Pods_likeNewsUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F2EF724FC11B26B8FB6EEF5 /* Pods_likeNewsUITests.framework */; };
 		E603694D1F2B58CE006A0BE7 /* CGRect+.swift in Sources */ = {isa = PBXBuildFile; fileRef = E603694C1F2B58CE006A0BE7 /* CGRect+.swift */; };
 		E625C6062097494900234735 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E625C6052097494900234735 /* CoreLocation.framework */; };
@@ -167,6 +168,7 @@
 		90EDD8BA1FF63CE800B7F5BA /* UIColor+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+.swift"; sourceTree = "<group>"; };
 		90EDD8BC1FF63EC700B7F5BA /* SpeechSettingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechSettingViewModel.swift; sourceTree = "<group>"; };
 		A1DFBFF5250005653FBC005A /* Pods_likeNews.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_likeNews.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C10FC3B320E6FAD2003550B5 /* Array+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+.swift"; sourceTree = "<group>"; };
 		E603694C1F2B58CE006A0BE7 /* CGRect+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CGRect+.swift"; sourceTree = "<group>"; };
 		E625C6052097494900234735 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		E67F1A151FBB161E00B7F136 /* UserDefaults+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "UserDefaults+.swift"; path = "likeNews/Extension/UserDefaults+.swift"; sourceTree = SOURCE_ROOT; };
@@ -314,6 +316,7 @@
 			isa = PBXGroup;
 			children = (
 				E67F1A151FBB161E00B7F136 /* UserDefaults+.swift */,
+				C10FC3B320E6FAD2003550B5 /* Array+.swift */,
 				E6BCEBD61F9B8D6D006B8A81 /* Bundle+.swift */,
 				9035F96F1F270FF100056A39 /* Enum+.swift */,
 				908A082B20B435AB00385034 /* Collection+.swift */,
@@ -891,6 +894,7 @@
 				9035F9AB1F270FF100056A39 /* MainCollectionViewCell.swift in Sources */,
 				E68AF12F1F34958D0002A3A7 /* TArticle.swift in Sources */,
 				90EDD8BB1FF63CE800B7F5BA /* UIColor+.swift in Sources */,
+				C10FC3B420E6FAD2003550B5 /* Array+.swift in Sources */,
 				90A0A3F120971994000063F2 /* EtcWeatherCellViewModel.swift in Sources */,
 				E6BE294E1FA8AC2A001A093D /* UIImageView+.swift in Sources */,
 				E6AF5FE41F499FBA005090E6 /* EtcViewModel.swift in Sources */,
