@@ -48,6 +48,12 @@ class SpeechModel: NSObject, AVSpeechSynthesizerDelegate {
     /// 読み上げ高さ
     var pitch: Float = 0
     
+    override init() {
+        super.init()
+        
+        try? AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
+    }
+    
     // MARK: - AVSpeechSynthesizerDelegate
     
     func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didFinish utterance: AVSpeechUtterance) {
