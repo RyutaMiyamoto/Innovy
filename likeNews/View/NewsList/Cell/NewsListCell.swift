@@ -131,7 +131,6 @@ class NewsListCell: UITableViewCell {
     /// - Parameter state: スピーチ状態（true:読み上げ中、false:読んでいない）
     func setSpeechState(state: Bool) {
         guard let viewModel = self.viewModel else { return }
-        viewModel.isSpeechNow = state
         self.backView.backgroundColor = viewModel.isSpeechNow ? .speechCell() : .white
     }
 }

@@ -129,19 +129,11 @@ class NewsListViewController: UIViewController, UITableViewDelegate, UITableView
     // MARK: - SpeechModelDelegate
     
     func speechFinishItem(finishText: String, nextText: String) {
-        guard let cellViewModel  = viewModel?.newsListCellViewModel else { return }
-        
         // 読み上げ完了セルを元に戻す
-        if let row = cellViewModel.findIndex(includeElement: { $0.titleText == finishText }).first,
-            let cell = tableView.cellForRow(at: IndexPath(row: row, section: 0)) as? NewsListCell  {
-            cell.setSpeechState(state: false)
-        }
+        setSpeechState(text: finishText, isSpeech: false)
         
         // 次に読み上げるセルを読み上げ中表示にする
-        if let row = cellViewModel.findIndex(includeElement: { $0.titleText == nextText }).first,
-            let cell = tableView.cellForRow(at: IndexPath(row: row, section: 0)) as? NewsListCell {
-            cell.setSpeechState(state: true)
-        }
+        setSpeechState(text: nextText, isSpeech: true)
     }
 
     func speechFinish() {
@@ -150,10 +142,7 @@ class NewsListViewController: UIViewController, UITableViewDelegate, UITableView
     
     func speechStop(stopText: String) {
         // 読み上げ中セルを元に戻す
-        guard let cellViewModel  = viewModel?.newsListCellViewModel,
-            let row = cellViewModel.findIndex(includeElement: { $0.titleText == stopText }).first,
-            let cell = tableView.cellForRow(at: IndexPath(row: row, section: 0)) as? NewsListCell else { return }
-        cell.setSpeechState(state: false)
+        setSpeechState(text: stopText, isSpeech: false)
     }
 
     // MARK: - Private Method
@@ -245,5 +234,22 @@ class NewsListViewController: UIViewController, UITableViewDelegate, UITableView
         let cancel = UIAlertAction(title: R.string.localizable.cancel(), style: UIAlertActionStyle.cancel, handler: nil)
         alertController.addAction(cancel)
         UIApplication.shared.keyWindow?.rootViewController?.present(alertController,animated: true,completion: nil)
+    }
+    
+    /// スピーチ状態をセットする
+    ///
+    /// - Parameters:
+    ///   - text: スピーチ対象Text
+    ///   - isSpeech: スピーチ状態（true:読み上げ中、false:読んでいない）
+    func setSpeechState(text: String, isSpeech: Bool) {
+        guard let cellViewModel  = viewModel?.newsListCellViewModel else { return }
+        if let row = cellViewModel.findIndex(includeElement: { $0.titleText == text }).first {
+            let updateViewModel = cellViewModel[row]
+            updateViewModel.setSpeechState(isSpeech: isSpeech)
+            viewModel?.newsListCellViewModel[row] = updateViewModel
+            if let cell = tableView.cellForRow(at: IndexPath(row: row, section: 0)) as? NewsListCell  {
+                cell.setSpeechState(state: isSpeech)
+            }
+        }
     }
 }
