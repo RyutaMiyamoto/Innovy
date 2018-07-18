@@ -130,4 +130,11 @@ class NewsListCellViewModel: NewsListModel {
             }
         }
     }
+    
+    /// スピーチ状態をセットする
+    ///
+    /// - Parameter isSpeech: スピーチ状態（true:読み上げ中、false:読んでいない）
+    func setSpeechState(isSpeech: Bool) {
+        isSpeechNow = isSpeech
+    }
 }

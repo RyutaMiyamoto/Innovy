@@ -24,8 +24,6 @@ class NewsClipViewController: UIViewController, UITableViewDelegate, UITableView
     var viewModel = NewsClipViewModel()
     /// セルの高さ
     var heightAtIndexPath = NSMutableDictionary()
-    /// TableViewの全セル
-    var allCell: [NewsListCell] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,11 +32,10 @@ class NewsClipViewController: UIViewController, UITableViewDelegate, UITableView
         self.navigationItem.titleView = R.nib.navigationTitleView.firstView(owner: self)
         
         viewModel.bind {
-            self.createCell()
             self.tableView.reloadData()
         }
     }
-    
+
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
@@ -49,9 +46,9 @@ class NewsClipViewController: UIViewController, UITableViewDelegate, UITableView
     // MARK: - TableView Delegate & DataSource
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return allCell.count
+        return viewModel.newsListCellViewModel.count
     }
-    
+
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableViewAutomaticDimension
     }
@@ -70,18 +67,18 @@ class NewsClipViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = allCell[indexPath.row]
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: R.nib.newsListCell),
+            let cellViewModel = viewModel.newsListCellViewModel[safe: indexPath.row] else { return UITableViewCell() }
+        cell.viewModel = cellViewModel
         cell.articleImageUrl()
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let cell = allCell[indexPath.row]
-        if let viewModel = cell.viewModel {
-            performSegue(withIdentifier: R.segue.newsClipViewController.articleDetail.identifier, sender: viewModel.sourceArticle)
-        }
+        guard let cell = tableView.cellForRow(at: indexPath) as? NewsListCell, let viewModel = cell.viewModel else { return }
+        performSegue(withIdentifier: R.segue.newsClipViewController.articleDetail.identifier, sender: viewModel.sourceArticle)
     }
-    
+
     // MARK: - segue
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -89,18 +86,6 @@ class NewsClipViewController: UIViewController, UITableViewDelegate, UITableView
             let article = sender as? Article {
             viewController.hidesBottomBarWhenPushed = true
             viewController.article = article
-        }
-    }
-    
-    // MARK: - Private Method
-    
-    /// 全セルを作成
-    func createCell() {
-        allCell = []
-        for cellViewModel in viewModel.newsListCellViewModel {
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: R.nib.newsListCell) else { return }
-            cell.viewModel = cellViewModel
-            allCell.append(cell)
         }
     }
 }
