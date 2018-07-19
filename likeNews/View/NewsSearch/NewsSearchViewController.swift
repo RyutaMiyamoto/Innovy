@@ -26,6 +26,18 @@ class NewsSearchViewController: UIViewController, UITableViewDelegate, UITableVi
             tableView.register(R.nib.newsListCell)
         }
     }
+    /// キーボードに配置する閉じるボタン用ツールバー
+    var toolbar: UIToolbar? {
+        didSet {
+            guard let toolbar = toolbar else { return }
+            toolbar.barStyle = .default
+            toolbar.sizeToFit()
+            let spacer = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
+            let closeButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(tapCloseButton(sender:)))
+            toolbar.items = [spacer, closeButton]
+            searchBar.inputAccessoryView = toolbar
+        }
+    }
     /// ViewModel
     var viewModel = NewsSearchViewModel()
     /// セルの高さ
@@ -33,6 +45,8 @@ class NewsSearchViewController: UIViewController, UITableViewDelegate, UITableVi
     /// 記事更新
     var refreshControl: UIRefreshControl!
 
+    // MARK: - Life Cycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -54,6 +68,13 @@ class NewsSearchViewController: UIViewController, UITableViewDelegate, UITableVi
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
+        // キーボードを閉じる
+        searchBar.resignFirstResponder()
+    }
+
+    // MARK: - User Event
+    
+    func tapCloseButton(sender: UIButton) {
         // キーボードを閉じる
         searchBar.resignFirstResponder()
     }
@@ -149,6 +170,9 @@ class NewsSearchViewController: UIViewController, UITableViewDelegate, UITableVi
     
     /// 初期設定
     func initSetting() {
+        
+        // ツールバー作成
+        toolbar = UIToolbar()
         
         refreshControl = UIRefreshControl()
         refreshControl?.addTarget(self, action: #selector(self.refresh(sender:)), for: .valueChanged)
