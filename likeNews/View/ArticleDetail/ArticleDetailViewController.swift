@@ -180,9 +180,11 @@ class ArticleDetailViewController: UIViewController, WKUIDelegate, WKNavigationD
         article.url = url.description
     }
     
-    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+    func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
+        // エラー処理
+        networkError(isTop: !webView.canGoBack)
     }
-    
+
     // MARK: - Private Method
     
     /// 戻る（前画面、またはリンク元）
@@ -398,5 +400,25 @@ class ArticleDetailViewController: UIViewController, WKUIDelegate, WKNavigationD
                     })
             })
         }
+    }
+    
+    /// Networkエラー処理
+    ///
+    /// - Parameter isTop: 詳細先頭画面有無（true:先頭画面）
+    func networkError(isTop: Bool) {
+        // 先頭画面以外は何もしない
+        if !isTop { return }
+        
+        // アラート表示。タップ後に一覧画面に戻る
+        let alertController = UIAlertController(title: R.string.localizable.detailNetworkErrorTitle(),
+                                                message: R.string.localizable.detailNetworkErrorMessage(), preferredStyle: .alert)
+        let okButton = UIAlertAction(title: R.string.localizable.ok(), style: UIAlertActionStyle.default){ (action: UIAlertAction) in
+            self.isBack = true
+            self.navigationController?.popViewController(animated: true)
+            self.delegate?.toBack(from: self, article: self.article)
+            self.dismiss(animated: true, completion: nil)
+        }
+        alertController.addAction(okButton)
+        UIApplication.shared.keyWindow?.rootViewController?.present(alertController,animated: true,completion: nil)
     }
 }

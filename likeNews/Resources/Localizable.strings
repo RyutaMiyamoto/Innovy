@@ -35,6 +35,8 @@
 "DetailAttentionMoreBefore" = "他に";
 "DetailAttentionMoreAfter" = "人の方が\nこの記事に注目しています！";
 "DetailOnClip" = "記事をクリップしました。";
+"DetailNetworkErrorTitle" = "通信エラー";
+"DetailNetworkErrorMessage" = "通信状況を確認してもう一度記事をタップしてください。";
 
 // MARK: - 読み上げ
 
