@@ -584,7 +584,7 @@ struct R: Rswift.Validatable {
   
   /// This `R.string` struct is generated, and contains static references to 1 localization tables.
   struct string {
-    /// This `R.string.localizable` struct is generated, and contains static references to 24 localization keys.
+    /// This `R.string.localizable` struct is generated, and contains static references to 26 localization keys.
     struct localizable {
       /// Value: 
       static let emptyString = Rswift.StringResource(key: "EmptyString", tableName: "Localizable", bundle: R.hostingBundle, locales: [], comment: nil)
@@ -629,7 +629,11 @@ struct R: Rswift.Validatable {
       /// Value: 詳細を見る
       static let articleLongPressToDetail = Rswift.StringResource(key: "ArticleLongPressToDetail", tableName: "Localizable", bundle: R.hostingBundle, locales: [], comment: nil)
       /// Value: 通信エラー
+      static let detailNetworkErrorTitle = Rswift.StringResource(key: "DetailNetworkErrorTitle", tableName: "Localizable", bundle: R.hostingBundle, locales: [], comment: nil)
+      /// Value: 通信エラー
       static let initActErrorTitle = Rswift.StringResource(key: "InitActErrorTitle", tableName: "Localizable", bundle: R.hostingBundle, locales: [], comment: nil)
+      /// Value: 通信状況を確認してもう一度記事をタップしてください。
+      static let detailNetworkErrorMessage = Rswift.StringResource(key: "DetailNetworkErrorMessage", tableName: "Localizable", bundle: R.hostingBundle, locales: [], comment: nil)
       /// Value: 選択してください
       static let articleLongPressTitle = Rswift.StringResource(key: "ArticleLongPressTitle", tableName: "Localizable", bundle: R.hostingBundle, locales: [], comment: nil)
       /// Value: 閉じる
@@ -741,8 +745,18 @@ struct R: Rswift.Validatable {
       }
       
       /// Value: 通信エラー
+      static func detailNetworkErrorTitle(_: Void = ()) -> String {
+        return NSLocalizedString("DetailNetworkErrorTitle", bundle: R.hostingBundle, comment: "")
+      }
+      
+      /// Value: 通信エラー
       static func initActErrorTitle(_: Void = ()) -> String {
         return NSLocalizedString("InitActErrorTitle", bundle: R.hostingBundle, comment: "")
+      }
+      
+      /// Value: 通信状況を確認してもう一度記事をタップしてください。
+      static func detailNetworkErrorMessage(_: Void = ()) -> String {
+        return NSLocalizedString("DetailNetworkErrorMessage", bundle: R.hostingBundle, comment: "")
       }
       
       /// Value: 選択してください
