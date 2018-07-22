@@ -31,26 +31,23 @@ class EtcViewController: UIViewController, UITableViewDelegate, UITableViewDataS
     var viewModel = EtcViewModel()
     /// セルの高さ
     var heightAtIndexPath = NSMutableDictionary()
-    /// TableViewの全セル
-    var allCell: [Any] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // navigationタイトル設定
         self.navigationItem.titleView = R.nib.navigationTitleView.firstView(owner: self)
         
         viewModel.bind {
             DispatchQueue.mainSyncSafe { [weak self] in
                 guard let `self` = self else { return }
-                self.createCell()
                 self.tableView.reloadData()
             }
         }
         // 初期設定
         initSetting()
     }
-    
+
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
@@ -68,9 +65,9 @@ class EtcViewController: UIViewController, UITableViewDelegate, UITableViewDataS
     // MARK: - TableView Delegate & DataSource
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return allCell.count
+        return viewModel.etcCellViewModel.count
     }
-    
+
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableViewAutomaticDimension
     }
@@ -89,10 +86,14 @@ class EtcViewController: UIViewController, UITableViewDelegate, UITableViewDataS
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if let cell = allCell[indexPath.row] as? EtcCell {
+        if let cellViewModel = viewModel.etcCellViewModel[indexPath.row] as? EtcCellViewModel {
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: R.nib.etcCell) else { return UITableViewCell() }
+            cell.viewModel = cellViewModel
             cell.delegate = self
             return cell
-        } else if let cell = allCell[indexPath.row] as? EtcWeatherCell {
+        } else if let cellViewModel = viewModel.etcCellViewModel[indexPath.row] as? EtcWeatherCellViewModel {
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: R.nib.etcWeatherCell) else { return UITableViewCell() }
+            cell.viewModel = cellViewModel
             cell.delegate = self
             return cell
         }
@@ -100,11 +101,11 @@ class EtcViewController: UIViewController, UITableViewDelegate, UITableViewDataS
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if let cell = allCell[indexPath.row] as? EtcWeatherCell {
+        if let cell = tableView.cellForRow(at: indexPath) as? EtcWeatherCell {
             // 天気情報更新
             cell.updateWeather()
             
-        } else if let cell = allCell[indexPath.row] as? EtcCell,
+        } else if let cell = tableView.cellForRow(at: indexPath) as? EtcCell,
             let viewModel = cell.viewModel {
             switch viewModel.type {
             case .weather:
@@ -181,26 +182,6 @@ class EtcViewController: UIViewController, UITableViewDelegate, UITableViewDataS
         updateWeather()
     }
     
-    /// 全セルを作成
-    func createCell() {
-        allCell = []
-        for cellViewModel in viewModel.etcCellViewModel {
-            if cellViewModel is EtcCellViewModel {
-                guard let cell = tableView.dequeueReusableCell(withIdentifier: R.nib.etcCell) else { return }
-                if let viewModel = cellViewModel as? EtcCellViewModel {
-                    cell.viewModel = viewModel
-                    allCell.append(cell)
-                }
-            } else if cellViewModel is EtcWeatherCellViewModel {
-                guard let cell = tableView.dequeueReusableCell(withIdentifier: R.nib.etcWeatherCell) else { return }
-                if let viewModel = cellViewModel as? EtcWeatherCellViewModel {
-                    cell.viewModel = viewModel
-                    allCell.append(cell)
-                }
-            }
-        }
-    }
-    
     /// キャッシュをクリアする
     func clearCache() {
         let alert = UIAlertController(title: R.string.localizable.etcClearCacheBeforeTitle(),
@@ -226,8 +207,7 @@ class EtcViewController: UIViewController, UITableViewDelegate, UITableViewDataS
     
     /// 天気情報を更新する
     func updateWeather() {
-        guard let cell = allCell.first as? EtcWeatherCell else { return }
-        
+        guard let cell = tableView.cellForRow(at: IndexPath(row: 0, section: 0)) as? EtcWeatherCell else { return }
         cell.updateWeather()
     }
 }

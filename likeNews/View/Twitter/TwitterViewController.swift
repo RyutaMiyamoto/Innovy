@@ -36,8 +36,6 @@ class TwitterViewController: UIViewController, UITableViewDelegate, UITableViewD
     @IBOutlet var closeViewHeight: NSLayoutConstraint!
     /// ViewModel
     var viewModel: TwitterViewModel?
-    /// TableViewの全セル
-    var allCell: [TweetCell] = []
     /// セルの高さ
     var heightAtIndexPath = NSMutableDictionary()
     /// ボタン種別
@@ -61,7 +59,6 @@ class TwitterViewController: UIViewController, UITableViewDelegate, UITableViewD
         if let viewModel = viewModel {
             self.navigationItem.title = viewModel.article.title + "に関するツイート"
             viewModel.reload(word: viewModel.article.title, completion: {_ in
-                self.createCell()
                 self.tableView.reloadDataAfter {
                     self.nonTweetView.alpha = viewModel.tweetCellViewModel.count > 0 ? 0 : 1
                     self.tweetButton.isHidden = viewModel.isTweetButtonHidden
@@ -74,9 +71,10 @@ class TwitterViewController: UIViewController, UITableViewDelegate, UITableViewD
     // MARK: - TableView Delegate & DataSource
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return allCell.count
+        guard let cellViewModel = viewModel?.tweetCellViewModel else { return 0 }
+        return cellViewModel.count
     }
-    
+
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableViewAutomaticDimension
     }
@@ -95,11 +93,13 @@ class TwitterViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = allCell[indexPath.row]
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: R.nib.tweetCell),
+            let cellViewModel = viewModel?.tweetCellViewModel[safe: indexPath.row] else { return UITableViewCell() }
+        cell.viewModel = cellViewModel
+        cell.tweetView.delegate = self
         return cell
-        
     }
-    
+
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.dismiss(animated: true, completion: nil)
     }
@@ -140,17 +140,5 @@ class TwitterViewController: UIViewController, UITableViewDelegate, UITableViewD
             composeView.setInitialText(viewModel.tweetInitText)
         }
         self.present(composeView, animated: true, completion: nil)
-    }
-    
-    /// 全セルを作成
-    func createCell() {
-        allCell = []
-        guard let viewModel = viewModel else { return }
-        for cellViewModel in viewModel.tweetCellViewModel {
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: R.nib.tweetCell) else { return }
-            cell.viewModel = cellViewModel
-            cell.tweetView.delegate = self
-            allCell.append(cell)
-        }
     }
 }
