@@ -44,8 +44,6 @@ class NewsListViewController: UIViewController, UITableViewDelegate, UITableView
     var heightAtIndexPath = NSMutableDictionary()
     /// ViewModel
     var viewModel: NewsListViewModel?
-    /// TableViewの全セル
-    var allCell: [NewsListCell] = []
     /// 記事更新
     var refreshControl: UIRefreshControl!
 
@@ -63,9 +61,10 @@ class NewsListViewController: UIViewController, UITableViewDelegate, UITableView
     // MARK: - TableView Delegate & DataSource
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return allCell.count
+        guard let cellViewModel = viewModel?.newsListCellViewModel else { return 0 }
+        return cellViewModel.count
     }
-    
+
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableViewAutomaticDimension
     }
@@ -84,20 +83,24 @@ class NewsListViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = allCell[indexPath.row]
+        
+        guard let viewModel = viewModel, let cellViewModel = viewModel.newsListCellViewModel[safe: indexPath.row],
+            let cell = tableView.dequeueReusableCell(withIdentifier: R.nib.newsListCell) else { return UITableViewCell() }
+        cell.viewModel = cellViewModel
+        cell.articleImageUrl()
         cell.delegate = self
-        if let viewModel = cell.viewModel, viewModel.dispType == .ad, !viewModel.isAdLoad {
+        if cellViewModel.dispType == .ad, !cellViewModel.isAdLoad {
             cell.loadAd()
         }
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let cell = allCell[indexPath.row]
-        guard let viewModel = cell.viewModel, let sourceArticle = viewModel.sourceArticle else { return }
+        guard let cell = tableView.cellForRow(at: indexPath) as? NewsListCell ,
+            let viewModel = cell.viewModel, let sourceArticle = viewModel.sourceArticle else { return }
         delegate?.toArticleDetail(from: self, article: sourceArticle)
     }
-    
+
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         guard let viewModel = viewModel else { return }
         if  tableView.contentOffset.y + tableView.frame.size.height > tableView.contentSize.height && tableView.isDragging &&
@@ -127,25 +130,19 @@ class NewsListViewController: UIViewController, UITableViewDelegate, UITableView
     
     func speechFinishItem(finishText: String, nextText: String) {
         // 読み上げ完了セルを元に戻す
-        if let finishCell = allCell.filter({ $0.viewModel?.titleText == finishText }).first {
-            finishCell.setSpeechState(state: false)
-        }
+        setSpeechState(text: finishText, isSpeech: false)
         
         // 次に読み上げるセルを読み上げ中表示にする
-        if let nextCell = allCell.filter({ $0.viewModel?.titleText == nextText }).first {
-            nextCell.setSpeechState(state: true)
-        }
+        setSpeechState(text: nextText, isSpeech: true)
     }
-    
+
     func speechFinish() {
         delegate?.endSpeech(from: self)
     }
     
     func speechStop(stopText: String) {
         // 読み上げ中セルを元に戻す
-        if let stopCell = allCell.filter({ $0.viewModel?.titleText == stopText }).first {
-            stopCell.setSpeechState(state: false)
-        }
+        setSpeechState(text: stopText, isSpeech: false)
     }
 
     // MARK: - Private Method
@@ -177,29 +174,9 @@ class NewsListViewController: UIViewController, UITableViewDelegate, UITableView
     func refreshView() {
         DispatchQueue.mainSyncSafe { [weak self] in
             guard let `self` = self else { return }
-            self.createCell()
             self.tableView.reloadDataAfter {
                 self.refreshControl.endRefreshing()
-                self.allCellImageLoad()
             }
-        }
-    }
-    
-    /// 全セルを作成
-    func createCell() {
-        allCell = []
-        guard let viewModel = viewModel else { return }
-        for cellViewModel in viewModel.newsListCellViewModel {
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: R.nib.newsListCell) else { return }
-            cell.viewModel = cellViewModel
-            allCell.append(cell)
-        }
-    }
-    
-    /// 全セルの記事画像を読み込む
-    func allCellImageLoad() {
-        for cell in self.allCell {
-            cell.articleImageUrl()
         }
     }
     
@@ -257,5 +234,22 @@ class NewsListViewController: UIViewController, UITableViewDelegate, UITableView
         let cancel = UIAlertAction(title: R.string.localizable.cancel(), style: UIAlertActionStyle.cancel, handler: nil)
         alertController.addAction(cancel)
         UIApplication.shared.keyWindow?.rootViewController?.present(alertController,animated: true,completion: nil)
+    }
+    
+    /// スピーチ状態をセットする
+    ///
+    /// - Parameters:
+    ///   - text: スピーチ対象Text
+    ///   - isSpeech: スピーチ状態（true:読み上げ中、false:読んでいない）
+    func setSpeechState(text: String, isSpeech: Bool) {
+        guard let cellViewModel  = viewModel?.newsListCellViewModel else { return }
+        if let row = cellViewModel.findIndex(includeElement: { $0.titleText == text }).first {
+            let updateViewModel = cellViewModel[row]
+            updateViewModel.setSpeechState(isSpeech: isSpeech)
+            viewModel?.newsListCellViewModel[row] = updateViewModel
+            if let cell = tableView.cellForRow(at: IndexPath(row: row, section: 0)) as? NewsListCell  {
+                cell.setSpeechState(state: isSpeech)
+            }
+        }
     }
 }

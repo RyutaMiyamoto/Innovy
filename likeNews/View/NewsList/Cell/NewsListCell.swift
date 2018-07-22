@@ -22,6 +22,8 @@ class NewsListCell: UITableViewCell {
     weak var delegate: NewsListCellDelegate?
     /// 背景
     @IBOutlet var backView: UIView!
+    /// 背景(広告用)
+    @IBOutlet weak var backAdView: UIView!
     /// タイトル
     @IBOutlet var titleLabel: UILabel!
     /// 情報元
@@ -107,7 +109,7 @@ class NewsListCell: UITableViewCell {
     }
     
     /// セル情報セット
-    func setCellInfo(){
+    func setCellInfo() {
         guard let viewModel = viewModel else { return }
         DispatchQueue.mainSyncSafe { [weak self] in
             guard let `self` = self else { return }
@@ -120,17 +122,20 @@ class NewsListCell: UITableViewCell {
             self.imageUrl = viewModel.imageUrl
             if viewModel.dispType == .ad, let nativeAd = viewModel.nativeAd {
                 // 広告ビューと広告明示にクリックイベントを追加
-                nativeAd.activateAdView(self, withPrLabel: self.sourceLabel)
+                backAdView.isHidden = false
+                nativeAd.activateAdView(backAdView, withPrLabel: self.sourceLabel)
+            } else {
+                backAdView.isHidden = true
             }
+            self.setSpeechState(state: viewModel.isSpeechNow)
         }
     }
-    
+
     /// スピーチ状態をセットする
     ///
     /// - Parameter state: スピーチ状態（true:読み上げ中、false:読んでいない）
     func setSpeechState(state: Bool) {
         guard let viewModel = self.viewModel else { return }
-        viewModel.isSpeechNow = state
         self.backView.backgroundColor = viewModel.isSpeechNow ? .speechCell() : .white
     }
 }
