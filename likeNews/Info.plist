@@ -26,6 +26,10 @@
 		<string>AAA</string>
 		<key>WeatherHost</key>
 		<string>https://api.openweathermap.org</string>
+		<key>GistHost</key>
+		<string>https://gist.githubusercontent.com</string>
+		<key>GistGenre</key>
+		<string>/RyutaMiyamoto/a939ea434672c18a39a3487882b923ad/raw/</string>
 	</dict>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>ja_JP</string>
