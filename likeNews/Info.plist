@@ -418,5 +418,16 @@
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
 	</array>
+	<key>UIApplicationShortcutItems</key>
+	<array>
+		<dict>
+			<key>UIApplicationShortcutItemIconType</key>
+			<string>UIApplicationShortcutIconTypeShare</string>
+			<key>UIApplicationShortcutItemTitle</key>
+			<string>Innovyを共有</string>
+			<key>UIApplicationShortcutItemType</key>
+			<string>Share</string>
+		</dict>
+	</array>
 </dict>
 </plist>
