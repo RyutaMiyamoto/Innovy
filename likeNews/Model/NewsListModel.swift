@@ -119,7 +119,18 @@ class NewsListModel: NewsListType {
     ///   - num: 取得件数
     ///   - completion: ニュースリスト
     func newsList(condition: GetNewsCondition, completion: @escaping ([Article])->Void) {
-        let url = createUrlBase(type: .getNews) + createGetNewsCondition(condition: condition)
+        var url = ""
+        if condition.word.isEmpty {
+            let genreFileName = getGistGenreFileName(genreName: condition.genre)
+            if genreFileName.isEmpty  {
+                completion([])
+                return
+            }
+            url = Bundle.Api(key: .gistHost) + Bundle.Api(key: .gistGenre) + genreFileName
+        } else {
+            url = createUrlBase(type: .getNews) + createGetNewsCondition(condition: condition)
+        }
+        
         Alamofire.request(url).responseData { response in
             guard let responce = response.result.value else {
                 completion([])
@@ -264,5 +275,21 @@ class NewsListModel: NewsListType {
         }
         let imagePrefetcher = SDWebImagePrefetcher.shared()
         imagePrefetcher.prefetchURLs(urlList)
+    }
+    
+    /// 指定されたジャンル名によるgistでのファイル名を取得する
+    ///
+    /// - Parameter genreName: ジャンル名
+    /// - Returns: gist上のファイル名
+    private func getGistGenreFileName(genreName: String) -> String {
+        let gistFileList = ["pop", "startup", "service", "design", "cryptocurrency", "worktechnique",
+                            "useful", "consideration", "life", "product"]
+        if !genreName.isEmpty {
+            let genreList = UserDefaults.standard.genreList
+            guard let index = genreList.index(of: genreName),
+                let fileName = gistFileList[safe: index] else { return "" }
+            return fileName
+        }
+        return "all"
     }
 }

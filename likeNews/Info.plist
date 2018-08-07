@@ -26,6 +26,10 @@
 		<string>AAA</string>
 		<key>WeatherHost</key>
 		<string>https://api.openweathermap.org</string>
+		<key>GistHost</key>
+		<string>https://gist.githubusercontent.com</string>
+		<key>GistGenre</key>
+		<string>/RyutaMiyamoto/a939ea434672c18a39a3487882b923ad/raw/</string>
 	</dict>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>ja_JP</string>
@@ -42,7 +46,7 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.1.1</string>
+	<string>1.12</string>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
@@ -413,6 +417,17 @@
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
+	</array>
+	<key>UIApplicationShortcutItems</key>
+	<array>
+		<dict>
+			<key>UIApplicationShortcutItemIconType</key>
+			<string>UIApplicationShortcutIconTypeShare</string>
+			<key>UIApplicationShortcutItemTitle</key>
+			<string>Innovyを共有</string>
+			<key>UIApplicationShortcutItemType</key>
+			<string>Share</string>
+		</dict>
 	</array>
 </dict>
 </plist>
