@@ -19,10 +19,6 @@ extension UserDefaults {
         case isDispThumbnail
         /// 記事を読んだ人数表示有無（true:表示）
         case isDispReadArticleNum
-        /// Twitter用OauthToken
-        case oauthToken
-        /// Twitter用OauthTokenSecret
-        case oauthTokenSecret
         /// 読み上げ機能（速度）
         case speechRate
         /// 読み上げ機能（高さ）
@@ -82,34 +78,6 @@ extension UserDefaults {
         }
         set {
             setValue(newValue, forKeyPath: UserDefaults.key.isDispReadArticleNum.rawValue)
-        }
-    }
-    
-    /// Twitter用OauthToken
-    var oauthToken: String? {
-        get {
-            let setKey = UserDefaults.key.oauthToken
-            guard let result = UserDefaults.standard.object(forKey: setKey.rawValue) as? String else {
-                return nil
-            }
-            return result
-        }
-        set {
-            setValue(newValue, forKeyPath: UserDefaults.key.oauthToken.rawValue)
-        }
-    }
-    
-    /// Twitter用OauthTokenSecret
-    var oauthTokenSecret: String? {
-        get {
-            let setKey = UserDefaults.key.oauthTokenSecret
-            guard let result = UserDefaults.standard.object(forKey: setKey.rawValue) as? String else {
-                return nil
-            }
-            return result
-        }
-        set {
-            setValue(newValue, forKeyPath: UserDefaults.key.oauthTokenSecret.rawValue)
         }
     }
     
