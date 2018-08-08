@@ -87,29 +87,6 @@ class UpTabViewControllerViewModel {
         return viewModelList
     }
     
-    /// ジャンル読み込み
-    ///
-    /// - Parameter completion: 読み込み結果
-    func loadGenre(completion: @escaping (Bool)->Void) {
-        NewsListModel.shared.genre(completion: { genre in
-            if genre.genreList.isEmpty {
-                if UserDefaults.standard.genreList.isEmpty {
-                    completion(false)
-                    return
-                }
-            } else {
-                // サーバから取得した日付が最新だった場合はジャンル情報を更新する
-                let saveGenreUpdateDate = UserDefaults.standard.genreUpdateDate
-                if genre.updateDate > saveGenreUpdateDate {
-                    UserDefaults.standard.genreUpdateDate = genre.updateDate
-                    UserDefaults.standard.genreList = genre.genreList
-                }
-            }
-            completion(true)
-            return
-        })
-    }
-    
     /// ニュース読み込み
     ///
     /// - Parameter completion: completion

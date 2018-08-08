@@ -11,10 +11,6 @@ import AVFoundation
 
 extension UserDefaults {
     enum key: String {
-        /// ジャンル更新日付
-        case genreUpdateDate
-        /// ジャンル一覧
-        case genreList
         /// サムネイル表示有無（true:表示）
         case isDispThumbnail
         /// 記事を読んだ人数表示有無（true:表示）
@@ -23,34 +19,6 @@ extension UserDefaults {
         case speechRate
         /// 読み上げ機能（高さ）
         case speechPitch
-    }
-    
-    /// ジャンル更新日付
-    var genreUpdateDate: Date {
-        get {
-            let setKey = UserDefaults.key.genreUpdateDate
-            guard let result =  UserDefaults.standard.object(forKey: setKey.rawValue) as? Date else {
-                return Date(timeIntervalSince1970: 0)
-            }
-            return result
-        }
-        set {
-            setValue(newValue, forKeyPath: UserDefaults.key.genreUpdateDate.rawValue)
-        }
-    }
-    
-    /// ジャンル一覧
-    var genreList: [String] {
-        get {
-            let setKey = UserDefaults.key.genreList
-            guard let result =  UserDefaults.standard.object(forKey: setKey.rawValue) as? [String] else {
-                return []
-            }
-            return result
-        }
-        set {
-            setValue(newValue, forKeyPath: UserDefaults.key.genreList.rawValue)
-        }
     }
     
     /// サムネイル表示有無

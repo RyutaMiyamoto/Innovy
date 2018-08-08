@@ -231,27 +231,9 @@ class UpTabViewController: UIViewController, UICollectionViewDataSource, UIColle
     /// 初期設定を行う
     private func initSetting() {
         SVProgressHUD.show()
-        viewModel.loadGenre(completion: { result in
-            DispatchQueue.mainSyncSafe { [weak self] in
-                guard let `self` = self else { return }
-                if !result {
-                    // ジャンルがない場合、アプリ使用不可
-                    let alert = UIAlertController(title: R.string.localizable.initActErrorTitle(),
-                                                  message: R.string.localizable.initActErrorMessage(),
-                                                  preferredStyle: UIAlertControllerStyle.alert)
-                    let okAction = UIAlertAction(title: R.string.localizable.ok(), style: UIAlertActionStyle.default, handler: {
-                        (action: UIAlertAction!) in self.initSetting()
-                    })
-                    alert.addAction(okAction)
-                    SVProgressHUD.dismiss()
-                    self.present(alert, animated: true, completion: nil)
-                    return
-                }
-                self.viewModel.loadNews(completion: {
-                    // 画面作成
-                    self.createView()
-                })
-            }
+        self.viewModel.loadNews(completion: {
+            // 画面作成
+            self.createView()
         })
     }
     
@@ -286,9 +268,7 @@ class UpTabViewController: UIViewController, UICollectionViewDataSource, UIColle
     
     /// ニュースリスト作成
     private func newsLists() {
-        let genreList = UserDefaults.standard.genreList
-        if genreList.isEmpty { return }
-        for genre in genreList {
+        for genre in NewsListModel.shared.genreList {
             if let viewController =
                 R.storyboard.newsList.instantiateInitialViewController() {
                 viewController.viewModel = NewsListViewModel(genre: genre)
