@@ -78,16 +78,16 @@
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="毎日新聞 12分前" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rjs-nc-JFw" userLabel="情報元">
-                                                                <rect key="frame" x="12" y="64" width="152" height="10"/>
+                                                                <rect key="frame" x="12" y="64" width="148" height="10"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="8"/>
                                                                 <color key="textColor" red="0.60784313725490191" green="0.60784313725490191" blue="0.60784313725490191" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="11/15 22:50" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8e1-MI-OFN" userLabel="日付">
-                                                                <rect key="frame" x="168" y="64" width="50" height="10"/>
+                                                                <rect key="frame" x="164" y="64" width="54" height="10"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="10" id="kgz-V1-uHo"/>
-                                                                    <constraint firstAttribute="width" constant="50" id="qdu-ds-kFM"/>
+                                                                    <constraint firstAttribute="width" constant="54" id="qdu-ds-kFM"/>
                                                                 </constraints>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="8"/>
                                                                 <color key="textColor" red="0.60784313729999995" green="0.60784313729999995" blue="0.60784313729999995" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
