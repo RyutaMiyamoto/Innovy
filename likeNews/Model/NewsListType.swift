@@ -10,14 +10,6 @@ import Foundation
 import Alamofire
 import Unbox
 
-/// ジャンル
-struct Genre {
-    /// 更新日付
-    var updateDate = Date(timeIntervalSince1970: 0)
-    /// ジャンルリスト
-    var genreList: [String] = []
-}
-
 /// 記事情報
 struct Article {
     /// ジャンル名
@@ -38,13 +30,6 @@ struct Article {
     var clipDate = Date(timeIntervalSince1970: 0)
     /// 既読有無
     var isRead = false
-}
-
-extension Genre: Unboxable {
-    init(unboxer: Unboxer) throws {
-        self.updateDate = try String.init(stringLiteral: unboxer.unbox(key: "updateDate")).toDate(dateFormat: "yyyy-MM-dd")!
-        self.genreList = try unboxer.unbox(key: "genreList")
-    }
 }
 
 extension Article: Unboxable {
@@ -69,19 +54,9 @@ struct NewsOverview {
 
 class NewsListType {
     
-    /// ジャンルJSONをパースする
-    ///
-    /// - Parameter json: JSON
-    /// - Returns: パースしたJSON
-    func parseJsonGenre(at json: Data) -> Genre {
-        do {
-            var tmpGenre: [Genre] = []
-            tmpGenre = try unbox(data: json)
-            if let genre = tmpGenre.first { return genre }
-        } catch {
-        }
-        return Genre()
-    }
+    /// ジャンル一覧
+    let genreList =  ["新着", "人気", "スタートアップ", "サービス", "デザイン", "仮想通貨", "仕事術",
+                      "お役立ち", "考察", "ライフ", "プロダクト"]
     
     /// ニュースJSONをパースする
     ///
@@ -97,4 +72,3 @@ class NewsListType {
         return articles
     }
 }
-
