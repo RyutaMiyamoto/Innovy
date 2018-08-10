@@ -37,10 +37,8 @@ class NewsListModel: NewsListType {
 
     /// API種別
     enum ApiType: Int {
-        /// ジャンル一覧取得
-        case getGenre = 0
         /// ニュース一覧取得
-        case getNews
+        case getNews = 0
         /// 記事のスコアをインクリメント
         case updateNewsScore
     }
@@ -57,8 +55,7 @@ class NewsListModel: NewsListType {
         
         // ジャンル、またはワード指定がない場合はスコア順に並び替え
         if !condition.genre.isEmpty {
-            let genreList = UserDefaults.standard.genreList
-            guard let index = genreList.index(of: condition.genre) else { return "" }
+            guard let index = NewsListModel.shared.genreList.index(of: condition.genre) else { return "" }
             conditionStr.append("&genre=" + index.description)
         } else if condition.word.isEmpty {
             conditionStr.append("&score=1")
@@ -85,8 +82,6 @@ class NewsListModel: NewsListType {
         let pass = Bundle.Api(key: .pass)
         var apiStr = ""
         switch type {
-        case .getGenre:
-            apiStr = "/getGenre.php?pass="
         case .getNews:
             apiStr = "/getNews.php?pass="
         case .updateNewsScore:
@@ -94,21 +89,6 @@ class NewsListModel: NewsListType {
         }
         
         return host + apiStr + pass
-    }
-    
-    /// ジャンル取得
-    ///
-    /// - Parameter completion: ジャンル
-    func genre(completion: @escaping (Genre)->Void) {
-        let url = createUrlBase(type: .getGenre)
-        Alamofire.request(url).responseData { response in
-            guard let responce = response.result.value else {
-                completion(Genre())
-                return
-            }
-            let genre = self.parseJsonGenre(at: responce)
-            completion(genre)
-        }
     }
     
     /// ニュースリスト取得
@@ -179,10 +159,14 @@ class NewsListModel: NewsListType {
     ///
     /// - Parameter genre: ジャンル
     func articles(genre: String = "") -> [Article] {
-        guard let genreFirst = UserDefaults.standard.genreList.first else { return [] }
-        let predicate = genre == genreFirst ? NSPredicate(format: "date > %@", argumentArray: [Date().dayBefore(day: 7)]) :
-            NSPredicate(format: "genreName = %@", argumentArray: [genre])
-        let sort = genre == genreFirst ? SortKey.score : SortKey.date
+        var predicate = NSPredicate()
+        switch genre {
+        case "新着", "人気":
+            predicate = NSPredicate(format: "date > %@", argumentArray: [Date().dayBefore(day: 7)])
+        default:
+            predicate = NSPredicate(format: "genreName = %@", argumentArray: [genre])
+        }
+        let sort = genre == "人気" ? SortKey.score : SortKey.date
         return takeArticles(predicate: predicate, sortKey: sort, num: numReadMax)
     }
 
@@ -282,11 +266,10 @@ class NewsListModel: NewsListType {
     /// - Parameter genreName: ジャンル名
     /// - Returns: gist上のファイル名
     private func getGistGenreFileName(genreName: String) -> String {
-        let gistFileList = ["pop", "startup", "service", "design", "cryptocurrency", "worktechnique",
+        let gistFileList = ["new", "pop", "startup", "service", "design", "cryptocurrency", "worktechnique",
                             "useful", "consideration", "life", "product"]
         if !genreName.isEmpty {
-            let genreList = UserDefaults.standard.genreList
-            guard let index = genreList.index(of: genreName),
+            guard let index = NewsListModel.shared.genreList.index(of: genreName),
                 let fileName = gistFileList[safe: index] else { return "" }
             return fileName
         }
