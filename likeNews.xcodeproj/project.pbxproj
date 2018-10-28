@@ -16,7 +16,6 @@
 		9035F8061F270E9800056A39 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9035F8041F270E9800056A39 /* LaunchScreen.storyboard */; };
 		9035F8111F270E9800056A39 /* likeNewsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9035F8101F270E9800056A39 /* likeNewsTests.swift */; };
 		9035F81C1F270E9800056A39 /* likeNewsUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9035F81B1F270E9800056A39 /* likeNewsUITests.swift */; };
-		9035F9951F270FF100056A39 /* Enum+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9035F96F1F270FF100056A39 /* Enum+.swift */; };
 		9035F9961F270FF100056A39 /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9035F9701F270FF100056A39 /* String+.swift */; };
 		9035F9971F270FF100056A39 /* UIStoryboard+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9035F9711F270FF100056A39 /* UIStoryboard+.swift */; };
 		9035F9981F270FF100056A39 /* NewsListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9035F9731F270FF100056A39 /* NewsListModel.swift */; };
@@ -131,7 +130,6 @@
 		9035F8171F270E9800056A39 /* likeNewsUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = likeNewsUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9035F81B1F270E9800056A39 /* likeNewsUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = likeNewsUITests.swift; sourceTree = "<group>"; };
 		9035F81D1F270E9800056A39 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		9035F96F1F270FF100056A39 /* Enum+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Enum+.swift"; sourceTree = "<group>"; };
 		9035F9701F270FF100056A39 /* String+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+.swift"; sourceTree = "<group>"; };
 		9035F9711F270FF100056A39 /* UIStoryboard+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIStoryboard+.swift"; sourceTree = "<group>"; };
 		9035F9731F270FF100056A39 /* NewsListModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewsListModel.swift; sourceTree = "<group>"; };
@@ -318,7 +316,6 @@
 				E67F1A151FBB161E00B7F136 /* UserDefaults+.swift */,
 				C10FC3B320E6FAD2003550B5 /* Array+.swift */,
 				E6BCEBD61F9B8D6D006B8A81 /* Bundle+.swift */,
-				9035F96F1F270FF100056A39 /* Enum+.swift */,
 				908A082B20B435AB00385034 /* Collection+.swift */,
 				E6BCEBD41F9B84AD006B8A81 /* Int+.swift */,
 				E6B4550C1F5D7CDF00935BB3 /* UITableView+.swift */,
@@ -885,7 +882,6 @@
 				E6BE294C1FA8AC1F001A093D /* UIView+.swift in Sources */,
 				E6AF5FD61F4306F4005090E6 /* DispatchQueue+.swift in Sources */,
 				E6BCEBD71F9B8D6D006B8A81 /* Bundle+.swift in Sources */,
-				9035F9951F270FF100056A39 /* Enum+.swift in Sources */,
 				E603694D1F2B58CE006A0BE7 /* CGRect+.swift in Sources */,
 				9035F9A51F270FF100056A39 /* NewsListViewModel.swift in Sources */,
 				90A9291A1FBFCEA100A476DA /* NewsTopTabBarController.swift in Sources */,
