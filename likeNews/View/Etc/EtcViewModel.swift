@@ -23,7 +23,7 @@ class EtcViewModel {
     }
 
     /// 表示種別
-    enum CellViewType: Int, EnumEnumerable {
+    enum CellViewType: Int, CaseIterable {
         /// 天気情報
         case weather = 0
         /// お問い合わせ
@@ -43,7 +43,7 @@ class EtcViewModel {
     /// - Parameter articles: 記事情報。無ければrealm内の情報を元に作成する
     func createCellViewModel() {
         var viewModel: [Any] = []
-        for i in 0..<CellViewType.count {
+        for i in 0..<CellViewType.allCases.count {
             guard let type = CellViewType(rawValue: i) else { break }
             if type == .weather {
                 viewModel.append(EtcWeatherCellViewModel())
