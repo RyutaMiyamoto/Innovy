@@ -40,7 +40,7 @@ class ActivityOpenSafari: UIActivity {
         
         // Safariで指定URLを開く
         if UIApplication.shared.canOpenURL(url!){
-            UIApplication.shared.openURL(url!)
+            UIApplication.shared.open(url!, options: [:], completionHandler: nil)
         }
     }
 }
