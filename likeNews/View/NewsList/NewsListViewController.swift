@@ -8,6 +8,7 @@
 
 import UIKit
 import Alamofire
+import FirebaseAnalytics
 
 protocol NewsListViewControllerDelegate: class {
     /// 記事詳細画面に遷移
@@ -46,6 +47,12 @@ class NewsListViewController: UIViewController, UITableViewDelegate, UITableView
     var viewModel: NewsListViewModel?
     /// 記事更新
     var refreshControl: UIRefreshControl!
+    /// これから読み込み対象のTableViewCellのIndexPath（Analyticsで使用）
+    var analyticsIndexPath = IndexPath(row: 0, section: 0)
+    /// スクロール開始Offset。下方向スクロール判別用。（Analyticsで使用）
+    var scrollBeginingOffset = CGPoint(x: 0, y: 0)
+    /// 下方向にスクロールしたか
+    var isUnderScroll = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -83,6 +90,8 @@ class NewsListViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        // 表示対象のIndexPathを取得
+        analyticsIndexPath = indexPath
         
         guard let viewModel = viewModel, let cellViewModel = viewModel.newsListCellViewModel[safe: indexPath.row],
             let cell = tableView.dequeueReusableCell(withIdentifier: R.nib.newsListCell) else { return UITableViewCell() }
@@ -100,18 +109,40 @@ class NewsListViewController: UIViewController, UITableViewDelegate, UITableView
             let viewModel = cell.viewModel, let sourceArticle = viewModel.sourceArticle else { return }
         delegate?.toArticleDetail(from: self, article: sourceArticle)
     }
+    
+    @IBAction func tableViewCellLongPress(_ sender: UILongPressGestureRecognizer) {
+        guard sender.state == .began else { return }
+        articleLongPress(gesture: sender)
+    }
+    
+    // MARK: - UIScrollViewDelegate
+    
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        scrollBeginingOffset = scrollView.contentOffset
+    }
 
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        // スクロール方向判別
+        isUnderScroll = scrollBeginingOffset.y < scrollView.contentOffset.y
+
+        // 次ページ読み込み判別
         guard let viewModel = viewModel else { return }
         if  tableView.contentOffset.y + tableView.frame.size.height > tableView.contentSize.height && tableView.isDragging &&
             viewModel.newsList.count > viewModel.numReadOfPage * viewModel.page  {
             viewModel.loadNext()
         }
     }
-    
-    @IBAction func tableViewCellLongPress(_ sender: UILongPressGestureRecognizer) {
-        guard sender.state == .began else { return }
-        articleLongPress(gesture: sender)
+
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        // FirebaseAnalytics（どこまでスクロールしたか）
+        if isUnderScroll, let viewModel = viewModel,
+            let vendor = UIDevice.current.identifierForVendor {
+            Analytics.logEvent("news_scroll", parameters: [
+                "uuid": vendor.uuidString,
+                "genre": viewModel.genre,
+                "position": analyticsIndexPath.row.description
+                ])
+        }
     }
     
     // MARK: - NewsListCellDelegate
