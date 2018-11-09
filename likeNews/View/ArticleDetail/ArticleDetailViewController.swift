@@ -9,6 +9,7 @@
 import UIKit
 import WebKit
 import TwitterKit
+import FirebaseAnalytics
 
 protocol ArticleDetailViewControllerDelegate: class {
     /// 遷移元画面に戻る
@@ -207,6 +208,13 @@ class ArticleDetailViewController: UIViewController, WKUIDelegate, WKNavigationD
         toggleClip()
         setClipButtonImage()
         showClipAlert()
+        
+        // FirebaseAnalytics（どの記事がクリップ（ON or OFF）されているか）
+        let eventName = article.clipDate != Date(timeIntervalSince1970: 0) ?
+            "clip_on" : "clip_off"
+        Analytics.logEvent(eventName, parameters: [
+            "article_title": article.title
+        ])
     }
     
     /// シェアする

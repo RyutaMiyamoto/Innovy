@@ -11,6 +11,7 @@ import HockeySDK
 import Firebase
 import SVProgressHUD
 import TwitterKit
+import UserNotifications
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -65,9 +66,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         FirebaseApp.configure()
         
         // Push通知設定
-        application.registerUserNotificationSettings(UIUserNotificationSettings(types: [.badge, .sound, .alert], categories: nil))
-        application.registerForRemoteNotifications()
-        
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { (granted, _) in
+            DispatchQueue.mainSyncSafe {
+                UNUserNotificationCenter.current().delegate = self
+            }
+        }
+
         // Twitter設定
         Twitter.sharedInstance().start(withConsumerKey:Bundle.Api(key: .twitterConsumerKey), consumerSecret:Bundle.Api(key: .twitterConsumerSecret))
         
@@ -100,3 +104,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 }
 
+extension AppDelegate: UNUserNotificationCenterDelegate {
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        // バックグラウンドで来た通知をタップしてアプリ起動
+        let notification = response.notification
+        let eventName = notification.request.trigger is UNPushNotificationTrigger ?
+        "notification_remote" : "notification_local"
+        let notificationBody = notification.request.content.body
+        
+        // FirebaseAnalytics（通知がタップされた）
+        Analytics.logEvent(eventName, parameters: [
+            "text": notificationBody
+            ])
+        
+        completionHandler()
+    }
+    
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+    }
+}
