@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Alamofire
 import Realm
 import SDWebImage
 import TwitterKit

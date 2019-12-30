@@ -68,7 +68,7 @@ class UpTabViewControllerViewModel {
             let center = CGRect().screenWidth() * 0.5
             let leftMargin = center - cellSizeFirst.width * 0.5
             let rightMargin = center - cellSizeLast.width * 0.5
-            collectionViewEdgeInsetsSegment = UIEdgeInsetsMake(0, leftMargin, 0, rightMargin)
+            collectionViewEdgeInsetsSegment = UIEdgeInsets(top: 0, left: leftMargin, bottom: 0, right: rightMargin)
         }
     }
 

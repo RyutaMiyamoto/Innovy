@@ -16,11 +16,6 @@ struct R: Rswift.Validatable {
     try intern.validate()
   }
   
-  /// This `R.color` struct is generated, and contains static references to 0 color palettes.
-  struct color {
-    fileprivate init() {}
-  }
-  
   /// This `R.file` struct is generated, and contains static references to 1 files.
   struct file {
     /// Resource file `GoogleService-Info.plist`.
@@ -32,11 +27,6 @@ struct R: Rswift.Validatable {
       return fileResource.bundle.url(forResource: fileResource)
     }
     
-    fileprivate init() {}
-  }
-  
-  /// This `R.font` struct is generated, and contains static references to 0 fonts.
-  struct font {
     fileprivate init() {}
   }
   
@@ -386,38 +376,73 @@ struct R: Rswift.Validatable {
     static let tweetCell = _R.nib._TweetCell()
     
     /// `UINib(name: "EtcCell", in: bundle)`
+    @available(*, deprecated, message: "Use UINib(resource: R.nib.etcCell) instead")
     static func etcCell(_: Void = ()) -> UIKit.UINib {
       return UIKit.UINib(resource: R.nib.etcCell)
     }
     
     /// `UINib(name: "EtcWeatherCell", in: bundle)`
+    @available(*, deprecated, message: "Use UINib(resource: R.nib.etcWeatherCell) instead")
     static func etcWeatherCell(_: Void = ()) -> UIKit.UINib {
       return UIKit.UINib(resource: R.nib.etcWeatherCell)
     }
     
     /// `UINib(name: "MainCollectionViewCell", in: bundle)`
+    @available(*, deprecated, message: "Use UINib(resource: R.nib.mainCollectionViewCell) instead")
     static func mainCollectionViewCell(_: Void = ()) -> UIKit.UINib {
       return UIKit.UINib(resource: R.nib.mainCollectionViewCell)
     }
     
     /// `UINib(name: "NavigationTitleView", in: bundle)`
+    @available(*, deprecated, message: "Use UINib(resource: R.nib.navigationTitleView) instead")
     static func navigationTitleView(_: Void = ()) -> UIKit.UINib {
       return UIKit.UINib(resource: R.nib.navigationTitleView)
     }
     
     /// `UINib(name: "NewsListCell", in: bundle)`
+    @available(*, deprecated, message: "Use UINib(resource: R.nib.newsListCell) instead")
     static func newsListCell(_: Void = ()) -> UIKit.UINib {
       return UIKit.UINib(resource: R.nib.newsListCell)
     }
     
     /// `UINib(name: "SegmentCollectionViewCell", in: bundle)`
+    @available(*, deprecated, message: "Use UINib(resource: R.nib.segmentCollectionViewCell) instead")
     static func segmentCollectionViewCell(_: Void = ()) -> UIKit.UINib {
       return UIKit.UINib(resource: R.nib.segmentCollectionViewCell)
     }
     
     /// `UINib(name: "TweetCell", in: bundle)`
+    @available(*, deprecated, message: "Use UINib(resource: R.nib.tweetCell) instead")
     static func tweetCell(_: Void = ()) -> UIKit.UINib {
       return UIKit.UINib(resource: R.nib.tweetCell)
+    }
+    
+    static func etcCell(owner ownerOrNil: AnyObject?, options optionsOrNil: [UINib.OptionsKey : Any]? = nil) -> EtcCell? {
+      return R.nib.etcCell.instantiate(withOwner: ownerOrNil, options: optionsOrNil)[0] as? EtcCell
+    }
+    
+    static func etcWeatherCell(owner ownerOrNil: AnyObject?, options optionsOrNil: [UINib.OptionsKey : Any]? = nil) -> EtcWeatherCell? {
+      return R.nib.etcWeatherCell.instantiate(withOwner: ownerOrNil, options: optionsOrNil)[0] as? EtcWeatherCell
+    }
+    
+    static func mainCollectionViewCell(owner ownerOrNil: AnyObject?, options optionsOrNil: [UINib.OptionsKey : Any]? = nil) -> MainCollectionViewCell? {
+      return R.nib.mainCollectionViewCell.instantiate(withOwner: ownerOrNil, options: optionsOrNil)[0] as? MainCollectionViewCell
+    }
+    
+    static func navigationTitleView(owner ownerOrNil: AnyObject?, options optionsOrNil: [UINib.OptionsKey : Any]? = nil) -> NavigationTitleView? {
+      return R.nib.navigationTitleView.instantiate(withOwner: ownerOrNil, options: optionsOrNil)[0] as? NavigationTitleView
+    }
+    
+    static func newsListCell(owner ownerOrNil: AnyObject?, options optionsOrNil: [UINib.OptionsKey : Any]? = nil) -> NewsListCell? {
+      return R.nib.newsListCell.instantiate(withOwner: ownerOrNil, options: optionsOrNil)[0] as? NewsListCell
+    }
+    
+    static func segmentCollectionViewCell(owner ownerOrNil: AnyObject?, options optionsOrNil: [UINib.OptionsKey : Any]? = nil) -> SegmentCollectionViewCell? {
+      return R.nib.segmentCollectionViewCell.instantiate(withOwner: ownerOrNil, options: optionsOrNil)[0] as? SegmentCollectionViewCell
+    }
+    
+    static func tweetCell(owner ownerOrNil: AnyObject?, options optionsOrNil: [UINib.OptionsKey : Any]? = nil) -> TweetCell? {
+      return R.nib.tweetCell.instantiate(withOwner: ownerOrNil, options: optionsOrNil)[0] as? TweetCell
     }
     
     fileprivate init() {}
@@ -807,13 +832,15 @@ struct _R: Rswift.Validatable {
       let identifier = "EtcCell"
       let name = "EtcCell"
       
-      func firstView(owner ownerOrNil: AnyObject?, options optionsOrNil: [NSObject : AnyObject]? = nil) -> EtcCell? {
+      func firstView(owner ownerOrNil: AnyObject?, options optionsOrNil: [UINib.OptionsKey : Any]? = nil) -> EtcCell? {
         return instantiate(withOwner: ownerOrNil, options: optionsOrNil)[0] as? EtcCell
       }
       
       static func validate() throws {
         if UIKit.UIImage(named: "EtcInquiry", in: R.hostingBundle, compatibleWith: nil) == nil { throw Rswift.ValidationError(description: "[R.swift] Image named 'EtcInquiry' is used in nib 'EtcCell', but couldn't be loaded.") }
         if UIKit.UIImage(named: "EtcNextPage", in: R.hostingBundle, compatibleWith: nil) == nil { throw Rswift.ValidationError(description: "[R.swift] Image named 'EtcNextPage' is used in nib 'EtcCell', but couldn't be loaded.") }
+        if #available(iOS 11.0, *) {
+        }
       }
       
       fileprivate init() {}
@@ -826,7 +853,7 @@ struct _R: Rswift.Validatable {
       let identifier = "EtcWeatherCell"
       let name = "EtcWeatherCell"
       
-      func firstView(owner ownerOrNil: AnyObject?, options optionsOrNil: [NSObject : AnyObject]? = nil) -> EtcWeatherCell? {
+      func firstView(owner ownerOrNil: AnyObject?, options optionsOrNil: [UINib.OptionsKey : Any]? = nil) -> EtcWeatherCell? {
         return instantiate(withOwner: ownerOrNil, options: optionsOrNil)[0] as? EtcWeatherCell
       }
       
@@ -840,7 +867,7 @@ struct _R: Rswift.Validatable {
       let identifier = "MainCollectionViewCell"
       let name = "MainCollectionViewCell"
       
-      func firstView(owner ownerOrNil: AnyObject?, options optionsOrNil: [NSObject : AnyObject]? = nil) -> MainCollectionViewCell? {
+      func firstView(owner ownerOrNil: AnyObject?, options optionsOrNil: [UINib.OptionsKey : Any]? = nil) -> MainCollectionViewCell? {
         return instantiate(withOwner: ownerOrNil, options: optionsOrNil)[0] as? MainCollectionViewCell
       }
       
@@ -851,12 +878,14 @@ struct _R: Rswift.Validatable {
       let bundle = R.hostingBundle
       let name = "NavigationTitleView"
       
-      func firstView(owner ownerOrNil: AnyObject?, options optionsOrNil: [NSObject : AnyObject]? = nil) -> NavigationTitleView? {
+      func firstView(owner ownerOrNil: AnyObject?, options optionsOrNil: [UINib.OptionsKey : Any]? = nil) -> NavigationTitleView? {
         return instantiate(withOwner: ownerOrNil, options: optionsOrNil)[0] as? NavigationTitleView
       }
       
       static func validate() throws {
         if UIKit.UIImage(named: "CommonNavigationTitle", in: R.hostingBundle, compatibleWith: nil) == nil { throw Rswift.ValidationError(description: "[R.swift] Image named 'CommonNavigationTitle' is used in nib 'NavigationTitleView', but couldn't be loaded.") }
+        if #available(iOS 11.0, *) {
+        }
       }
       
       fileprivate init() {}
@@ -869,7 +898,7 @@ struct _R: Rswift.Validatable {
       let identifier = "NewsListCell"
       let name = "NewsListCell"
       
-      func firstView(owner ownerOrNil: AnyObject?, options optionsOrNil: [NSObject : AnyObject]? = nil) -> NewsListCell? {
+      func firstView(owner ownerOrNil: AnyObject?, options optionsOrNil: [UINib.OptionsKey : Any]? = nil) -> NewsListCell? {
         return instantiate(withOwner: ownerOrNil, options: optionsOrNil)[0] as? NewsListCell
       }
       
@@ -883,7 +912,7 @@ struct _R: Rswift.Validatable {
       let identifier = "SegmentCollectionViewCell"
       let name = "SegmentCollectionViewCell"
       
-      func firstView(owner ownerOrNil: AnyObject?, options optionsOrNil: [NSObject : AnyObject]? = nil) -> SegmentCollectionViewCell? {
+      func firstView(owner ownerOrNil: AnyObject?, options optionsOrNil: [UINib.OptionsKey : Any]? = nil) -> SegmentCollectionViewCell? {
         return instantiate(withOwner: ownerOrNil, options: optionsOrNil)[0] as? SegmentCollectionViewCell
       }
       
@@ -897,7 +926,7 @@ struct _R: Rswift.Validatable {
       let identifier = "TweetCell"
       let name = "TweetCell"
       
-      func firstView(owner ownerOrNil: AnyObject?, options optionsOrNil: [NSObject : AnyObject]? = nil) -> TweetCell? {
+      func firstView(owner ownerOrNil: AnyObject?, options optionsOrNil: [UINib.OptionsKey : Any]? = nil) -> TweetCell? {
         return instantiate(withOwner: ownerOrNil, options: optionsOrNil)[0] as? TweetCell
       }
       
@@ -909,15 +938,16 @@ struct _R: Rswift.Validatable {
   
   struct storyboard: Rswift.Validatable {
     static func validate() throws {
-      try upTabViewController.validate()
-      try speechSetting.validate()
-      try newsSearch.validate()
       try articleDetail.validate()
       try etc.validate()
-      try newsList.validate()
-      try newsClip.validate()
-      try twitter.validate()
       try launchScreen.validate()
+      try newsClip.validate()
+      try newsList.validate()
+      try newsSearch.validate()
+      try newsTop.validate()
+      try speechSetting.validate()
+      try twitter.validate()
+      try upTabViewController.validate()
     }
     
     struct articleDetail: Rswift.StoryboardResourceWithInitialControllerType, Rswift.Validatable {
@@ -927,10 +957,12 @@ struct _R: Rswift.Validatable {
       let name = "ArticleDetail"
       
       static func validate() throws {
-        if UIKit.UIImage(named: "ArticleDetailTwitterButton") == nil { throw Rswift.ValidationError(description: "[R.swift] Image named 'ArticleDetailTwitterButton' is used in storyboard 'ArticleDetail', but couldn't be loaded.") }
-        if UIKit.UIImage(named: "ArticleDetailShareButton") == nil { throw Rswift.ValidationError(description: "[R.swift] Image named 'ArticleDetailShareButton' is used in storyboard 'ArticleDetail', but couldn't be loaded.") }
-        if UIKit.UIImage(named: "ArticleDetailClipOnButton") == nil { throw Rswift.ValidationError(description: "[R.swift] Image named 'ArticleDetailClipOnButton' is used in storyboard 'ArticleDetail', but couldn't be loaded.") }
-        if UIKit.UIImage(named: "ArticleDetailBackButton") == nil { throw Rswift.ValidationError(description: "[R.swift] Image named 'ArticleDetailBackButton' is used in storyboard 'ArticleDetail', but couldn't be loaded.") }
+        if UIKit.UIImage(named: "ArticleDetailBackButton", in: R.hostingBundle, compatibleWith: nil) == nil { throw Rswift.ValidationError(description: "[R.swift] Image named 'ArticleDetailBackButton' is used in storyboard 'ArticleDetail', but couldn't be loaded.") }
+        if UIKit.UIImage(named: "ArticleDetailClipOnButton", in: R.hostingBundle, compatibleWith: nil) == nil { throw Rswift.ValidationError(description: "[R.swift] Image named 'ArticleDetailClipOnButton' is used in storyboard 'ArticleDetail', but couldn't be loaded.") }
+        if UIKit.UIImage(named: "ArticleDetailShareButton", in: R.hostingBundle, compatibleWith: nil) == nil { throw Rswift.ValidationError(description: "[R.swift] Image named 'ArticleDetailShareButton' is used in storyboard 'ArticleDetail', but couldn't be loaded.") }
+        if UIKit.UIImage(named: "ArticleDetailTwitterButton", in: R.hostingBundle, compatibleWith: nil) == nil { throw Rswift.ValidationError(description: "[R.swift] Image named 'ArticleDetailTwitterButton' is used in storyboard 'ArticleDetail', but couldn't be loaded.") }
+        if #available(iOS 11.0, *) {
+        }
       }
       
       fileprivate init() {}
@@ -943,7 +975,9 @@ struct _R: Rswift.Validatable {
       let name = "Etc"
       
       static func validate() throws {
-        if UIKit.UIImage(named: "NewsTopTabEtc") == nil { throw Rswift.ValidationError(description: "[R.swift] Image named 'NewsTopTabEtc' is used in storyboard 'Etc', but couldn't be loaded.") }
+        if UIKit.UIImage(named: "NewsTopTabEtc", in: R.hostingBundle, compatibleWith: nil) == nil { throw Rswift.ValidationError(description: "[R.swift] Image named 'NewsTopTabEtc' is used in storyboard 'Etc', but couldn't be loaded.") }
+        if #available(iOS 11.0, *) {
+        }
       }
       
       fileprivate init() {}
@@ -956,7 +990,9 @@ struct _R: Rswift.Validatable {
       let name = "LaunchScreen"
       
       static func validate() throws {
-        if UIKit.UIImage(named: "LaunchScreenLogo") == nil { throw Rswift.ValidationError(description: "[R.swift] Image named 'LaunchScreenLogo' is used in storyboard 'LaunchScreen', but couldn't be loaded.") }
+        if UIKit.UIImage(named: "LaunchScreenLogo", in: R.hostingBundle, compatibleWith: nil) == nil { throw Rswift.ValidationError(description: "[R.swift] Image named 'LaunchScreenLogo' is used in storyboard 'LaunchScreen', but couldn't be loaded.") }
+        if #available(iOS 11.0, *) {
+        }
       }
       
       fileprivate init() {}
@@ -969,8 +1005,10 @@ struct _R: Rswift.Validatable {
       let name = "NewsClip"
       
       static func validate() throws {
-        if UIKit.UIImage(named: "NewsClipNonArticle") == nil { throw Rswift.ValidationError(description: "[R.swift] Image named 'NewsClipNonArticle' is used in storyboard 'NewsClip', but couldn't be loaded.") }
-        if UIKit.UIImage(named: "NewsTopTabClip") == nil { throw Rswift.ValidationError(description: "[R.swift] Image named 'NewsTopTabClip' is used in storyboard 'NewsClip', but couldn't be loaded.") }
+        if UIKit.UIImage(named: "NewsClipNonArticle", in: R.hostingBundle, compatibleWith: nil) == nil { throw Rswift.ValidationError(description: "[R.swift] Image named 'NewsClipNonArticle' is used in storyboard 'NewsClip', but couldn't be loaded.") }
+        if UIKit.UIImage(named: "NewsTopTabClip", in: R.hostingBundle, compatibleWith: nil) == nil { throw Rswift.ValidationError(description: "[R.swift] Image named 'NewsTopTabClip' is used in storyboard 'NewsClip', but couldn't be loaded.") }
+        if #available(iOS 11.0, *) {
+        }
       }
       
       fileprivate init() {}
@@ -988,6 +1026,8 @@ struct _R: Rswift.Validatable {
       }
       
       static func validate() throws {
+        if #available(iOS 11.0, *) {
+        }
         if _R.storyboard.newsList().newsList() == nil { throw Rswift.ValidationError(description:"[R.swift] ViewController with identifier 'newsList' could not be loaded from storyboard 'NewsList' as 'NewsListViewController'.") }
       }
       
@@ -1001,18 +1041,25 @@ struct _R: Rswift.Validatable {
       let name = "NewsSearch"
       
       static func validate() throws {
-        if UIKit.UIImage(named: "NewsSearchNonArticle") == nil { throw Rswift.ValidationError(description: "[R.swift] Image named 'NewsSearchNonArticle' is used in storyboard 'NewsSearch', but couldn't be loaded.") }
-        if UIKit.UIImage(named: "NewsTopTabSearch") == nil { throw Rswift.ValidationError(description: "[R.swift] Image named 'NewsTopTabSearch' is used in storyboard 'NewsSearch', but couldn't be loaded.") }
+        if UIKit.UIImage(named: "NewsSearchNonArticle", in: R.hostingBundle, compatibleWith: nil) == nil { throw Rswift.ValidationError(description: "[R.swift] Image named 'NewsSearchNonArticle' is used in storyboard 'NewsSearch', but couldn't be loaded.") }
+        if UIKit.UIImage(named: "NewsTopTabSearch", in: R.hostingBundle, compatibleWith: nil) == nil { throw Rswift.ValidationError(description: "[R.swift] Image named 'NewsTopTabSearch' is used in storyboard 'NewsSearch', but couldn't be loaded.") }
+        if #available(iOS 11.0, *) {
+        }
       }
       
       fileprivate init() {}
     }
     
-    struct newsTop: Rswift.StoryboardResourceWithInitialControllerType {
+    struct newsTop: Rswift.StoryboardResourceWithInitialControllerType, Rswift.Validatable {
       typealias InitialController = NewsTopTabBarController
       
       let bundle = R.hostingBundle
       let name = "NewsTop"
+      
+      static func validate() throws {
+        if #available(iOS 11.0, *) {
+        }
+      }
       
       fileprivate init() {}
     }
@@ -1024,10 +1071,12 @@ struct _R: Rswift.Validatable {
       let name = "SpeechSetting"
       
       static func validate() throws {
-        if UIKit.UIImage(named: "SpeechHigh") == nil { throw Rswift.ValidationError(description: "[R.swift] Image named 'SpeechHigh' is used in storyboard 'SpeechSetting', but couldn't be loaded.") }
-        if UIKit.UIImage(named: "SpeechSlow") == nil { throw Rswift.ValidationError(description: "[R.swift] Image named 'SpeechSlow' is used in storyboard 'SpeechSetting', but couldn't be loaded.") }
-        if UIKit.UIImage(named: "SpeechLow") == nil { throw Rswift.ValidationError(description: "[R.swift] Image named 'SpeechLow' is used in storyboard 'SpeechSetting', but couldn't be loaded.") }
-        if UIKit.UIImage(named: "SpeechQuick") == nil { throw Rswift.ValidationError(description: "[R.swift] Image named 'SpeechQuick' is used in storyboard 'SpeechSetting', but couldn't be loaded.") }
+        if UIKit.UIImage(named: "SpeechHigh", in: R.hostingBundle, compatibleWith: nil) == nil { throw Rswift.ValidationError(description: "[R.swift] Image named 'SpeechHigh' is used in storyboard 'SpeechSetting', but couldn't be loaded.") }
+        if UIKit.UIImage(named: "SpeechLow", in: R.hostingBundle, compatibleWith: nil) == nil { throw Rswift.ValidationError(description: "[R.swift] Image named 'SpeechLow' is used in storyboard 'SpeechSetting', but couldn't be loaded.") }
+        if UIKit.UIImage(named: "SpeechQuick", in: R.hostingBundle, compatibleWith: nil) == nil { throw Rswift.ValidationError(description: "[R.swift] Image named 'SpeechQuick' is used in storyboard 'SpeechSetting', but couldn't be loaded.") }
+        if UIKit.UIImage(named: "SpeechSlow", in: R.hostingBundle, compatibleWith: nil) == nil { throw Rswift.ValidationError(description: "[R.swift] Image named 'SpeechSlow' is used in storyboard 'SpeechSetting', but couldn't be loaded.") }
+        if #available(iOS 11.0, *) {
+        }
       }
       
       fileprivate init() {}
@@ -1045,8 +1094,10 @@ struct _R: Rswift.Validatable {
       }
       
       static func validate() throws {
-        if UIKit.UIImage(named: "TwitterCloseButton") == nil { throw Rswift.ValidationError(description: "[R.swift] Image named 'TwitterCloseButton' is used in storyboard 'Twitter', but couldn't be loaded.") }
-        if UIKit.UIImage(named: "TwitterTweetButton") == nil { throw Rswift.ValidationError(description: "[R.swift] Image named 'TwitterTweetButton' is used in storyboard 'Twitter', but couldn't be loaded.") }
+        if UIKit.UIImage(named: "TwitterCloseButton", in: R.hostingBundle, compatibleWith: nil) == nil { throw Rswift.ValidationError(description: "[R.swift] Image named 'TwitterCloseButton' is used in storyboard 'Twitter', but couldn't be loaded.") }
+        if UIKit.UIImage(named: "TwitterTweetButton", in: R.hostingBundle, compatibleWith: nil) == nil { throw Rswift.ValidationError(description: "[R.swift] Image named 'TwitterTweetButton' is used in storyboard 'Twitter', but couldn't be loaded.") }
+        if #available(iOS 11.0, *) {
+        }
         if _R.storyboard.twitter().twitter() == nil { throw Rswift.ValidationError(description:"[R.swift] ViewController with identifier 'twitter' could not be loaded from storyboard 'Twitter' as 'TwitterViewController'.") }
       }
       
@@ -1060,8 +1111,10 @@ struct _R: Rswift.Validatable {
       let name = "UpTabViewController"
       
       static func validate() throws {
-        if UIKit.UIImage(named: "CommonSpeechStop") == nil { throw Rswift.ValidationError(description: "[R.swift] Image named 'CommonSpeechStop' is used in storyboard 'UpTabViewController', but couldn't be loaded.") }
-        if UIKit.UIImage(named: "NewsTopTabList") == nil { throw Rswift.ValidationError(description: "[R.swift] Image named 'NewsTopTabList' is used in storyboard 'UpTabViewController', but couldn't be loaded.") }
+        if UIKit.UIImage(named: "CommonSpeechStop", in: R.hostingBundle, compatibleWith: nil) == nil { throw Rswift.ValidationError(description: "[R.swift] Image named 'CommonSpeechStop' is used in storyboard 'UpTabViewController', but couldn't be loaded.") }
+        if UIKit.UIImage(named: "NewsTopTabList", in: R.hostingBundle, compatibleWith: nil) == nil { throw Rswift.ValidationError(description: "[R.swift] Image named 'NewsTopTabList' is used in storyboard 'UpTabViewController', but couldn't be loaded.") }
+        if #available(iOS 11.0, *) {
+        }
       }
       
       fileprivate init() {}

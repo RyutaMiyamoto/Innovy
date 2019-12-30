@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import Alamofire
 import FirebaseAnalytics
 
 protocol NewsListViewControllerDelegate: class {
@@ -73,14 +72,14 @@ class NewsListViewController: UIViewController, UITableViewDelegate, UITableView
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return UITableViewAutomaticDimension
+        return UITableView.automaticDimension
     }
     
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
         if let height = heightAtIndexPath.object(forKey: indexPath) as? NSNumber {
             return CGFloat(height.floatValue)
         } else {
-            return UITableViewAutomaticDimension
+            return UITableView.automaticDimension
         }
     }
     
@@ -94,7 +93,7 @@ class NewsListViewController: UIViewController, UITableViewDelegate, UITableView
         analyticsIndexPath = indexPath
         
         guard let viewModel = viewModel, let cellViewModel = viewModel.newsListCellViewModel[safe: indexPath.row],
-            let cell = tableView.dequeueReusableCell(withIdentifier: R.nib.newsListCell) else { return UITableViewCell() }
+            let cell = tableView.dequeueReusableCell(withIdentifier: R.nib.newsListCell, for: indexPath) else { return UITableViewCell() }
         cell.viewModel = cellViewModel
         cell.articleImageUrl()
         cell.delegate = self
@@ -183,22 +182,14 @@ class NewsListViewController: UIViewController, UITableViewDelegate, UITableView
         
         refreshControl = UIRefreshControl()
         refreshControl?.addTarget(self, action: #selector(self.refresh(sender:)), for: .valueChanged)
-        if #available(iOS 10.0, *) {
-            tableView.refreshControl = refreshControl
-        } else {
-            // Fallback on earlier versions
-        }
+        tableView.refreshControl = refreshControl
         
         refreshView()
     }
     
-    func refresh(sender: UIRefreshControl) {
-        if #available(iOS 10.0, *) {
-            guard let viewModel = viewModel else { return }
-            viewModel.reload(completion: {_ in })
-        } else {
-            // Fallback on earlier versions
-        }
+    @objc func refresh(sender: UIRefreshControl) {
+        guard let viewModel = viewModel else { return }
+        viewModel.reload(completion: { })
     }
     
     /// 画面を再描画する
@@ -246,7 +237,7 @@ class NewsListViewController: UIViewController, UITableViewDelegate, UITableView
         
         // 詳細を見るボタン
         let alertController = UIAlertController(title: R.string.localizable.articleLongPressTitle(), message: nil, preferredStyle: .actionSheet)
-        let toArticleDetail = UIAlertAction(title: R.string.localizable.articleLongPressToDetail(), style: UIAlertActionStyle.default){ (action: UIAlertAction) in
+        let toArticleDetail = UIAlertAction(title: R.string.localizable.articleLongPressToDetail(), style: UIAlertAction.Style.default){ (action: UIAlertAction) in
             if let longPressCellViewModel = longPressCellViewModel, let sourceArticle = longPressCellViewModel.sourceArticle {
                 self.delegate?.toArticleDetail(from: self, article: sourceArticle)
             }
@@ -254,7 +245,7 @@ class NewsListViewController: UIViewController, UITableViewDelegate, UITableView
         alertController.addAction(toArticleDetail)
         
         // 音声アシスト開始ボタン
-        let speechStart = UIAlertAction(title: R.string.localizable.articleLongPressSpeechStart(), style: UIAlertActionStyle.default){ (action: UIAlertAction) in
+        let speechStart = UIAlertAction(title: R.string.localizable.articleLongPressSpeechStart(), style: UIAlertAction.Style.default){ (action: UIAlertAction) in
             SpeechModel.shared.startSpeech(articles: speechArticles)
             self.delegate?.startSpeech(from: self)
             SpeechModel.shared.delegate = self
@@ -262,7 +253,7 @@ class NewsListViewController: UIViewController, UITableViewDelegate, UITableView
         alertController.addAction(speechStart)
         
         // キャンセルボタン
-        let cancel = UIAlertAction(title: R.string.localizable.cancel(), style: UIAlertActionStyle.cancel, handler: nil)
+        let cancel = UIAlertAction(title: R.string.localizable.cancel(), style: UIAlertAction.Style.cancel, handler: nil)
         alertController.addAction(cancel)
         UIApplication.shared.keyWindow?.rootViewController?.present(alertController,animated: true,completion: nil)
     }

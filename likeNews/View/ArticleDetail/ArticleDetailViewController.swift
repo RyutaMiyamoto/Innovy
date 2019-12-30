@@ -31,6 +31,13 @@ class ArticleDetailViewController: UIViewController, WKUIDelegate, WKNavigationD
             setClipButtonImage()
         }
     }
+    /// webView
+    @IBOutlet weak var webView: WKWebView! {
+        didSet {
+            webView.uiDelegate = self
+            webView.navigationDelegate = self
+        }
+    }
     /// 注目View
     @IBOutlet weak var attentionView: UIView!
     /// 注目ラベル
@@ -40,8 +47,6 @@ class ArticleDetailViewController: UIViewController, WKUIDelegate, WKNavigationD
     
     /// 記事情報
     var article: Article!
-    /// webView
-    var webView: WKWebView!
     /// ProgressView更新タイマ
     var timer: Timer!
     /// ProgressView更新間隔
@@ -232,7 +237,7 @@ class ArticleDetailViewController: UIViewController, WKUIDelegate, WKNavigationD
         
         // 使用しないアクティビティタイプ
         let excludedActivityTypes = [
-            UIActivityType.saveToCameraRoll
+            UIActivity.ActivityType.saveToCameraRoll
         ]
         activityVC.excludedActivityTypes = excludedActivityTypes
         
@@ -252,11 +257,11 @@ class ArticleDetailViewController: UIViewController, WKUIDelegate, WKNavigationD
     ///
     /// - Parameter button: ボタン
     func buttonTapAction(button: UIButton) {
-        DispatchQueue.mainSyncSafe { _ in
-            UIView.animate(withDuration: 0.05, animations: { _ in
+        DispatchQueue.mainSyncSafe { 
+            UIView.animate(withDuration: 0.05, animations: { 
                 button.transform = CGAffineTransform(scaleX: 1.3, y: 1.3)
             }, completion: { _ in
-                UIView.animate(withDuration: 0.05, animations: { _ in
+                UIView.animate(withDuration: 0.05, animations: { 
                     button.transform = CGAffineTransform.identity
                 }, completion: nil)
             })
@@ -265,21 +270,6 @@ class ArticleDetailViewController: UIViewController, WKUIDelegate, WKNavigationD
     
     /// WebView設定
     func settingWebView() {
-        webView = WKWebView()
-        // Autolayoutを設定
-        webView.translatesAutoresizingMaskIntoConstraints = false
-        // 親ViewにWKWebViewを追加
-        view.addSubview(webView)
-        // 拡大/縮小禁止
-        webView.scrollView.maximumZoomScale = 1
-        webView.scrollView.minimumZoomScale = 1
-        // Delegateの設定
-        webView.uiDelegate = self
-        webView.navigationDelegate = self
-        // WKWebViewを最背面に移動
-        view.sendSubview(toBack: webView)
-        // レイアウトを設定（後述）
-        setWebViewLayoutWithConstant()
         // ページのロード
         if let url = URL(string: article.url) {
             webView.load(URLRequest(url: url))
@@ -296,28 +286,8 @@ class ArticleDetailViewController: UIViewController, WKUIDelegate, WKNavigationD
                                      userInfo: nil, repeats: true)
     }
     
-    /// WebViewのレイアウト設定
-    func setWebViewLayoutWithConstant(){
-        // Constraintsを一度削除する
-        for constraint in self.view.constraints {
-            let secondItem: WKWebView? = constraint.secondItem as? WKWebView
-            if secondItem == self.webView {
-                self.view.removeConstraint(constraint)
-            }
-        }
-        // Constraintsを追加
-        view.addConstraint(NSLayoutConstraint(item: view, attribute: NSLayoutAttribute.width,
-            relatedBy: NSLayoutRelation.equal, toItem: webView, attribute: NSLayoutAttribute.width, multiplier: 1.0, constant: 0.0))
-        view.addConstraint(NSLayoutConstraint(item: view, attribute: NSLayoutAttribute.centerX,
-            relatedBy: NSLayoutRelation.equal, toItem: webView, attribute: NSLayoutAttribute.centerX, multiplier: 1.0, constant: 0.0))
-        view.addConstraint(NSLayoutConstraint(item: topLayoutGuide, attribute: NSLayoutAttribute.bottom,
-            relatedBy: NSLayoutRelation.equal, toItem: webView, attribute: NSLayoutAttribute.top, multiplier: 1.0, constant: 0.0))
-        view.addConstraint(NSLayoutConstraint(item: bottomLayoutGuide, attribute: NSLayoutAttribute.top,
-            relatedBy: NSLayoutRelation.equal, toItem: webView, attribute: NSLayoutAttribute.bottom, multiplier: 1.0, constant: 44))
-    }
-    
     /// ProgressView更新
-    func updateProgressView() {
+    @objc func updateProgressView() {
         progressView.setProgress(Float(webView.estimatedProgress), animated: true)
         if webView.estimatedProgress == 1.0 && timer?.isValid == true {
             // ページの読み込みが完了したらProgressViewを非表示にする
@@ -420,7 +390,7 @@ class ArticleDetailViewController: UIViewController, WKUIDelegate, WKNavigationD
         // アラート表示。タップ後に一覧画面に戻る
         let alertController = UIAlertController(title: R.string.localizable.detailNetworkErrorTitle(),
                                                 message: R.string.localizable.detailNetworkErrorMessage(), preferredStyle: .alert)
-        let okButton = UIAlertAction(title: R.string.localizable.ok(), style: UIAlertActionStyle.default){ (action: UIAlertAction) in
+        let okButton = UIAlertAction(title: R.string.localizable.ok(), style: UIAlertAction.Style.default){ (action: UIAlertAction) in
             self.isBack = true
             self.navigationController?.popViewController(animated: true)
             self.delegate?.toBack(from: self, article: self.article)

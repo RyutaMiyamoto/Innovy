@@ -37,15 +37,13 @@ class NewsListCell: UITableViewCell {
     /// 記事画像（一覧先頭用）
     @IBOutlet var topArticleImageView: UIImageView! {
         didSet {
-            topArticleImageView.sd_setShowActivityIndicatorView(true)
-            topArticleImageView.sd_setIndicatorStyle(.gray)
+            topArticleImageView.sd_imageIndicator = SDWebImageProgressIndicator.default
         }
     }
     /// 記事画像
     @IBOutlet var articleImageView: UIImageView! {
         didSet {
-            articleImageView.sd_setShowActivityIndicatorView(true)
-            articleImageView.sd_setIndicatorStyle(.gray)
+            articleImageView.sd_imageIndicator = SDWebImageProgressIndicator.default
         }
     }
     

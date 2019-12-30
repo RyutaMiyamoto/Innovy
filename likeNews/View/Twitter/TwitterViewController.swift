@@ -58,7 +58,7 @@ class TwitterViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         if let viewModel = viewModel {
             self.navigationItem.title = viewModel.article.title + "に関するツイート"
-            viewModel.reload(word: viewModel.article.title, completion: {_ in
+            viewModel.reload(word: viewModel.article.title, completion: {
                 self.tableView.reloadDataAfter {
                     self.nonTweetView.alpha = viewModel.tweetCellViewModel.count > 0 ? 0 : 1
                     self.tweetButton.isHidden = viewModel.isTweetButtonHidden
@@ -76,14 +76,14 @@ class TwitterViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return UITableViewAutomaticDimension
+        return UITableView.automaticDimension
     }
     
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
         if let height = heightAtIndexPath.object(forKey: indexPath) as? NSNumber {
             return CGFloat(height.floatValue)
         } else {
-            return UITableViewAutomaticDimension
+            return UITableView.automaticDimension
         }
     }
     
@@ -93,7 +93,7 @@ class TwitterViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: R.nib.tweetCell),
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: R.nib.tweetCell, for: indexPath),
             let cellViewModel = viewModel?.tweetCellViewModel[safe: indexPath.row] else { return UITableViewCell() }
         cell.viewModel = cellViewModel
         cell.tweetView.delegate = self
