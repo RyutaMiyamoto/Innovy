@@ -32,7 +32,12 @@ class ArticleDetailViewController: UIViewController, WKUIDelegate, WKNavigationD
         }
     }
     /// webView
-    @IBOutlet weak var webView: WKWebView!
+    @IBOutlet weak var webView: WKWebView! {
+        didSet {
+            webView.uiDelegate = self
+            webView.navigationDelegate = self
+        }
+    }
     /// 注目View
     @IBOutlet weak var attentionView: UIView!
     /// 注目ラベル
