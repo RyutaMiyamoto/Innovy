@@ -54,7 +54,7 @@ class NewsListModel: NewsListType {
         
         // ジャンル、またはワード指定がない場合はスコア順に並び替え
         if !condition.genre.isEmpty {
-            guard let index = NewsListModel.shared.genreList.index(of: condition.genre) else { return "" }
+            guard let index = NewsListModel.shared.genreList.firstIndex(of: condition.genre) else { return "" }
             conditionStr.append("&genre=" + index.description)
         } else if condition.word.isEmpty {
             conditionStr.append("&score=1")
@@ -269,7 +269,7 @@ class NewsListModel: NewsListType {
         let gistFileList = ["new", "pop", "startup", "service", "design", "cryptocurrency", "worktechnique",
                             "useful", "consideration", "life", "product"]
         if !genreName.isEmpty {
-            guard let index = NewsListModel.shared.genreList.index(of: genreName),
+            guard let index = NewsListModel.shared.genreList.firstIndex(of: genreName),
                 let fileName = gistFileList[safe: index] else { return "" }
             return fileName
         }
