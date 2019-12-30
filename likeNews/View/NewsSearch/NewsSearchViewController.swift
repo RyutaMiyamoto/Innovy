@@ -75,7 +75,7 @@ class NewsSearchViewController: UIViewController, UITableViewDelegate, UITableVi
 
     // MARK: - User Event
     
-    func tapCloseButton(sender: UIButton) {
+    @objc func tapCloseButton(sender: UIButton) {
         // キーボードを閉じる
         searchBar.resignFirstResponder()
     }
@@ -104,14 +104,14 @@ class NewsSearchViewController: UIViewController, UITableViewDelegate, UITableVi
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return UITableViewAutomaticDimension
+        return UITableView.automaticDimension
     }
     
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
         if let height = heightAtIndexPath.object(forKey: indexPath) as? NSNumber {
             return CGFloat(height.floatValue)
         } else {
-            return UITableViewAutomaticDimension
+            return UITableView.automaticDimension
         }
     }
     
@@ -121,7 +121,7 @@ class NewsSearchViewController: UIViewController, UITableViewDelegate, UITableVi
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: R.nib.newsListCell),
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: R.nib.newsListCell, for: indexPath),
             let cellViewModel = viewModel.newsListCellViewModel[safe: indexPath.row] else { return UITableViewCell() }
         cell.viewModel = cellViewModel
         cell.articleImageUrl()
@@ -177,20 +177,12 @@ class NewsSearchViewController: UIViewController, UITableViewDelegate, UITableVi
         
         refreshControl = UIRefreshControl()
         refreshControl?.addTarget(self, action: #selector(self.refresh(sender:)), for: .valueChanged)
-        if #available(iOS 10.0, *) {
-            tableView.refreshControl = refreshControl
-        } else {
-            // Fallback on earlier versions
-        }
+        tableView.refreshControl = refreshControl
     }
     
-    func refresh(sender: UIRefreshControl) {
-        if #available(iOS 10.0, *) {
-            // 検索
-            searchText()
-        } else {
-            // Fallback on earlier versions
-        }
+    @objc func refresh(sender: UIRefreshControl) {
+        // 検索
+        searchText()
     }
     
     /// 入力されたテキストから記事を検索する

@@ -54,11 +54,7 @@ class EtcViewController: UIViewController, UITableViewDelegate, UITableViewDataS
         // レビュー促進ダイアログ表示
         DispatchQueue.mainSyncSafe { [weak self] in
             guard let _ = self else { return }
-            if #available(iOS 10.3, *) {
-                SKStoreReviewController.requestReview()
-            } else {
-                // Fallback on earlier versions
-            }
+            SKStoreReviewController.requestReview()
         }
     }
     
@@ -69,14 +65,14 @@ class EtcViewController: UIViewController, UITableViewDelegate, UITableViewDataS
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return UITableViewAutomaticDimension
+        return UITableView.automaticDimension
     }
     
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
         if let height = heightAtIndexPath.object(forKey: indexPath) as? NSNumber {
             return CGFloat(height.floatValue)
         } else {
-            return UITableViewAutomaticDimension
+            return UITableView.automaticDimension
         }
     }
     
@@ -87,12 +83,12 @@ class EtcViewController: UIViewController, UITableViewDelegate, UITableViewDataS
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let cellViewModel = viewModel.etcCellViewModel[indexPath.row] as? EtcCellViewModel {
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: R.nib.etcCell) else { return UITableViewCell() }
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: R.nib.etcCell, for: indexPath) else { return UITableViewCell() }
             cell.viewModel = cellViewModel
             cell.delegate = self
             return cell
         } else if let cellViewModel = viewModel.etcCellViewModel[indexPath.row] as? EtcWeatherCellViewModel {
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: R.nib.etcWeatherCell) else { return UITableViewCell() }
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: R.nib.etcWeatherCell, for: indexPath) else { return UITableViewCell() }
             cell.viewModel = cellViewModel
             cell.delegate = self
             return cell
@@ -156,7 +152,7 @@ class EtcViewController: UIViewController, UITableViewDelegate, UITableViewDataS
         // 位置情報取得許可アラート表示
         let alertController = UIAlertController(title: R.string.localizable.etcWeatherLocationAuthorizationTitle(),
                                                 message: R.string.localizable.etcWeatherLocationAuthorizationMessage(), preferredStyle: .alert)
-        let toSettingButton = UIAlertAction(title: R.string.localizable.ok(), style: UIAlertActionStyle.default){ (action: UIAlertAction) in }
+        let toSettingButton = UIAlertAction(title: R.string.localizable.ok(), style: UIAlertAction.Style.default){ (action: UIAlertAction) in }
         alertController.addAction(toSettingButton)
         present(alertController, animated: true, completion: nil)
     }
@@ -186,19 +182,20 @@ class EtcViewController: UIViewController, UITableViewDelegate, UITableViewDataS
     func clearCache() {
         let alert = UIAlertController(title: R.string.localizable.etcClearCacheBeforeTitle(),
                                       message: R.string.localizable.etcClearCacheBeforeMessage(),
-                                      preferredStyle: UIAlertControllerStyle.alert)
-        let action = UIAlertAction(title: R.string.localizable.ok(), style: UIAlertActionStyle.default, handler: {
+                                      preferredStyle: UIAlertController.Style.alert)
+        let action = UIAlertAction(title: R.string.localizable.ok(), style: UIAlertAction.Style.default, handler: {
             (action: UIAlertAction!) in
-            SDWebImageManager.shared().imageCache?.clearDisk(onCompletion: {
+            SDWebImageManager.shared.imageCache.clear(with: .all, completion: {
                 let alert = UIAlertController(title:nil,
                                               message: R.string.localizable.etcClearCacheAfterMessage(),
                                               preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: R.string.localizable.ok(),
                                               style: .default, handler: nil))
                 self.present(alert, animated: true, completion: nil)
+
             })
         })
-        let cancel = UIAlertAction(title: R.string.localizable.cancel(), style: UIAlertActionStyle.cancel, handler: {
+        let cancel = UIAlertAction(title: R.string.localizable.cancel(), style: UIAlertAction.Style.cancel, handler: {
             (action: UIAlertAction!) in })
         alert.addAction(action)
         alert.addAction(cancel)

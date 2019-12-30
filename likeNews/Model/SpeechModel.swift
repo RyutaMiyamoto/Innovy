@@ -51,7 +51,7 @@ class SpeechModel: NSObject, AVSpeechSynthesizerDelegate {
     override init() {
         super.init()
         
-        try? AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
+        try? AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.playback)
     }
     
     // MARK: - AVSpeechSynthesizerDelegate
