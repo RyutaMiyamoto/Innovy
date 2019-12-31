@@ -16,6 +16,8 @@ pod 'SVProgressHUD'
 pod‘HockeySDK', '~> 5.1.4'
 pod 'Firebase/Core'
 pod 'Firebase/Messaging'
+pod 'Fabric', '~> 1.10.2'
+pod 'Crashlytics', '~> 3.14.0'
 pod 'NendSDK_iOS'
 pod 'TwitterKit'
 
