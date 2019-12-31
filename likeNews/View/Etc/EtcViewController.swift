@@ -47,9 +47,11 @@ class EtcViewController: UIViewController, UITableViewDelegate, UITableViewDataS
         // 初期設定
         initSetting()
     }
-
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        
+        FirebaseAnalyticsModel.shared.sendScreen(screenName: .etc, screenClass: classForCoder.description())
         
         // レビュー促進ダイアログ表示
         DispatchQueue.mainSyncSafe { [weak self] in

@@ -35,6 +35,12 @@ class NewsClipViewController: UIViewController, UITableViewDelegate, UITableView
             self.tableView.reloadData()
         }
     }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        FirebaseAnalyticsModel.shared.sendScreen(screenName: .newsClip, screenClass: classForCoder.description())
+    }
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)

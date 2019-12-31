@@ -98,7 +98,9 @@ class ArticleDetailViewController: UIViewController, WKUIDelegate, WKNavigationD
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
+            
+        FirebaseAnalyticsModel.shared.sendScreen(screenName: .articleDetail, screenClass: classForCoder.description())
+
         // ProgressView設定
         settingProgressView()
     }

@@ -65,6 +65,12 @@ class NewsSearchViewController: UIViewController, UITableViewDelegate, UITableVi
             }
         }
     }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        FirebaseAnalyticsModel.shared.sendScreen(screenName: .newsSearch, screenClass: classForCoder.description())
+    }
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)

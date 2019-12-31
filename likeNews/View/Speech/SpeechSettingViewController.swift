@@ -30,6 +30,12 @@ class SpeechSettingViewController: UIViewController {
         initSetting()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        FirebaseAnalyticsModel.shared.sendScreen(screenName: .speechSetting, screenClass: classForCoder.description())
+    }
+    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         

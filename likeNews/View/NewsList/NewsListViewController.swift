@@ -64,6 +64,12 @@ class NewsListViewController: UIViewController, UITableViewDelegate, UITableView
         }
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        FirebaseAnalyticsModel.shared.sendScreen(screenName: .newsList, screenClass: classForCoder.description())
+    }
+    
     // MARK: - TableView Delegate & DataSource
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
