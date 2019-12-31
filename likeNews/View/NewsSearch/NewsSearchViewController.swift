@@ -8,7 +8,6 @@
 
 import UIKit
 import SVProgressHUD
-import FirebaseAnalytics
 
 class NewsSearchViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, NewsListCellDelegate, ArticleDetailViewControllerDelegate {
     /// 記事無しView
@@ -64,6 +63,12 @@ class NewsSearchViewController: UIViewController, UITableViewDelegate, UITableVi
                 }
             }
         }
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        FirebaseAnalyticsModel.shared.sendScreen(screenName: .newsSearch, screenClass: classForCoder.description())
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -183,6 +188,9 @@ class NewsSearchViewController: UIViewController, UITableViewDelegate, UITableVi
     @objc func refresh(sender: UIRefreshControl) {
         // 検索
         searchText()
+        
+        // FirebaseAnalytics（検索ニュース一覧手動更新）
+        FirebaseAnalyticsModel.shared.sendEvent(eventName: .updateSearchNews, params: nil)
     }
     
     /// 入力されたテキストから記事を検索する
@@ -199,10 +207,9 @@ class NewsSearchViewController: UIViewController, UITableViewDelegate, UITableVi
             self.nonArticleView.isHidden = self.viewModel.isNonArticleViewHidden
                         
             // FirebaseAnalytics（どんなワードで検索されているか）
-            Analytics.logEvent("search_news", parameters: [
-                "word": text,
-                "result_count": self.viewModel.newsList.count.description
-                ])
+            let params = ["検索ワード": text,
+                          "HIT件数": self.viewModel.newsList.count.description]
+            FirebaseAnalyticsModel.shared.sendEvent(eventName: .searchWord, params:     params)
         })
     }
     

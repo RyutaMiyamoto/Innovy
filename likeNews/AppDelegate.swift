@@ -106,16 +106,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 extension AppDelegate: UNUserNotificationCenterDelegate {
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
         // バックグラウンドで来た通知をタップしてアプリ起動
-        let notification = response.notification
-        let eventName = notification.request.trigger is UNPushNotificationTrigger ?
-        "notification_remote" : "notification_local"
-        let notificationBody = notification.request.content.body
-        
         // FirebaseAnalytics（通知がタップされた）
-        Analytics.logEvent(eventName, parameters: [
-            "text": notificationBody
-            ])
-        
+        let notification = response.notification
+        let eventName: FirebaseAnalyticsModel.EventName =
+            notification.request.trigger is UNPushNotificationTrigger ? .tapRemotePush : .tapLocalPush
+        let notificationTitle = notification.request.content.title
+        let notificationBody = notification.request.content.body
+        let params = ["タイトル": notificationTitle, "内容": notificationBody]
+        FirebaseAnalyticsModel.shared.sendEvent(eventName: eventName, params: params)
         completionHandler()
     }
     

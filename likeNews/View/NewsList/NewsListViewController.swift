@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import FirebaseAnalytics
 
 protocol NewsListViewControllerDelegate: class {
     /// 記事詳細画面に遷移
@@ -62,6 +61,12 @@ class NewsListViewController: UIViewController, UITableViewDelegate, UITableView
         viewModel.bind {
             self.refreshView()
         }
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        FirebaseAnalyticsModel.shared.sendScreen(screenName: .newsList, screenClass: classForCoder.description())
     }
     
     // MARK: - TableView Delegate & DataSource
@@ -136,11 +141,10 @@ class NewsListViewController: UIViewController, UITableViewDelegate, UITableView
         // FirebaseAnalytics（どこまでスクロールしたか）
         if isUnderScroll, let viewModel = viewModel,
             let vendor = UIDevice.current.identifierForVendor {
-            Analytics.logEvent("news_scroll", parameters: [
-                "uuid": vendor.uuidString,
-                "genre": viewModel.genre,
-                "position": analyticsIndexPath.row.description
-                ])
+            let params = ["UUID": vendor.uuidString,
+                          "ジャンル": viewModel.genre,
+                          "スクロール位置": analyticsIndexPath.row.description]
+            FirebaseAnalyticsModel.shared.sendEvent(eventName: .scrollNews, params: params)
         }
     }
     
@@ -190,6 +194,10 @@ class NewsListViewController: UIViewController, UITableViewDelegate, UITableView
     @objc func refresh(sender: UIRefreshControl) {
         guard let viewModel = viewModel else { return }
         viewModel.reload(completion: { })
+        
+        // FirebaseAnalytics（ニュース一覧手動更新）
+        let params = ["ジャンル": viewModel.genre]
+        FirebaseAnalyticsModel.shared.sendEvent(eventName: .updateNews, params: params)
     }
     
     /// 画面を再描画する

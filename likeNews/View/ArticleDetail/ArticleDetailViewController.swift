@@ -9,7 +9,6 @@
 import UIKit
 import WebKit
 import TwitterKit
-import FirebaseAnalytics
 
 protocol ArticleDetailViewControllerDelegate: class {
     /// 遷移元画面に戻る
@@ -98,7 +97,9 @@ class ArticleDetailViewController: UIViewController, WKUIDelegate, WKNavigationD
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
+            
+        FirebaseAnalyticsModel.shared.sendScreen(screenName: .articleDetail, screenClass: classForCoder.description())
+
         // ProgressView設定
         settingProgressView()
     }
@@ -215,11 +216,12 @@ class ArticleDetailViewController: UIViewController, WKUIDelegate, WKNavigationD
         showClipAlert()
         
         // FirebaseAnalytics（どの記事がクリップ（ON or OFF）されているか）
-        let eventName = article.clipDate != Date(timeIntervalSince1970: 0) ?
-            "clip_on" : "clip_off"
-        Analytics.logEvent(eventName, parameters: [
-            "article_title": article.title
-        ])
+        let state = article.clipDate != Date(timeIntervalSince1970: 0)
+        let clipNum = NewsListModel.shared.articles().count
+        let params = ["記事タイトル": article.title,
+                      "状態": state.description,
+                      "クリップ件数": clipNum.description]
+        FirebaseAnalyticsModel.shared.sendEvent(eventName: .clip, params: params)
     }
     
     /// シェアする

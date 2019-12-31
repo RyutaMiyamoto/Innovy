@@ -8,7 +8,6 @@
 
 import UIKit
 import SVProgressHUD
-import FirebaseAnalytics
 
 class UpTabViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, NewsListViewControllerDelegate {
 
@@ -313,9 +312,8 @@ class UpTabViewController: UIViewController, UICollectionViewDataSource, UIColle
                 
                 // FirebaseAnalytics（どのジャンルが選択されたか）
                 guard let genreName = NewsListModel.shared.genreList[safe: indexPath.row] else { return }
-                Analytics.logEvent("show_view", parameters: [
-                    "genre_name": genreName
-                    ])
+                let params = ["ジャンル": genreName]
+                FirebaseAnalyticsModel.shared.sendEvent(eventName: .selectedGenre, params: params)
             })
         }
     }
