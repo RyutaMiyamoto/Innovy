@@ -40,11 +40,7 @@ class NewsClipViewController: UIViewController, UITableViewDelegate, UITableView
         super.viewDidAppear(animated)
         
         FirebaseAnalyticsModel.shared.sendScreen(screenName: .newsClip, screenClass: classForCoder.description())
-    }
 
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
         viewModel.createCellViewModel()
         nonArticleView.isHidden = viewModel.isNonArticleViewHidden
     }

@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import FirebaseAnalytics
 
 protocol NewsListViewControllerDelegate: class {
     /// 記事詳細画面に遷移
@@ -142,11 +141,10 @@ class NewsListViewController: UIViewController, UITableViewDelegate, UITableView
         // FirebaseAnalytics（どこまでスクロールしたか）
         if isUnderScroll, let viewModel = viewModel,
             let vendor = UIDevice.current.identifierForVendor {
-            Analytics.logEvent("news_scroll", parameters: [
-                "uuid": vendor.uuidString,
-                "genre": viewModel.genre,
-                "position": analyticsIndexPath.row.description
-                ])
+            let params = ["UUID": vendor.uuidString,
+                          "ジャンル": viewModel.genre,
+                          "スクロール位置": analyticsIndexPath.row.description]
+            FirebaseAnalyticsModel.shared.sendEvent(eventName: .newsScroll, params: params)
         }
     }
     

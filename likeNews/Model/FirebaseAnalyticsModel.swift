@@ -29,11 +29,37 @@ class FirebaseAnalyticsModel {
         case speechSetting = "音声アシスト"
     }
     
+    /// イベント名
+    enum EventName: String {
+        /// ニューススクロール
+        case newsScroll = "ニュース一覧スクロール"
+        /// ジャンル選択
+        case selectedGenre = "ジャンル選択"
+        /// ワード検索
+        case searchWord = "ワード検索"
+        /// ニュースクリップON
+        case clipOn = "ニュースクリップON"
+        /// ニュースクリップOFF
+        case clipOff = "ニュースクリップOFF"
+        /// リモートPUSHタップ
+        case remotePushTap = "PUSH通知(リモート)タップ"
+        /// ローカルPUSHタップ
+        case localPushTap = "PUSH通知(ローカル)タップ"
+    }
+    
     /// スクリーントラッキング送信
     /// - Parameters:
     ///   - screenName: スクリーン名
     ///   - screenClass: クラス
     func sendScreen(screenName: ScreenName, screenClass: String?) {
         Analytics.setScreenName(screenName.rawValue, screenClass: screenClass)
+    }
+    
+    /// イベントトラッキング送信
+    /// - Parameters:
+    ///   - eventName: イベント名
+    ///   - params: パラメータ
+    func sendEvent(eventName: EventName, params: [String: String]) {
+        Analytics.logEvent(eventName.rawValue, parameters: params)
     }
 }

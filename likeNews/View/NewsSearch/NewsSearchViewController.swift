@@ -8,7 +8,6 @@
 
 import UIKit
 import SVProgressHUD
-import FirebaseAnalytics
 
 class NewsSearchViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, NewsListCellDelegate, ArticleDetailViewControllerDelegate {
     /// 記事無しView
@@ -205,10 +204,9 @@ class NewsSearchViewController: UIViewController, UITableViewDelegate, UITableVi
             self.nonArticleView.isHidden = self.viewModel.isNonArticleViewHidden
                         
             // FirebaseAnalytics（どんなワードで検索されているか）
-            Analytics.logEvent("search_news", parameters: [
-                "word": text,
-                "result_count": self.viewModel.newsList.count.description
-                ])
+            let params = ["検索ワード": text,
+                          "HIT件数": self.viewModel.newsList.count.description]
+            FirebaseAnalyticsModel.shared.sendEvent(eventName: .searchWord, params:     params)
         })
     }
     
