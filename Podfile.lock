@@ -1,6 +1,9 @@
 PODS:
   - Alamofire (5.0.0-rc.3)
+  - Crashlytics (3.14.0):
+    - Fabric (~> 1.10.2)
   - CTFeedback (1.1.1)
+  - Fabric (1.10.2)
   - Firebase/Core (4.13.0):
     - FirebaseAnalytics (= 4.2.0)
     - FirebaseCore (= 4.0.20)
@@ -55,7 +58,9 @@ PODS:
 
 DEPENDENCIES:
   - Alamofire (~> 5.0.0-rc.3)
+  - Crashlytics (~> 3.14.0)
   - CTFeedback
+  - Fabric (~> 1.10.2)
   - Firebase/Core
   - Firebase/Messaging
   - HockeySDK (~> 5.1.4)
@@ -71,7 +76,9 @@ DEPENDENCIES:
 SPEC REPOS:
   trunk:
     - Alamofire
+    - Crashlytics
     - CTFeedback
+    - Fabric
     - Firebase
     - FirebaseAnalytics
     - FirebaseCore
@@ -94,7 +101,9 @@ SPEC REPOS:
 
 SPEC CHECKSUMS:
   Alamofire: ca8c0de6906873be89d6deec5c8de279e00bf872
+  Crashlytics: 540b7e5f5da5a042647227a5e3ac51d85eed06df
   CTFeedback: 6f128606e0d26d46075c3fa9fc33884372df8675
+  Fabric: 706c8b8098fff96c33c0db69cbf81f9c551d0d74
   Firebase: 5ec5e863d269d82d66b4bf56856726f8fb8f0fb3
   FirebaseAnalytics: 7ef69e76a5142f643aeb47c780e1cdce4e23632e
   FirebaseCore: 90cb1c53d69b556f112a1bf72b5fcfaad7650790
@@ -115,6 +124,6 @@ SPEC CHECKSUMS:
   TwitterKit: 205ac89824bbfe9e85a16c420d30bb7bcbedac45
   Unbox: 30e437e6151a6de16139375fd4e8dd9a664cfbf7
 
-PODFILE CHECKSUM: 36b18be91dd802e13db6f31059bbd2ef14037922
+PODFILE CHECKSUM: 52f5781146392ae33850445ab33519724c90c66b
 
 COCOAPODS: 1.8.4
