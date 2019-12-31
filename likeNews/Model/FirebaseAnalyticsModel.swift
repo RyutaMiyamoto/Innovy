@@ -41,10 +41,8 @@ class FirebaseAnalyticsModel {
         case selectedGenre = "ジャンル選択"
         /// ワード検索
         case searchWord = "ワード検索"
-        /// ニュースクリップON
-        case clipOn = "ニュースクリップON"
-        /// ニュースクリップOFF
-        case clipOff = "ニュースクリップOFF"
+        /// ニュースクリップ
+        case clip = "ニュースクリップ"
         /// リモートPUSHタップ
         case tapRemotePush = "PUSH通知(リモート)タップ"
         /// ローカルPUSHタップ

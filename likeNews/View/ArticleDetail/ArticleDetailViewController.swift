@@ -216,12 +216,12 @@ class ArticleDetailViewController: UIViewController, WKUIDelegate, WKNavigationD
         showClipAlert()
         
         // FirebaseAnalytics（どの記事がクリップ（ON or OFF）されているか）
-        let eventName: FirebaseAnalyticsModel.EventName =
-            article.clipDate != Date(timeIntervalSince1970: 0) ? .clipOn : .clipOff
+        let state = article.clipDate != Date(timeIntervalSince1970: 0)
         let clipNum = NewsListModel.shared.articles().count
         let params = ["記事タイトル": article.title,
+                      "状態": state.description,
                       "クリップ件数": clipNum.description]
-        FirebaseAnalyticsModel.shared.sendEvent(eventName: eventName, params: params)
+        FirebaseAnalyticsModel.shared.sendEvent(eventName: .clip, params: params)
     }
     
     /// シェアする
