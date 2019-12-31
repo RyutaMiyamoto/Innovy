@@ -44,6 +44,12 @@ class SpeechSettingViewController: UIViewController {
         
         // 設定値保存
         viewModel.saveSetting()
+        
+        // FirebaseAnalytics（音声アシスト設定変更）
+        let params = ["速さ": rateSlider.value.description,
+                      "高さ": pitchSlider.value.description]
+        FirebaseAnalyticsModel.shared.sendEvent(eventName: .updateSpeechSetting, params: params)
+
     }
     
     // MARK: - User Event

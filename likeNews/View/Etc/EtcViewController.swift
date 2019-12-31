@@ -103,6 +103,9 @@ class EtcViewController: UIViewController, UITableViewDelegate, UITableViewDataS
             // 天気情報更新
             cell.updateWeather()
             
+            // FirebaseAnalytics（天気情報手動更新）
+            FirebaseAnalyticsModel.shared.sendEvent(eventName: .updateWeather, params: nil)
+            
         } else if let cell = tableView.cellForRow(at: indexPath) as? EtcCell,
             let viewModel = cell.viewModel {
             switch viewModel.type {
@@ -111,6 +114,8 @@ class EtcViewController: UIViewController, UITableViewDelegate, UITableViewDataS
             case .inquiry:
                 if let navigaticonController = feedbackViewController {
                     present(navigaticonController, animated: true, completion:nil)
+                    // FirebaseAnalytics（お問い合わせタップ）
+                    FirebaseAnalyticsModel.shared.sendEvent(eventName: .tapInquiry, params: nil)
                 }
             case .cacheClear:
                 clearCache()
@@ -137,8 +142,17 @@ class EtcViewController: UIViewController, UITableViewDelegate, UITableViewDataS
             break
         case .dispThumbnail:
             UserDefaults.standard.isDispThumbnail = sender.titleSwitch.isOn
+            
+            // FirebaseAnalytics（サムネイル表示切り替え）
+            let params = ["サムネイル表示": sender.titleSwitch.isOn.description]
+            FirebaseAnalyticsModel.shared.sendEvent(eventName: .switchingDispThumbnail, params: params)
         case .dispReadArticleNum:
             UserDefaults.standard.isDispReadArticleNum = sender.titleSwitch.isOn
+            
+            // FirebaseAnalytics（記事を読んだ人数表示切り替え）
+            let params = ["人数表示": sender.titleSwitch.isOn.description]
+            FirebaseAnalyticsModel.shared.sendEvent(eventName: .switchingDispReadArticleNum, params: params)
+
         case .speech:
             break
         }
@@ -187,6 +201,9 @@ class EtcViewController: UIViewController, UITableViewDelegate, UITableViewDataS
                                       preferredStyle: UIAlertController.Style.alert)
         let action = UIAlertAction(title: R.string.localizable.ok(), style: UIAlertAction.Style.default, handler: {
             (action: UIAlertAction!) in
+            // FirebaseAnalytics（キャッシュクリア実行）
+            FirebaseAnalyticsModel.shared.sendEvent(eventName: .clearCache, params: nil)
+            
             SDWebImageManager.shared.imageCache.clear(with: .all, completion: {
                 let alert = UIAlertController(title:nil,
                                               message: R.string.localizable.etcClearCacheAfterMessage(),
@@ -194,7 +211,6 @@ class EtcViewController: UIViewController, UITableViewDelegate, UITableViewDataS
                 alert.addAction(UIAlertAction(title: R.string.localizable.ok(),
                                               style: .default, handler: nil))
                 self.present(alert, animated: true, completion: nil)
-
             })
         })
         let cancel = UIAlertAction(title: R.string.localizable.cancel(), style: UIAlertAction.Style.cancel, handler: {

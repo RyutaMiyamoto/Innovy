@@ -109,7 +109,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         // FirebaseAnalytics（通知がタップされた）
         let notification = response.notification
         let eventName: FirebaseAnalyticsModel.EventName =
-            notification.request.trigger is UNPushNotificationTrigger ? .remotePushTap : .localPushTap
+            notification.request.trigger is UNPushNotificationTrigger ? .tapRemotePush : .tapLocalPush
         let notificationTitle = notification.request.content.title
         let notificationBody = notification.request.content.body
         let params = ["タイトル": notificationTitle, "内容": notificationBody]

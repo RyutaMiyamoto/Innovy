@@ -188,6 +188,9 @@ class NewsSearchViewController: UIViewController, UITableViewDelegate, UITableVi
     @objc func refresh(sender: UIRefreshControl) {
         // 検索
         searchText()
+        
+        // FirebaseAnalytics（検索ニュース一覧手動更新）
+        FirebaseAnalyticsModel.shared.sendEvent(eventName: .updateSearchNews, params: nil)
     }
     
     /// 入力されたテキストから記事を検索する

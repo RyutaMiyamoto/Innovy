@@ -144,7 +144,7 @@ class NewsListViewController: UIViewController, UITableViewDelegate, UITableView
             let params = ["UUID": vendor.uuidString,
                           "ジャンル": viewModel.genre,
                           "スクロール位置": analyticsIndexPath.row.description]
-            FirebaseAnalyticsModel.shared.sendEvent(eventName: .newsScroll, params: params)
+            FirebaseAnalyticsModel.shared.sendEvent(eventName: .scrollNews, params: params)
         }
     }
     
@@ -194,6 +194,10 @@ class NewsListViewController: UIViewController, UITableViewDelegate, UITableView
     @objc func refresh(sender: UIRefreshControl) {
         guard let viewModel = viewModel else { return }
         viewModel.reload(completion: { })
+        
+        // FirebaseAnalytics（ニュース一覧手動更新）
+        let params = ["ジャンル": viewModel.genre]
+        FirebaseAnalyticsModel.shared.sendEvent(eventName: .updateNews, params: params)
     }
     
     /// 画面を再描画する
