@@ -20,6 +20,7 @@ pod 'Fabric', '~> 1.10.2'
 pod 'Crashlytics', '~> 3.14.0'
 pod 'NendSDK_iOS'
 pod 'TwitterKit'
+pod 'Google-Mobile-Ads-SDK'
 
   # Pods for likeNews
 

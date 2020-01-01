@@ -404,6 +404,8 @@
 	<string>天気情報の取得</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>ニュース記事画像参照</string>
+	<key>GADApplicationIdentifier</key>
+	<string>ca-app-pub-8739049638327705~5212914108</string>
 	<key>Nend</key>
 	<dict>
 		<key>ApiKey</key>
