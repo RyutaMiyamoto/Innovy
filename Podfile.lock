@@ -62,7 +62,6 @@ PODS:
     - nanopb/encode (= 0.3.8)
   - nanopb/decode (0.3.8)
   - nanopb/encode (0.3.8)
-  - NendSDK_iOS (4.0.4)
   - NoticeObserveKit (0.3.0)
   - Protobuf (3.5.0)
   - R.swift (5.0.3):
@@ -89,7 +88,6 @@ DEPENDENCIES:
   - Firebase/Messaging
   - Google-Mobile-Ads-SDK
   - HockeySDK (~> 5.1.4)
-  - NendSDK_iOS
   - NoticeObserveKit
   - R.swift (~> 5.0.3)
   - Realm (~> 4.3.0)
@@ -115,7 +113,6 @@ SPEC REPOS:
     - GoogleUtilities
     - HockeySDK
     - nanopb
-    - NendSDK_iOS
     - NoticeObserveKit
     - Protobuf
     - R.swift
@@ -143,7 +140,6 @@ SPEC CHECKSUMS:
   GoogleUtilities: 29bd0d8f850efbd28cff6d99e8b7da1f8d236bcf
   HockeySDK: 15afe6bc0a5bfe3a531fd73dbf082095f37dac3b
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
-  NendSDK_iOS: 0b891e3240f006893fce0bcb2a392298d299ee93
   NoticeObserveKit: 66f37e06f155a3632d3a96e799cf7700f6a4c104
   Protobuf: 8a9838fba8dae3389230e1b7f8c104aa32389c03
   R.swift: f5a87643b91ea569d23d6afb3eee9c743edde239
@@ -155,6 +151,6 @@ SPEC CHECKSUMS:
   TwitterKit: 205ac89824bbfe9e85a16c420d30bb7bcbedac45
   Unbox: 30e437e6151a6de16139375fd4e8dd9a664cfbf7
 
-PODFILE CHECKSUM: c822c1a480633eb401d66b6c59670053f6c08b0d
+PODFILE CHECKSUM: 41e17e724b23ec66e5542c8931c77a6fd4e42853
 
 COCOAPODS: 1.8.4

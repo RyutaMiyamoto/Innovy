@@ -118,10 +118,9 @@ class NewsListCell: UITableViewCell {
             self.topArticleImageBackView.isHidden = viewModel.topArticleImageHidden
             self.articleImageBackView.isHidden = viewModel.articleImageHidden
             self.imageUrl = viewModel.imageUrl
-            if viewModel.dispType == .ad, let nativeAd = viewModel.nativeAd {
+            if viewModel.dispType == .ad {
                 // 広告ビューと広告明示にクリックイベントを追加
                 backAdView.isHidden = false
-                nativeAd.activateAdView(backAdView, withPrLabel: self.sourceLabel)
             } else {
                 backAdView.isHidden = true
             }

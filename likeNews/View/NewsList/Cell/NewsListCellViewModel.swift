@@ -9,7 +9,6 @@
 import Foundation
 import UIKit
 import Realm
-import NendAd
 
 class NewsListCellViewModel: NewsListModel {
     
@@ -68,10 +67,6 @@ class NewsListCellViewModel: NewsListModel {
     var isSpeechNow = false
     /// indexPath
     var indexPath = IndexPath()
-    // Nendクライアント
-    private var nendClient: NADNativeClient!
-    // 広告
-    var nativeAd: NADNative?
     
     /// init
     ///
@@ -114,21 +109,8 @@ class NewsListCellViewModel: NewsListModel {
     
     /// 広告のロード
     func loadAd(completion: @escaping (Bool)->Void) {
-        nendClient = NADNativeClient(spotId: Bundle.Nend(key: .spotId), apiKey: Bundle.Nend(key: .apiKey))
-        nendClient.disableAutoReload()
-        nendClient.load() { (ad, error) in
-            if let nativeAd = ad {
-                self.nativeAd = nativeAd
-                self.titleText = nativeAd.longText
-                self.sourceNameText = nativeAd.prText(for: .PR)
-                self.noteText = ""
-                self.articleUrl = ""
-                self.imageUrl = nativeAd.imageUrl
-                completion(true)
-            } else {
-                completion(false)
-            }
-        }
+        completion(true)
+        completion(false)
     }
     
     /// スピーチ状態をセットする

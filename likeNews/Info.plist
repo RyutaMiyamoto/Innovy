@@ -406,13 +406,6 @@
 	<string>ニュース記事画像参照</string>
 	<key>GADApplicationIdentifier</key>
 	<string>ca-app-pub-8739049638327705~5212914108</string>
-	<key>Nend</key>
-	<dict>
-		<key>ApiKey</key>
-		<string>49325aace4833b600ec09a8d4bee09d200fe9a19</string>
-		<key>SpotId</key>
-		<string>875225</string>
-	</dict>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>audio</string>
