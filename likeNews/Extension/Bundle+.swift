@@ -9,6 +9,13 @@
 import Foundation
 
 extension Bundle {
+    
+    /// 広告（AdMob）
+    enum AdMobKey: String {
+        /// 広告ユニット ID
+        case adUnitID = "AdUnitId"
+    }
+    
     /// HockeyApp
     enum HockeyAppKey: String {
         /// ID
@@ -48,6 +55,21 @@ extension Bundle {
         case gistHost = "GistHost"
         /// gist上のジャンル
         case gistGenre = "GistGenre"
+    }
+
+    /// 広告（AdMob）に関連する値を返却する
+    ///
+    /// - Parameter key: キー名
+    /// - Returns: 値
+    class func AdMob(key: AdMobKey) -> String {
+        guard let dictionary = Bundle.main.infoDictionary?["AdMob"] as? Dictionary<String, String> else {
+            return ""
+        }
+        guard let returnString = dictionary[key.rawValue] as String? else {
+            return ""
+        }
+        
+        return  returnString
     }
 
     /// HockeyAppに関連する値を返却する

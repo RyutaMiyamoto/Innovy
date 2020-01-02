@@ -406,6 +406,11 @@
 	<string>ニュース記事画像参照</string>
 	<key>GADApplicationIdentifier</key>
 	<string>ca-app-pub-8739049638327705~5212914108</string>
+	<key>AdMob</key>
+	<dict>
+		<key>AdUnitId</key>
+		<string>ca-app-pub-8739049638327705/6866744142</string>
+	</dict>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>audio</string>

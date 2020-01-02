@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 import Realm
+import GoogleMobileAds
 
 class NewsListCellViewModel: NewsListModel {
     
@@ -110,7 +111,6 @@ class NewsListCellViewModel: NewsListModel {
     /// 広告のロード
     func loadAd(completion: @escaping (Bool)->Void) {
         completion(true)
-        completion(false)
     }
     
     /// スピーチ状態をセットする
@@ -118,5 +118,14 @@ class NewsListCellViewModel: NewsListModel {
     /// - Parameter isSpeech: スピーチ状態（true:読み上げ中、false:読んでいない）
     func setSpeechState(isSpeech: Bool) {
         isSpeechNow = isSpeech
+    }
+    
+    /// 広告情報を反映する
+    /// - Parameter nativeAd: 広告情報
+    func setAdData(nativeAd: GADUnifiedNativeAd) {
+        guard let title = nativeAd.headline,
+            let source = nativeAd.advertiser else { return }
+        titleText = title
+        sourceNameText = source
     }
 }

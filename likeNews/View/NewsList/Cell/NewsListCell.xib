@@ -116,7 +116,7 @@
                                     </view>
                                 </subviews>
                             </stackView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UsU-Zj-yKc" userLabel="背景(広告用)">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UsU-Zj-yKc" userLabel="背景(広告用)" customClass="GADUnifiedNativeAdView">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="260"/>
                             </view>
                         </subviews>

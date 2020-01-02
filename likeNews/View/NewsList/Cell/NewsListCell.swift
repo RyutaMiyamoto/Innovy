@@ -8,6 +8,7 @@
 
 import UIKit
 import SDWebImage
+import GoogleMobileAds
 
 protocol NewsListCellDelegate: class {
     
@@ -18,7 +19,8 @@ protocol NewsListCellDelegate: class {
     func imageUrlLoadComplete(from cell: NewsListCell)
 }
 
-class NewsListCell: UITableViewCell {
+class NewsListCell: UITableViewCell, GADAdLoaderDelegate, GADUnifiedNativeAdLoaderDelegate {
+    
     weak var delegate: NewsListCellDelegate?
     /// 背景
     @IBOutlet var backView: UIView!
@@ -77,7 +79,29 @@ class NewsListCell: UITableViewCell {
             }
         }
     }
+    /// AdMobローダ
+    var adLoader: GADAdLoader!
     
+    // MARK: - GADAdLoaderDelegate
+    
+    func adLoader(_ adLoader: GADAdLoader, didFailToReceiveAdWithError error: GADRequestError) {
+    }
+    
+    // MARK: - GADUnifiedNativeAdLoaderDelegate
+    
+    func adLoader(_ adLoader: GADAdLoader, didReceive nativeAd: GADUnifiedNativeAd) {
+        viewModel?.setAdData(nativeAd: nativeAd)
+        setCellInfo()
+        if let gadImage = nativeAd.icon {
+            articleImageView?.image = gadImage.image
+            backAdView.isHidden = false
+            articleImageBackView.isHidden = false
+        }
+        viewModel?.isAdLoad = true
+    }
+
+    // MARK: - Private Method
+
     /// 記事画像URL取得
     func articleImageUrl() {
         // サムネイル非表示設定時は画像を非表示にする
@@ -98,12 +122,14 @@ class NewsListCell: UITableViewCell {
     
     /// 広告読み込み
     func loadAd() {
-        guard let viewModel = viewModel else { return }
-        viewModel.loadAd(completion: { result in
-            guard result else { return }
-            viewModel.isAdLoad = true
-            self.setCellInfo()
-        })
+        if let viewController = UIApplication.shared.keyWindow?.rootViewController {
+            adLoader = GADAdLoader(adUnitID: Bundle.AdMob(key: .adUnitID),
+                                        rootViewController: viewController,
+                                        adTypes: [GADAdLoaderAdType.unifiedNative],
+                                        options: nil)
+            adLoader.delegate = self
+            adLoader.load(GADRequest())
+        }
     }
     
     /// セル情報セット
