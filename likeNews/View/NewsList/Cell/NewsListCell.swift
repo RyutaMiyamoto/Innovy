@@ -19,13 +19,14 @@ protocol NewsListCellDelegate: class {
     func imageUrlLoadComplete(from cell: NewsListCell)
 }
 
-class NewsListCell: UITableViewCell, GADAdLoaderDelegate, GADUnifiedNativeAdLoaderDelegate {
+class NewsListCell: UITableViewCell, GADAdLoaderDelegate, GADUnifiedNativeAdLoaderDelegate,
+        GADUnifiedNativeAdDelegate {
     
     weak var delegate: NewsListCellDelegate?
     /// 背景
     @IBOutlet var backView: UIView!
     /// 背景(広告用)
-    @IBOutlet weak var backAdView: UIView!
+    @IBOutlet weak var backAdView: GADUnifiedNativeAdView!
     /// タイトル
     @IBOutlet var titleLabel: UILabel!
     /// 情報元
@@ -91,15 +92,25 @@ class NewsListCell: UITableViewCell, GADAdLoaderDelegate, GADUnifiedNativeAdLoad
     
     func adLoader(_ adLoader: GADAdLoader, didReceive nativeAd: GADUnifiedNativeAd) {
         viewModel?.setAdData(nativeAd: nativeAd)
+        backAdView.nativeAd = nativeAd
+        nativeAd.delegate = self
         setCellInfo()
-        if let gadImage = nativeAd.icon {
-            articleImageView?.image = gadImage.image
-            backAdView.isHidden = false
-            articleImageBackView.isHidden = false
-        }
-        viewModel?.isAdLoad = true
     }
 
+    // MARK: - GADUnifiedNativeAdDelegate
+    
+    func nativeAdDidRecordClick(_ nativeAd: GADUnifiedNativeAd) {}
+
+    func nativeAdDidRecordImpression(_ nativeAd: GADUnifiedNativeAd) {}
+
+    func nativeAdWillPresentScreen(_ nativeAd: GADUnifiedNativeAd) {}
+
+    func nativeAdWillDismissScreen(_ nativeAd: GADUnifiedNativeAd) {}
+
+    func nativeAdDidDismissScreen(_ nativeAd: GADUnifiedNativeAd) {}
+
+    func nativeAdWillLeaveApplication(_ nativeAd: GADUnifiedNativeAd) {}
+    
     // MARK: - Private Method
 
     /// 記事画像URL取得
@@ -125,7 +136,7 @@ class NewsListCell: UITableViewCell, GADAdLoaderDelegate, GADUnifiedNativeAdLoad
         if let viewController = UIApplication.shared.keyWindow?.rootViewController {
             adLoader = GADAdLoader(adUnitID: Bundle.AdMob(key: .adUnitID),
                                         rootViewController: viewController,
-                                        adTypes: [GADAdLoaderAdType.unifiedNative],
+                                        adTypes: [.unifiedNative],
                                         options: nil)
             adLoader.delegate = self
             adLoader.load(GADRequest())
@@ -143,12 +154,11 @@ class NewsListCell: UITableViewCell, GADAdLoaderDelegate, GADUnifiedNativeAdLoad
             self.noteLabel.text = viewModel.noteText
             self.topArticleImageBackView.isHidden = viewModel.topArticleImageHidden
             self.articleImageBackView.isHidden = viewModel.articleImageHidden
-            self.imageUrl = viewModel.imageUrl
+            self.backAdView.isHidden = !(viewModel.dispType == .ad)
             if viewModel.dispType == .ad {
-                // 広告ビューと広告明示にクリックイベントを追加
-                backAdView.isHidden = false
+                self.articleImageView.image = viewModel.imageAd
             } else {
-                backAdView.isHidden = true
+                self.imageUrl = viewModel.imageUrl
             }
             self.setSpeechState(state: viewModel.isSpeechNow)
         }

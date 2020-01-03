@@ -19,6 +19,10 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hTd-p9-SZX" userLabel="背景">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="260"/>
                         <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UsU-Zj-yKc" userLabel="背景(広告用)" customClass="GADUnifiedNativeAdView">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="260"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Mb1-UC-0mA">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="260"/>
                                 <subviews>
@@ -116,9 +120,6 @@
                                     </view>
                                 </subviews>
                             </stackView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UsU-Zj-yKc" userLabel="背景(広告用)" customClass="GADUnifiedNativeAdView">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="260"/>
-                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>

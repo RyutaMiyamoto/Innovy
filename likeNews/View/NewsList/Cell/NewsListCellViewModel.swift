@@ -37,6 +37,8 @@ class NewsListCellViewModel: NewsListModel {
     var articleUrl = ""
     /// 記事画像URL
     var imageUrl = ""
+    /// 記事画像（AdMob用）
+    var imageAd = UIImage()
     /// 記事画像表示有無
     var articleImageHidden = true
     /// 記事画像表示有無（一覧先頭用）
@@ -108,11 +110,6 @@ class NewsListCellViewModel: NewsListModel {
         sourceArticle?.isRead = isRead
     }
     
-    /// 広告のロード
-    func loadAd(completion: @escaping (Bool)->Void) {
-        completion(true)
-    }
-    
     /// スピーチ状態をセットする
     ///
     /// - Parameter isSpeech: スピーチ状態（true:読み上げ中、false:読んでいない）
@@ -123,9 +120,13 @@ class NewsListCellViewModel: NewsListModel {
     /// 広告情報を反映する
     /// - Parameter nativeAd: 広告情報
     func setAdData(nativeAd: GADUnifiedNativeAd) {
-        guard let title = nativeAd.headline,
-            let source = nativeAd.advertiser else { return }
+        guard let title = nativeAd.body,
+            let source = nativeAd.advertiser,
+            let image = nativeAd.icon?.image else { return }
         titleText = title
+        imageAd = image
         sourceNameText = source
+        noteText = "PR"
+        isAdLoad = true
     }
 }
