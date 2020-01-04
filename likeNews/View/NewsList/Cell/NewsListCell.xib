@@ -16,13 +16,9 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="260"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hTd-p9-SZX" userLabel="背景">
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hTd-p9-SZX" userLabel="背景" customClass="GADUnifiedNativeAdView">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="260"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UsU-Zj-yKc" userLabel="背景(広告用)" customClass="GADUnifiedNativeAdView">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="260"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            </view>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Mb1-UC-0mA">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="260"/>
                                 <subviews>
@@ -123,15 +119,21 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="UsU-Zj-yKc" firstAttribute="leading" secondItem="hTd-p9-SZX" secondAttribute="leading" id="GSk-Of-ciQ"/>
                             <constraint firstItem="Mb1-UC-0mA" firstAttribute="leading" secondItem="hTd-p9-SZX" secondAttribute="leading" id="IIg-TI-bgB"/>
                             <constraint firstAttribute="bottom" secondItem="Mb1-UC-0mA" secondAttribute="bottom" id="MzO-Cd-Yjc"/>
-                            <constraint firstAttribute="bottom" secondItem="UsU-Zj-yKc" secondAttribute="bottom" id="QPn-gY-jld"/>
-                            <constraint firstItem="UsU-Zj-yKc" firstAttribute="top" secondItem="hTd-p9-SZX" secondAttribute="top" id="RNU-fc-KNm"/>
-                            <constraint firstAttribute="trailing" secondItem="UsU-Zj-yKc" secondAttribute="trailing" id="b9J-ti-PZX"/>
                             <constraint firstAttribute="trailing" secondItem="Mb1-UC-0mA" secondAttribute="trailing" id="dN7-xB-C4g"/>
                             <constraint firstItem="Mb1-UC-0mA" firstAttribute="top" secondItem="hTd-p9-SZX" secondAttribute="top" id="jmS-JE-gcs"/>
                         </constraints>
+                        <connections>
+                            <outlet property="advertiserView" destination="8e1-MI-OFN" id="tDr-RH-AZZ"/>
+                            <outlet property="bodyView" destination="hSU-es-KVV" id="n6O-0c-DMZ"/>
+                            <outlet property="iconView" destination="ZRI-ZP-5UM" id="eWP-fX-A3t"/>
+                        </connections>
+                    </view>
+                    <view contentMode="scaleToFill" id="mgA-3n-0nS" userLabel="広告表示Block用">
+                        <rect key="frame" x="305" y="0.0" width="15" height="15"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </view>
                 </subviews>
                 <constraints>
@@ -142,10 +144,10 @@
                 </constraints>
             </tableViewCellContentView>
             <connections>
+                <outlet property="adBlockView" destination="mgA-3n-0nS" id="wIG-lb-ibb"/>
                 <outlet property="articleImageBackView" destination="9iJ-W0-VfD" id="kfE-0n-Wcx"/>
                 <outlet property="articleImageView" destination="ZRI-ZP-5UM" id="p7U-iv-AX1"/>
-                <outlet property="backAdView" destination="UsU-Zj-yKc" id="5ML-3D-uGz"/>
-                <outlet property="backView" destination="hTd-p9-SZX" id="aKi-a4-Arc"/>
+                <outlet property="backView" destination="hTd-p9-SZX" id="NCZ-yt-KHs"/>
                 <outlet property="noteLabel" destination="8e1-MI-OFN" id="xn5-69-Roo"/>
                 <outlet property="sourceLabel" destination="Rjs-nc-JFw" id="FH2-jd-9X3"/>
                 <outlet property="titleLabel" destination="hSU-es-KVV" id="IM6-YR-lH1"/>

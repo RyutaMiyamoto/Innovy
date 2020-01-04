@@ -25,6 +25,8 @@ class NewsListCellViewModel: NewsListModel {
     
     /// 表示種別
     var dispType: DispType = .normal
+    /// 広告表示BlockView表示有無
+    var isAdBlockViewHideen = true
     /// タイトル
     var titleText = ""
     /// タイトル色
@@ -101,6 +103,7 @@ class NewsListCellViewModel: NewsListModel {
         indexPath = index
         dispType = type
         
+        isAdBlockViewHideen = dispType == .ad
         topArticleImageHidden = !(dispType == .top) || !UserDefaults.standard.isDispThumbnail
         articleImageHidden = !(dispType == .normal || dispType == .ad) || !UserDefaults.standard.isDispThumbnail
     }

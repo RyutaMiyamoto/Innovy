@@ -24,9 +24,9 @@ class NewsListCell: UITableViewCell, GADAdLoaderDelegate, GADUnifiedNativeAdLoad
     
     weak var delegate: NewsListCellDelegate?
     /// 背景
-    @IBOutlet var backView: UIView!
-    /// 背景(広告用)
-    @IBOutlet weak var backAdView: GADUnifiedNativeAdView!
+    @IBOutlet var backView: GADUnifiedNativeAdView!
+    /// 広告表示Block用
+    @IBOutlet var adBlockView: UIView!
     /// タイトル
     @IBOutlet var titleLabel: UILabel!
     /// 情報元
@@ -92,7 +92,7 @@ class NewsListCell: UITableViewCell, GADAdLoaderDelegate, GADUnifiedNativeAdLoad
     
     func adLoader(_ adLoader: GADAdLoader, didReceive nativeAd: GADUnifiedNativeAd) {
         viewModel?.setAdData(nativeAd: nativeAd)
-        backAdView.nativeAd = nativeAd
+        backView.nativeAd = nativeAd
         nativeAd.delegate = self
         setCellInfo()
     }
@@ -152,9 +152,9 @@ class NewsListCell: UITableViewCell, GADAdLoaderDelegate, GADUnifiedNativeAdLoad
             self.titleLabel.textColor = viewModel.titleTextColor
             self.sourceLabel.text = viewModel.sourceNameText
             self.noteLabel.text = viewModel.noteText
+            self.adBlockView.isHidden = viewModel.isAdBlockViewHideen
             self.topArticleImageBackView.isHidden = viewModel.topArticleImageHidden
             self.articleImageBackView.isHidden = viewModel.articleImageHidden
-            self.backAdView.isHidden = !(viewModel.dispType == .ad)
             if viewModel.dispType == .ad {
                 self.articleImageView.image = viewModel.imageAd
             } else {
