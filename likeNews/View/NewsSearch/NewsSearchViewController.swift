@@ -129,11 +129,15 @@ class NewsSearchViewController: UIViewController, UITableViewDelegate, UITableVi
         guard let cell = tableView.dequeueReusableCell(withIdentifier: R.nib.newsListCell, for: indexPath),
             let cellViewModel = viewModel.newsListCellViewModel[safe: indexPath.row] else { return UITableViewCell() }
         cell.viewModel = cellViewModel
-        cell.articleImageUrl()
-        cell.delegate = self
-        if cellViewModel.dispType == .ad, !cellViewModel.isAdLoad {
-            cell.loadAd()
+        switch cellViewModel.dispType {
+        case .normal, .top:
+            cell.articleImageUrl()
+        case .ad:
+            if !cellViewModel.isAdLoad {
+                cell.loadAd()
+            }
         }
+        cell.delegate = self
         return cell
     }
     

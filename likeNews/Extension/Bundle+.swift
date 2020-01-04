@@ -10,12 +10,10 @@ import Foundation
 
 extension Bundle {
     
-    /// 広告（Nend）
-    enum NendKey: String {
-        /// API Key
-        case apiKey = "ApiKey"
-        /// SpotID
-        case spotId = "SpotId"
+    /// 広告（AdMob）
+    enum AdMobKey: String {
+        /// 広告ユニット ID
+        case adUnitID = "AdUnitId"
     }
     
     /// HockeyApp
@@ -58,13 +56,13 @@ extension Bundle {
         /// gist上のジャンル
         case gistGenre = "GistGenre"
     }
-    
-    /// 広告（Nend）に関連する値を返却する
+
+    /// 広告（AdMob）に関連する値を返却する
     ///
     /// - Parameter key: キー名
     /// - Returns: 値
-    class func Nend(key: NendKey) -> String {
-        guard let dictionary = Bundle.main.infoDictionary?["Nend"] as? Dictionary<String, String> else {
+    class func AdMob(key: AdMobKey) -> String {
+        guard let dictionary = Bundle.main.infoDictionary?["AdMob"] as? Dictionary<String, String> else {
             return ""
         }
         guard let returnString = dictionary[key.rawValue] as String? else {

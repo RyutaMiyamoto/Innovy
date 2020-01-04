@@ -404,12 +404,12 @@
 	<string>天気情報の取得</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>ニュース記事画像参照</string>
-	<key>Nend</key>
+	<key>GADApplicationIdentifier</key>
+	<string>ca-app-pub-8739049638327705~5212914108</string>
+	<key>AdMob</key>
 	<dict>
-		<key>ApiKey</key>
-		<string>49325aace4833b600ec09a8d4bee09d200fe9a19</string>
-		<key>SpotId</key>
-		<string>875225</string>
+		<key>AdUnitId</key>
+		<string>ca-app-pub-8739049638327705/6866744142</string>
 	</dict>
 	<key>UIBackgroundModes</key>
 	<array>

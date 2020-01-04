@@ -8,6 +8,7 @@
 
 import UIKit
 import SDWebImage
+import GoogleMobileAds
 
 protocol NewsListCellDelegate: class {
     
@@ -18,12 +19,14 @@ protocol NewsListCellDelegate: class {
     func imageUrlLoadComplete(from cell: NewsListCell)
 }
 
-class NewsListCell: UITableViewCell {
+class NewsListCell: UITableViewCell, GADAdLoaderDelegate, GADUnifiedNativeAdLoaderDelegate,
+        GADUnifiedNativeAdDelegate {
+    
     weak var delegate: NewsListCellDelegate?
     /// 背景
-    @IBOutlet var backView: UIView!
-    /// 背景(広告用)
-    @IBOutlet weak var backAdView: UIView!
+    @IBOutlet var backView: GADUnifiedNativeAdView!
+    /// 広告表示Block用
+    @IBOutlet var adBlockView: UIView!
     /// タイトル
     @IBOutlet var titleLabel: UILabel!
     /// 情報元
@@ -77,7 +80,39 @@ class NewsListCell: UITableViewCell {
             }
         }
     }
+    /// AdMobローダ
+    var adLoader: GADAdLoader!
     
+    // MARK: - GADAdLoaderDelegate
+    
+    func adLoader(_ adLoader: GADAdLoader, didFailToReceiveAdWithError error: GADRequestError) {
+    }
+    
+    // MARK: - GADUnifiedNativeAdLoaderDelegate
+    
+    func adLoader(_ adLoader: GADAdLoader, didReceive nativeAd: GADUnifiedNativeAd) {
+        viewModel?.setAdData(nativeAd: nativeAd)
+        backView.nativeAd = nativeAd
+        nativeAd.delegate = self
+        setCellInfo()
+    }
+
+    // MARK: - GADUnifiedNativeAdDelegate
+    
+    func nativeAdDidRecordClick(_ nativeAd: GADUnifiedNativeAd) {}
+
+    func nativeAdDidRecordImpression(_ nativeAd: GADUnifiedNativeAd) {}
+
+    func nativeAdWillPresentScreen(_ nativeAd: GADUnifiedNativeAd) {}
+
+    func nativeAdWillDismissScreen(_ nativeAd: GADUnifiedNativeAd) {}
+
+    func nativeAdDidDismissScreen(_ nativeAd: GADUnifiedNativeAd) {}
+
+    func nativeAdWillLeaveApplication(_ nativeAd: GADUnifiedNativeAd) {}
+    
+    // MARK: - Private Method
+
     /// 記事画像URL取得
     func articleImageUrl() {
         // サムネイル非表示設定時は画像を非表示にする
@@ -98,12 +133,14 @@ class NewsListCell: UITableViewCell {
     
     /// 広告読み込み
     func loadAd() {
-        guard let viewModel = viewModel else { return }
-        viewModel.loadAd(completion: { result in
-            guard result else { return }
-            viewModel.isAdLoad = true
-            self.setCellInfo()
-        })
+        if let viewController = UIApplication.shared.keyWindow?.rootViewController {
+            adLoader = GADAdLoader(adUnitID: Bundle.AdMob(key: .adUnitID),
+                                        rootViewController: viewController,
+                                        adTypes: [.unifiedNative],
+                                        options: nil)
+            adLoader.delegate = self
+            adLoader.load(GADRequest())
+        }
     }
     
     /// セル情報セット
@@ -115,15 +152,13 @@ class NewsListCell: UITableViewCell {
             self.titleLabel.textColor = viewModel.titleTextColor
             self.sourceLabel.text = viewModel.sourceNameText
             self.noteLabel.text = viewModel.noteText
+            self.adBlockView.isHidden = viewModel.isAdBlockViewHideen
             self.topArticleImageBackView.isHidden = viewModel.topArticleImageHidden
             self.articleImageBackView.isHidden = viewModel.articleImageHidden
-            self.imageUrl = viewModel.imageUrl
-            if viewModel.dispType == .ad, let nativeAd = viewModel.nativeAd {
-                // 広告ビューと広告明示にクリックイベントを追加
-                backAdView.isHidden = false
-                nativeAd.activateAdView(backAdView, withPrLabel: self.sourceLabel)
+            if viewModel.dispType == .ad {
+                self.articleImageView.image = viewModel.imageAd
             } else {
-                backAdView.isHidden = true
+                self.imageUrl = viewModel.imageUrl
             }
             self.setSpeechState(state: viewModel.isSpeechNow)
         }
@@ -135,5 +170,6 @@ class NewsListCell: UITableViewCell {
     func setSpeechState(state: Bool) {
         guard let viewModel = self.viewModel else { return }
         self.backView.backgroundColor = viewModel.isSpeechNow ? .speechCell() : .white
+        self.adBlockView.backgroundColor = viewModel.isSpeechNow ? .speechCell() : .white
     }
 }

@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 import Realm
-import NendAd
+import GoogleMobileAds
 
 class NewsListCellViewModel: NewsListModel {
     
@@ -25,6 +25,8 @@ class NewsListCellViewModel: NewsListModel {
     
     /// 表示種別
     var dispType: DispType = .normal
+    /// 広告表示BlockView表示有無
+    var isAdBlockViewHideen = true
     /// タイトル
     var titleText = ""
     /// タイトル色
@@ -37,6 +39,8 @@ class NewsListCellViewModel: NewsListModel {
     var articleUrl = ""
     /// 記事画像URL
     var imageUrl = ""
+    /// 記事画像（AdMob用）
+    var imageAd = UIImage()
     /// 記事画像表示有無
     var articleImageHidden = true
     /// 記事画像表示有無（一覧先頭用）
@@ -68,10 +72,6 @@ class NewsListCellViewModel: NewsListModel {
     var isSpeechNow = false
     /// indexPath
     var indexPath = IndexPath()
-    // Nendクライアント
-    private var nendClient: NADNativeClient!
-    // 広告
-    var nativeAd: NADNative?
     
     /// init
     ///
@@ -103,6 +103,7 @@ class NewsListCellViewModel: NewsListModel {
         indexPath = index
         dispType = type
         
+        isAdBlockViewHideen = dispType == .ad
         topArticleImageHidden = !(dispType == .top) || !UserDefaults.standard.isDispThumbnail
         articleImageHidden = !(dispType == .normal || dispType == .ad) || !UserDefaults.standard.isDispThumbnail
     }
@@ -112,29 +113,23 @@ class NewsListCellViewModel: NewsListModel {
         sourceArticle?.isRead = isRead
     }
     
-    /// 広告のロード
-    func loadAd(completion: @escaping (Bool)->Void) {
-        nendClient = NADNativeClient(spotId: Bundle.Nend(key: .spotId), apiKey: Bundle.Nend(key: .apiKey))
-        nendClient.disableAutoReload()
-        nendClient.load() { (ad, error) in
-            if let nativeAd = ad {
-                self.nativeAd = nativeAd
-                self.titleText = nativeAd.longText
-                self.sourceNameText = nativeAd.prText(for: .PR)
-                self.noteText = ""
-                self.articleUrl = ""
-                self.imageUrl = nativeAd.imageUrl
-                completion(true)
-            } else {
-                completion(false)
-            }
-        }
-    }
-    
     /// スピーチ状態をセットする
     ///
     /// - Parameter isSpeech: スピーチ状態（true:読み上げ中、false:読んでいない）
     func setSpeechState(isSpeech: Bool) {
         isSpeechNow = isSpeech
+    }
+    
+    /// 広告情報を反映する
+    /// - Parameter nativeAd: 広告情報
+    func setAdData(nativeAd: GADUnifiedNativeAd) {
+        guard let title = nativeAd.body,
+            let source = nativeAd.advertiser,
+            let image = nativeAd.icon?.image else { return }
+        titleText = title
+        imageAd = image
+        sourceNameText = source
+        noteText = "PR"
+        isAdLoad = true
     }
 }

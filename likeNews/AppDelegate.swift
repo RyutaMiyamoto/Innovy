@@ -12,6 +12,7 @@ import Firebase
 import SVProgressHUD
 import TwitterKit
 import UserNotifications
+import GoogleMobileAds
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -63,6 +64,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private func initSetting(application: UIApplication) {
         // Firebase初期設定
         FirebaseApp.configure()
+        
+        // AdMob初期設定
+        GADMobileAds.sharedInstance().start(completionHandler: nil)
         
         // Push通知設定
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { (granted, _) in
