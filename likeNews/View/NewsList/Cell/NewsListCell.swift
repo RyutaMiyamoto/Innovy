@@ -170,5 +170,6 @@ class NewsListCell: UITableViewCell, GADAdLoaderDelegate, GADUnifiedNativeAdLoad
     func setSpeechState(state: Bool) {
         guard let viewModel = self.viewModel else { return }
         self.backView.backgroundColor = viewModel.isSpeechNow ? .speechCell() : .white
+        self.adBlockView.backgroundColor = viewModel.isSpeechNow ? .speechCell() : .white
     }
 }
