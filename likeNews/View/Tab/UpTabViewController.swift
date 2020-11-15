@@ -9,7 +9,7 @@
 import UIKit
 import SVProgressHUD
 
-class UpTabViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, NewsListViewControllerDelegate {
+class UpTabViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, SpeechModelDelegate {
 
     /// CollectionView種別
     enum CollectionViewType: Int {
