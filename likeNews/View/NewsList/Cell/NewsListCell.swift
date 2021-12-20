@@ -10,7 +10,7 @@ import UIKit
 import SDWebImage
 import GoogleMobileAds
 
-protocol NewsListCellDelegate: class {
+protocol NewsListCellDelegate: AnyObject {
     
     /// 画像URL読み込み完了
     ///
@@ -19,12 +19,11 @@ protocol NewsListCellDelegate: class {
     func imageUrlLoadComplete(from cell: NewsListCell)
 }
 
-class NewsListCell: UITableViewCell, GADAdLoaderDelegate, GADUnifiedNativeAdLoaderDelegate,
-        GADUnifiedNativeAdDelegate {
+class NewsListCell: UITableViewCell, GADAdLoaderDelegate, GADNativeAdLoaderDelegate, GADNativeAdDelegate {
     
     weak var delegate: NewsListCellDelegate?
     /// 背景
-    @IBOutlet var backView: GADUnifiedNativeAdView!
+    @IBOutlet var backView: GADNativeAdView!
     /// 広告表示Block用
     @IBOutlet var adBlockView: UIView!
     /// タイトル
@@ -85,31 +84,30 @@ class NewsListCell: UITableViewCell, GADAdLoaderDelegate, GADUnifiedNativeAdLoad
     
     // MARK: - GADAdLoaderDelegate
     
-    func adLoader(_ adLoader: GADAdLoader, didFailToReceiveAdWithError error: GADRequestError) {
-    }
+    func adLoader(_ adLoader: GADAdLoader, didFailToReceiveAdWithError error: Error) {}
     
-    // MARK: - GADUnifiedNativeAdLoaderDelegate
+    // MARK: - GADNativeAdLoaderDelegate
     
-    func adLoader(_ adLoader: GADAdLoader, didReceive nativeAd: GADUnifiedNativeAd) {
+    func adLoader(_ adLoader: GADAdLoader, didReceive nativeAd: GADNativeAd) {
         viewModel?.setAdData(nativeAd: nativeAd)
         backView.nativeAd = nativeAd
         nativeAd.delegate = self
         setCellInfo()
     }
 
-    // MARK: - GADUnifiedNativeAdDelegate
+    // MARK: - GADNativeAdDelegate
     
-    func nativeAdDidRecordClick(_ nativeAd: GADUnifiedNativeAd) {}
+    func nativeAdDidRecordClick(_ nativeAd: GADNativeAd) {}
 
-    func nativeAdDidRecordImpression(_ nativeAd: GADUnifiedNativeAd) {}
+    func nativeAdDidRecordImpression(_ nativeAd: GADNativeAd) {}
 
-    func nativeAdWillPresentScreen(_ nativeAd: GADUnifiedNativeAd) {}
+    func nativeAdWillPresentScreen(_ nativeAd: GADNativeAd) {}
 
-    func nativeAdWillDismissScreen(_ nativeAd: GADUnifiedNativeAd) {}
+    func nativeAdWillDismissScreen(_ nativeAd: GADNativeAd) {}
 
-    func nativeAdDidDismissScreen(_ nativeAd: GADUnifiedNativeAd) {}
+    func nativeAdDidDismissScreen(_ nativeAd: GADNativeAd) {}
 
-    func nativeAdWillLeaveApplication(_ nativeAd: GADUnifiedNativeAd) {}
+    func nativeAdWillLeaveApplication(_ nativeAd: GADNativeAd) {}
     
     // MARK: - Private Method
 
@@ -136,7 +134,7 @@ class NewsListCell: UITableViewCell, GADAdLoaderDelegate, GADUnifiedNativeAdLoad
         if let viewController = UIApplication.shared.keyWindow?.rootViewController {
             adLoader = GADAdLoader(adUnitID: Bundle.AdMob(key: .adUnitID),
                                         rootViewController: viewController,
-                                        adTypes: [.unifiedNative],
+                                        adTypes: [.native],
                                         options: nil)
             adLoader.delegate = self
             adLoader.load(GADRequest())

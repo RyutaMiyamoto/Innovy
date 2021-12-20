@@ -122,7 +122,7 @@ class NewsListCellViewModel: NewsListModel {
     
     /// 広告情報を反映する
     /// - Parameter nativeAd: 広告情報
-    func setAdData(nativeAd: GADUnifiedNativeAd) {
+    func setAdData(nativeAd: GADNativeAd) {
         guard let title = nativeAd.body,
             let source = nativeAd.advertiser,
             let image = nativeAd.icon?.image else { return }

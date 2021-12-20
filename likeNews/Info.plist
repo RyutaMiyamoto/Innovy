@@ -60,11 +60,6 @@
 	<string>1.0.0</string>
 	<key>FirebaseAppDelegateProxyEnabled</key>
 	<false/>
-	<key>HockeyApp</key>
-	<dict>
-		<key>Id</key>
-		<string>AAA</string>
-	</dict>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>twitter</string>

@@ -16,11 +16,6 @@ extension Bundle {
         case adUnitID = "AdUnitId"
     }
     
-    /// HockeyApp
-    enum HockeyAppKey: String {
-        /// ID
-        case Id = "Id"
-    }
     /// メール
     enum MailKey: String {
         /// お問い合わせ
@@ -72,20 +67,6 @@ extension Bundle {
         return  returnString
     }
 
-    /// HockeyAppに関連する値を返却する
-    ///
-    /// - Parameter key: キー名
-    /// - Returns: 値
-    class func HockeyApp(key: HockeyAppKey) -> String {
-        guard let dictionary = Bundle.main.infoDictionary?["HockeyApp"] as? Dictionary<String, String> else {
-            return ""
-        }
-        guard let returnString = dictionary[key.rawValue] as String? else {
-            return ""
-        }
-        
-        return  returnString
-    }
     /// メールに関連する値を返却する
     ///
     /// - Parameter key: キー名

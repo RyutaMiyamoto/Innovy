@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import HockeySDK
 import Firebase
 import SVProgressHUD
 import TwitterKit
@@ -83,11 +82,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // NavigationBarの初期設定
         setNavigationBar()
-        
-        // HockeyAppの初期設定
-        BITHockeyManager.shared().configure(withIdentifier: Bundle.HockeyApp(key: .Id))
-        BITHockeyManager.shared().start()
-        BITHockeyManager.shared().authenticator.authenticateInstallation()
         
         // SVProgressHUDの設定
         SVProgressHUD.setDefaultMaskType(.clear)
