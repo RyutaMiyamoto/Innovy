@@ -44,6 +44,11 @@
 		90A9291A1FBFCEA100A476DA /* NewsTopTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90A929191FBFCEA100A476DA /* NewsTopTabBarController.swift */; };
 		90A9291C1FBFCEB900A476DA /* NewsTopTabBarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90A9291B1FBFCEB900A476DA /* NewsTopTabBarViewModel.swift */; };
 		90A9291E1FC0001200A476DA /* UICollectionView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90A9291D1FC0001200A476DA /* UICollectionView+.swift */; };
+		90AAFD9C27707972001B173A /* GoogleMobileAds.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 90AAFD9B27707972001B173A /* GoogleMobileAds.xcframework */; };
+		90AAFD9E27707989001B173A /* FirebaseAnalytics.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 90AAFD9D27707989001B173A /* FirebaseAnalytics.xcframework */; };
+		90AAFDA0277079A0001B173A /* GoogleAppMeasurement.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 90AAFD9F277079A0001B173A /* GoogleAppMeasurement.xcframework */; };
+		90AAFDA2277079AF001B173A /* GoogleAppMeasurementIdentitySupport.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 90AAFDA1277079AF001B173A /* GoogleAppMeasurementIdentitySupport.xcframework */; };
+		90AAFDA427707A36001B173A /* UserMessagingPlatform.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 90AAFDA327707A36001B173A /* UserMessagingPlatform.xcframework */; };
 		90C2A3901FCEE0D500A0769C /* NavigationTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90C2A38F1FCEE0D500A0769C /* NavigationTitleView.swift */; };
 		90C2A3921FCEE0E900A0769C /* NavigationTitleView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 90C2A3911FCEE0E900A0769C /* NavigationTitleView.xib */; };
 		90DCE0401FF5E5D100574584 /* SpeechModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90DCE03F1FF5E5D100574584 /* SpeechModel.swift */; };
@@ -89,7 +94,6 @@
 		E6E5645F1FD651B70049A26B /* TweetCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6E5645D1FD651B70049A26B /* TweetCell.swift */; };
 		E6E564601FD651B70049A26B /* TweetCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E6E5645E1FD651B70049A26B /* TweetCell.xib */; };
 		E6E564621FD651CA0049A26B /* TweetCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6E564611FD651CA0049A26B /* TweetCellViewModel.swift */; };
-		E97E71C9F2DB6057F27E9C64 /* Pods_likeNews.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A1DFBFF5250005653FBC005A /* Pods_likeNews.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -160,6 +164,11 @@
 		90A929191FBFCEA100A476DA /* NewsTopTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsTopTabBarController.swift; sourceTree = "<group>"; };
 		90A9291B1FBFCEB900A476DA /* NewsTopTabBarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsTopTabBarViewModel.swift; sourceTree = "<group>"; };
 		90A9291D1FC0001200A476DA /* UICollectionView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+.swift"; sourceTree = "<group>"; };
+		90AAFD9B27707972001B173A /* GoogleMobileAds.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = GoogleMobileAds.xcframework; path = "Pods/Google-Mobile-Ads-SDK/Frameworks/GoogleMobileAdsFramework-Current/GoogleMobileAds.xcframework"; sourceTree = "<group>"; };
+		90AAFD9D27707989001B173A /* FirebaseAnalytics.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = FirebaseAnalytics.xcframework; path = Pods/FirebaseAnalytics/Frameworks/FirebaseAnalytics.xcframework; sourceTree = "<group>"; };
+		90AAFD9F277079A0001B173A /* GoogleAppMeasurement.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = GoogleAppMeasurement.xcframework; path = Pods/GoogleAppMeasurement/Frameworks/GoogleAppMeasurement.xcframework; sourceTree = "<group>"; };
+		90AAFDA1277079AF001B173A /* GoogleAppMeasurementIdentitySupport.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = GoogleAppMeasurementIdentitySupport.xcframework; path = Pods/GoogleAppMeasurement/Frameworks/GoogleAppMeasurementIdentitySupport.xcframework; sourceTree = "<group>"; };
+		90AAFDA327707A36001B173A /* UserMessagingPlatform.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = UserMessagingPlatform.xcframework; path = Pods/GoogleUserMessagingPlatform/Frameworks/Release/UserMessagingPlatform.xcframework; sourceTree = "<group>"; };
 		90C2A38F1FCEE0D500A0769C /* NavigationTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationTitleView.swift; sourceTree = "<group>"; };
 		90C2A3911FCEE0E900A0769C /* NavigationTitleView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NavigationTitleView.xib; sourceTree = "<group>"; };
 		90DCE03F1FF5E5D100574584 /* SpeechModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechModel.swift; sourceTree = "<group>"; };
@@ -213,8 +222,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				90AAFDA427707A36001B173A /* UserMessagingPlatform.xcframework in Frameworks */,
+				90AAFDA2277079AF001B173A /* GoogleAppMeasurementIdentitySupport.xcframework in Frameworks */,
+				90AAFDA0277079A0001B173A /* GoogleAppMeasurement.xcframework in Frameworks */,
+				90AAFD9E27707989001B173A /* FirebaseAnalytics.xcframework in Frameworks */,
+				90AAFD9C27707972001B173A /* GoogleMobileAds.xcframework in Frameworks */,
 				E625C6062097494900234735 /* CoreLocation.framework in Frameworks */,
-				E97E71C9F2DB6057F27E9C64 /* Pods_likeNews.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -240,6 +253,11 @@
 		06F7596C9ACC6A667D25DD52 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				90AAFDA327707A36001B173A /* UserMessagingPlatform.xcframework */,
+				90AAFDA1277079AF001B173A /* GoogleAppMeasurementIdentitySupport.xcframework */,
+				90AAFD9F277079A0001B173A /* GoogleAppMeasurement.xcframework */,
+				90AAFD9D27707989001B173A /* FirebaseAnalytics.xcframework */,
+				90AAFD9B27707972001B173A /* GoogleMobileAds.xcframework */,
 				E625C6052097494900234735 /* CoreLocation.framework */,
 				A1DFBFF5250005653FBC005A /* Pods_likeNews.framework */,
 				857F5861FF44E59CA703C13F /* Pods_likeNewsTests.framework */,
@@ -1038,6 +1056,7 @@
 				CODE_SIGN_ENTITLEMENTS = likeNews/likeNews.entitlements;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = C5T96DT99L;
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = x86_64;
 				INFOPLIST_FILE = likeNews/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1057,6 +1076,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = likeNews/likeNews.entitlements;
 				DEVELOPMENT_TEAM = C5T96DT99L;
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = x86_64;
 				INFOPLIST_FILE = likeNews/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
