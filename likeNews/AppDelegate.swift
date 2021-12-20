@@ -9,7 +9,6 @@
 import UIKit
 import Firebase
 import SVProgressHUD
-import TwitterKit
 import UserNotifications
 import GoogleMobileAds
 
@@ -48,10 +47,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
     
-    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
-        return Twitter.sharedInstance().application(app, open: url, options: options)
-    }
-    
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         // Push通知設定
         Messaging.messaging().apnsToken = deviceToken
@@ -74,9 +69,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
 
-        // Twitter設定
-        Twitter.sharedInstance().start(withConsumerKey:Bundle.Api(key: .twitterConsumerKey), consumerSecret:Bundle.Api(key: .twitterConsumerSecret))
-        
         // 古い記事を削除
         NewsListModel().removeOldArticles()
         
