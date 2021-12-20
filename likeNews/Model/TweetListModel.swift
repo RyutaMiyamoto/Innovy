@@ -27,8 +27,8 @@ class TweetListModel {
         let url = Bundle.Api(key: .twitterHost) + "/" + Bundle.Api(key: .twitterHostVersion) + "/search/tweets.json"
         let params = ["q": word, "count": numReadMax.description]
         var clientError : NSError?
-        
-        let request = client.urlRequest(withMethod: "GET", url: url, parameters: params, error: &clientError)
+
+        let request = client.urlRequest(withMethod: "GET", urlString: url, parameters: params, error: &clientError)
         client.sendTwitterRequest(request) { (response, data, connectionError) -> Void in
             if connectionError != nil { completion([]) }
             do {
