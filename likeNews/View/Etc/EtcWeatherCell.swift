@@ -9,7 +9,7 @@
 import UIKit
 import CoreLocation
 
-protocol EtcWeatherCellDelegate: class {
+protocol EtcWeatherCellDelegate: AnyObject {
     
     /// 天気情報更新完了
     ///

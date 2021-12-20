@@ -10,7 +10,7 @@ import UIKit
 import WebKit
 import TwitterKit
 
-protocol ArticleDetailViewControllerDelegate: class {
+protocol ArticleDetailViewControllerDelegate: AnyObject {
     /// 遷移元画面に戻る
     ///
     /// - Parameters:

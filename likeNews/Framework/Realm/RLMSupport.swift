@@ -70,7 +70,7 @@ extension RLMCollection {
 extension RLMCollection {
     // Swift query convenience functions
     public func indexOfObject(where predicateFormat: String, _ args: CVarArg...) -> UInt {
-        return indexOfObject(with: NSPredicate(format: predicateFormat, arguments: getVaList(args)))
+        return indexOfObject!(with: NSPredicate(format: predicateFormat, arguments: getVaList(args)))
     }
 
     public func objects(where predicateFormat: String, _ args: CVarArg...) -> RLMResults<NSObject> {

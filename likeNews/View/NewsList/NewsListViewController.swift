@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol NewsListViewControllerDelegate: class {
+protocol NewsListViewControllerDelegate: AnyObject {
     /// 記事詳細画面に遷移
     ///
     /// - Parameters:
