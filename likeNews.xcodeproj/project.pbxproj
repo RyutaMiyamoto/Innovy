@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7E3763DB79853250365A722A /* Pods_likeNews.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A1DFBFF5250005653FBC005A /* Pods_likeNews.framework */; };
 		88E58D6B1F28137500C20093 /* ArticleDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88E58D6A1F28137500C20093 /* ArticleDetailViewController.swift */; };
 		88E58D8D1F29B43C00C20093 /* ActivityOpenSafari.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88E58D8C1F29B43C00C20093 /* ActivityOpenSafari.swift */; };
 		88E58D911F29BD4200C20093 /* ArticleDetail.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 88E58D901F29BD4200C20093 /* ArticleDetail.storyboard */; };
@@ -228,6 +229,7 @@
 				90AAFD9E27707989001B173A /* FirebaseAnalytics.xcframework in Frameworks */,
 				90AAFD9C27707972001B173A /* GoogleMobileAds.xcframework in Frameworks */,
 				E625C6062097494900234735 /* CoreLocation.framework in Frameworks */,
+				7E3763DB79853250365A722A /* Pods_likeNews.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -815,7 +817,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				$SRCROOT/likeNews/R.generated.swift,
+				"$SRCROOT/likeNews/R.generated.swift",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;

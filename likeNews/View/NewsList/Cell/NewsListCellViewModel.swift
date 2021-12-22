@@ -63,7 +63,7 @@ class NewsListCellViewModel: NewsListModel {
     var isLoad = false
     /// 既読状態
     var isRead: Bool {
-        guard let sourceArticle = sourceArticle, let article = NewsListModel.shared.articles(title: sourceArticle.title).first else { return false }
+        guard let article = NewsListModel.shared.articles(title: titleText).first else { return false }
         return article.isRead
     }
     /// 広告ロード状態（true:ロード済み）
@@ -124,7 +124,7 @@ class NewsListCellViewModel: NewsListModel {
     /// - Parameter nativeAd: 広告情報
     func setAdData(nativeAd: GADNativeAd) {
         guard let title = nativeAd.body,
-            let source = nativeAd.advertiser,
+            let source = nativeAd.headline,
             let image = nativeAd.icon?.image else { return }
         titleText = title
         imageAd = image

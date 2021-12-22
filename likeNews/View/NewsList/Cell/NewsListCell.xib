@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_0" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -16,7 +16,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="260"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hTd-p9-SZX" userLabel="背景" customClass="GADUnifiedNativeAdView">
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hTd-p9-SZX" userLabel="背景" customClass="GADNativeAdView">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="260"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Mb1-UC-0mA">
@@ -124,11 +124,6 @@
                             <constraint firstAttribute="trailing" secondItem="Mb1-UC-0mA" secondAttribute="trailing" id="dN7-xB-C4g"/>
                             <constraint firstItem="Mb1-UC-0mA" firstAttribute="top" secondItem="hTd-p9-SZX" secondAttribute="top" id="jmS-JE-gcs"/>
                         </constraints>
-                        <connections>
-                            <outlet property="advertiserView" destination="8e1-MI-OFN" id="tDr-RH-AZZ"/>
-                            <outlet property="bodyView" destination="hSU-es-KVV" id="n6O-0c-DMZ"/>
-                            <outlet property="iconView" destination="ZRI-ZP-5UM" id="eWP-fX-A3t"/>
-                        </connections>
                     </view>
                     <view contentMode="scaleToFill" id="mgA-3n-0nS" userLabel="広告表示Block用">
                         <rect key="frame" x="305" y="0.0" width="15" height="15"/>
@@ -147,7 +142,7 @@
                 <outlet property="adBlockView" destination="mgA-3n-0nS" id="wIG-lb-ibb"/>
                 <outlet property="articleImageBackView" destination="9iJ-W0-VfD" id="kfE-0n-Wcx"/>
                 <outlet property="articleImageView" destination="ZRI-ZP-5UM" id="p7U-iv-AX1"/>
-                <outlet property="backView" destination="hTd-p9-SZX" id="NCZ-yt-KHs"/>
+                <outlet property="backView" destination="hTd-p9-SZX" id="Qyk-hr-qmv"/>
                 <outlet property="noteLabel" destination="8e1-MI-OFN" id="xn5-69-Roo"/>
                 <outlet property="sourceLabel" destination="Rjs-nc-JFw" id="FH2-jd-9X3"/>
                 <outlet property="titleLabel" destination="hSU-es-KVV" id="IM6-YR-lH1"/>
