@@ -164,7 +164,7 @@ struct R: Rswift.Validatable {
   #endif
 
   #if os(iOS) || os(tvOS)
-  /// This `R.storyboard` struct is generated, and contains static references to 10 storyboards.
+  /// This `R.storyboard` struct is generated, and contains static references to 9 storyboards.
   struct storyboard {
     /// Storyboard `ArticleDetail`.
     static let articleDetail = _R.storyboard.articleDetail()
@@ -174,8 +174,6 @@ struct R: Rswift.Validatable {
     static let launchScreen = _R.storyboard.launchScreen()
     /// Storyboard `NewsClip`.
     static let newsClip = _R.storyboard.newsClip()
-    /// Storyboard `NewsList`.
-    static let newsList = _R.storyboard.newsList()
     /// Storyboard `NewsSearch`.
     static let newsSearch = _R.storyboard.newsSearch()
     /// Storyboard `NewsTop`.
@@ -212,13 +210,6 @@ struct R: Rswift.Validatable {
     /// `UIStoryboard(name: "NewsClip", bundle: ...)`
     static func newsClip(_: Void = ()) -> UIKit.UIStoryboard {
       return UIKit.UIStoryboard(resource: R.storyboard.newsClip)
-    }
-    #endif
-
-    #if os(iOS) || os(tvOS)
-    /// `UIStoryboard(name: "NewsList", bundle: ...)`
-    static func newsList(_: Void = ()) -> UIKit.UIStoryboard {
-      return UIKit.UIStoryboard(resource: R.storyboard.newsList)
     }
     #endif
 
@@ -1383,9 +1374,6 @@ struct _R: Rswift.Validatable {
       try newsClip.validate()
       #endif
       #if os(iOS) || os(tvOS)
-      try newsList.validate()
-      #endif
-      #if os(iOS) || os(tvOS)
       try newsSearch.validate()
       #endif
       #if os(iOS) || os(tvOS)
@@ -1468,28 +1456,6 @@ struct _R: Rswift.Validatable {
         if UIKit.UIImage(named: "NewsTopTabClip", in: R.hostingBundle, compatibleWith: nil) == nil { throw Rswift.ValidationError(description: "[R.swift] Image named 'NewsTopTabClip' is used in storyboard 'NewsClip', but couldn't be loaded.") }
         if #available(iOS 11.0, tvOS 11.0, *) {
         }
-      }
-
-      fileprivate init() {}
-    }
-    #endif
-
-    #if os(iOS) || os(tvOS)
-    struct newsList: Rswift.StoryboardResourceWithInitialControllerType, Rswift.Validatable {
-      typealias InitialController = NewsListViewController
-
-      let bundle = R.hostingBundle
-      let name = "NewsList"
-      let newsList = StoryboardViewControllerResource<NewsListViewController>(identifier: "NewsList")
-
-      func newsList(_: Void = ()) -> NewsListViewController? {
-        return UIKit.UIStoryboard(resource: self).instantiateViewController(withResource: newsList)
-      }
-
-      static func validate() throws {
-        if #available(iOS 11.0, tvOS 11.0, *) {
-        }
-        if _R.storyboard.newsList().newsList() == nil { throw Rswift.ValidationError(description:"[R.swift] ViewController with identifier 'newsList' could not be loaded from storyboard 'NewsList' as 'NewsListViewController'.") }
       }
 
       fileprivate init() {}

@@ -9,7 +9,7 @@
 import UIKit
 import SVProgressHUD
 
-class UpTabViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, NewsListViewControllerDelegate {
+class UpTabViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, NewsListTableViewDelegate {
 
     /// CollectionView種別
     enum CollectionViewType: Int {
@@ -45,7 +45,6 @@ class UpTabViewController: UIViewController, UICollectionViewDataSource, UIColle
             selectedStateView.backgroundColor = .thema()
             selectedStateView.layer.cornerRadius = 1
             selectedStateView.layer.masksToBounds = true
-
         }
     }
     
@@ -56,10 +55,6 @@ class UpTabViewController: UIViewController, UICollectionViewDataSource, UIColle
 
     /// viewModel
     var viewModel = UpTabViewControllerViewModel()
-    /// 画面リスト
-    var newsViewControllerList: [(viewController: UIViewController, title: String)] = []
-    /// 遷移元ViewController
-    var sourceNewsListViewController: NewsListViewController?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -70,7 +65,7 @@ class UpTabViewController: UIViewController, UICollectionViewDataSource, UIColle
         // 初期設定
         initSetting()
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
@@ -81,11 +76,10 @@ class UpTabViewController: UIViewController, UICollectionViewDataSource, UIColle
     // MARK: - CollectionView Delegate & DataSource
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return viewModel.sourceTabInfo.count
+        return viewModel.genreList.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let tabInfo = viewModel.sourceTabInfo[indexPath.row]
         // セグメント
         if collectionView == segmentCollectionView {
             if let cell = segmentCollectionView.dequeueReusableCell(withReuseIdentifier: R.nib.segmentCollectionViewCell,
@@ -101,15 +95,12 @@ class UpTabViewController: UIViewController, UICollectionViewDataSource, UIColle
         
         // メイン
         if collectionView == mainCollectionView {
-            if let cell = mainCollectionView.dequeueReusableCell(withReuseIdentifier: R.nib.mainCollectionViewCell,
-                                                                 for: indexPath),
-                let viewController: NewsListViewController = tabInfo.viewController as? NewsListViewController {
-                viewController.delegate = self
-                cell.setView(viewController: viewController)
+            if let cell = mainCollectionView.dequeueReusableCell(withReuseIdentifier: R.nib.mainCollectionViewCell, for: indexPath) {
+                let mainViewModel = viewModel.mainCollectionViewCellViewModelList[indexPath.row]
+                cell.viewModel = mainViewModel
                 return cell
             }
         }
-        
         return UICollectionViewCell()
     }
 
@@ -119,8 +110,8 @@ class UpTabViewController: UIViewController, UICollectionViewDataSource, UIColle
             // 選択中の上タブをもう一度タップした場合は、該当ニュース一覧を先頭にスクロールする
             if mainCollectionView.contentOffset.x == CGRect().screenWidth() * CGFloat(indexPath.row) {
                 if let cell = mainCollectionView.cellForItem(at: indexPath) as? MainCollectionViewCell,
-                   let viewController = cell.newsListViewController {
-                    viewController.tableView.setContentOffset(CGPoint.zero, animated: true)
+                   let tableView = cell.tableView {
+                    tableView.setContentOffset(CGPoint.zero, animated: true)
                 }
             } else {
                 // 対象セルを画面の中央に表示
@@ -154,11 +145,10 @@ class UpTabViewController: UIViewController, UICollectionViewDataSource, UIColle
             if isPrefetching {
                 return viewModel.cellSizeMain[indexPath.row]
             } else {
-                return CGSize(width: CGFloat(viewModel.sourceTabInfo.count) / CGRect().screenWidth(),
+                return CGSize(width: CGFloat(viewModel.genreList.count) / CGRect().screenWidth(),
                               height: CGRect().screenHeight() - UIApplication.shared.statusBarFrame.size.height - 155)
             }
         }
-        
         return CGSize.zero
     }
     
@@ -189,20 +179,19 @@ class UpTabViewController: UIViewController, UICollectionViewDataSource, UIColle
         }
     }
 
-    // MARK: - NewsListViewControllerDelegate
+    // MARK: - NewsListTableViewDelegate
     
-    func toArticleDetail(from viewController: NewsListViewController, article: Article) {
+    func toArticleDetail(from tableView: NewsListTableView, article: Article) {
         // 記事詳細画面に遷移
-        sourceNewsListViewController = viewController
         performSegue(withIdentifier: R.segue.upTabViewController.articleDetail.identifier, sender: article)
     }
     
-    func startSpeech(from viewController: NewsListViewController) {
+    func startSpeech(from tableView: NewsListTableView) {
         // 読み上げ停止ボタン表示
         dispSpeechStopButton()
     }
     
-    func endSpeech(from viewController: NewsListViewController) {
+    func endSpeech(from tableView: NewsListTableView) {
         // 読み上げ停止ボタン非表示
         hideSpeechStopButton()
     }
@@ -212,7 +201,6 @@ class UpTabViewController: UIViewController, UICollectionViewDataSource, UIColle
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let viewController = R.segue.upTabViewController.articleDetail(segue: segue)?.destination,
             let article = sender as? Article {
-            viewController.delegate = sourceNewsListViewController
             viewController.hidesBottomBarWhenPushed = true
             viewController.article = article
         }
@@ -238,16 +226,15 @@ class UpTabViewController: UIViewController, UICollectionViewDataSource, UIColle
     }
     
     /// 初期作成
-    private func create(array: [(viewController: UIViewController, title: String)]) {
-        viewModel.setInfo(tabinfo: array)
+    private func create(genreList: [String]) {
+        viewModel.setInfo(genreList: genreList)
     }
     
     /// 画面作成
     private func createView() {
-        // 各タブに表示するニュース一覧ViewController作成
-        newsLists()
         // viewModelにviewControllerとタイトルをセット
-        create(array: newsViewControllerList)
+        create(genreList: NewsListModel.shared.genreList)
+        
         // 選択状態View初期設定
         if let selectedStateViewFrame = viewModel.selectedStateViewFrameList.first {
             selectedStateView = UIView(frame: selectedStateViewFrame)
@@ -264,17 +251,6 @@ class UpTabViewController: UIViewController, UICollectionViewDataSource, UIColle
             }
         }
         segmentCollectionView.reloadData()
-    }
-    
-    /// ニュースリスト作成
-    private func newsLists() {
-        for genre in NewsListModel.shared.genreList {
-            if let viewController =
-                R.storyboard.newsList.instantiateInitialViewController() {
-                viewController.viewModel = NewsListViewModel(genre: genre)
-                newsViewControllerList.append((viewController, genre))
-            }
-        }
     }
     
     /// 前回選択表示されていたセルを未選択表示にし、今回指定されたIndexPathに該当するセルを選択表示する

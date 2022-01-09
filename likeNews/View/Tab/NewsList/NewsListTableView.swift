@@ -1,60 +1,58 @@
 //
-//  NewsListViewController.swift
+//  NewsListTableView.swift
 //  likeNews
 //
-//  Created by R.miyamoto on 2017/01/16.
-//  Copyright © 2017年 R.Miyamoto. All rights reserved.
+//  Created by R.miyamoto on 2021/12/22.
+//  Copyright © 2021 R.Miyamoto. All rights reserved.
 //
 
 import UIKit
 
-protocol NewsListViewControllerDelegate: AnyObject {
+protocol NewsListTableViewDelegate: AnyObject {
     /// 記事詳細画面に遷移
     ///
     /// - Parameters:
-    ///   - viewController: 呼び出し元
+    ///   - view: 呼び出し元
     ///   - article: 記事情報
-    func toArticleDetail(from viewController: NewsListViewController, article: Article)
+    func toArticleDetail(from view: NewsListTableView, article: Article)
     
     /// ニュース読み上げ開始
     ///
-    /// - Parameter viewController: 呼び出し元
-    func startSpeech(from viewController: NewsListViewController)
+    /// - Parameter view: 呼び出し元
+    func startSpeech(from view: NewsListTableView)
     
     /// ニュース読み上げ終了
     ///
-    /// - Parameter viewController: 呼び出し元
-    func endSpeech(from viewController: NewsListViewController)
+    /// - Parameter view: 呼び出し元
+    func endSpeech(from view: NewsListTableView)
 }
 
-class NewsListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, NewsListCellDelegate, ArticleDetailViewControllerDelegate, SpeechModelDelegate {
-    
-    weak var delegate: NewsListViewControllerDelegate?
+class NewsListTableView: UITableView, NewsListCellDelegate, ArticleDetailViewControllerDelegate, SpeechModelDelegate {
 
-    /// 記事一覧テーブル
-    @IBOutlet weak var tableView: UITableView! {
-        didSet {
-            tableView.delegate = self
-            tableView.dataSource = self
-            tableView.register(R.nib.newsListCell)
-        }
+    /*
+    // Only override draw() if you perform custom drawing.
+    // An empty implementation adversely affects performance during animation.
+    override func draw(_ rect: CGRect) {
+        // Drawing code
     }
+    */
+    weak var myDelegate: NewsListTableViewDelegate?
     /// セルの高さ
     var heightAtIndexPath = NSMutableDictionary()
     /// ViewModel
-    var viewModel: NewsListViewModel?
+    var viewModel: NewsListTableViewModel?
     /// 記事更新
-    var refreshControl: UIRefreshControl!
+    //var refreshControl: UIRefreshControl!
     /// これから読み込み対象のTableViewCellのIndexPath（Analyticsで使用）
     var analyticsIndexPath = IndexPath(row: 0, section: 0)
     /// スクロール開始Offset。下方向スクロール判別用。（Analyticsで使用）
     var scrollBeginingOffset = CGPoint(x: 0, y: 0)
     /// 下方向にスクロールしたか
     var isUnderScroll = false
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
+    
+    override init(frame: CGRect, style: UITableView.Style) {
+        super.init(frame: frame, style: style)
+        
         initSetting()
         
         guard let viewModel = viewModel else { return }
@@ -63,14 +61,18 @@ class NewsListViewController: UIViewController, UITableViewDelegate, UITableView
         }
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-        FirebaseAnalyticsModel.shared.sendScreen(screenName: .newsList, screenClass: classForCoder.description())
+    required init?(coder aDecoder: NSCoder) {
+       super.init(coder: aDecoder)
     }
-    
+
     // MARK: - TableView Delegate & DataSource
-    
+    override func numberOfRows(inSection section: Int) -> Int {
+        super.numberOfRows(inSection: section)
+        
+        guard let cellViewModel = viewModel?.newsListCellViewModel else { return 0 }
+        return cellViewModel.count
+
+    }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         guard let cellViewModel = viewModel?.newsListCellViewModel else { return 0 }
         return cellViewModel.count
@@ -98,7 +100,7 @@ class NewsListViewController: UIViewController, UITableViewDelegate, UITableView
         analyticsIndexPath = indexPath
         
         guard let viewModel = viewModel, let cellViewModel = viewModel.newsListCellViewModel[safe: indexPath.row],
-            let cell = tableView.dequeueReusableCell(withIdentifier: R.nib.newsListCell, for: indexPath) else { return UITableViewCell() }
+            let cell = self.dequeueReusableCell(withIdentifier: R.nib.newsListCell, for: indexPath) else { return UITableViewCell() }
         cell.viewModel = cellViewModel
         switch cellViewModel.dispType {
         case .normal, .top:
@@ -113,9 +115,9 @@ class NewsListViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let cell = tableView.cellForRow(at: indexPath) as? NewsListCell ,
+        guard let cell = self.cellForRow(at: indexPath) as? NewsListCell ,
             let viewModel = cell.viewModel, let sourceArticle = viewModel.sourceArticle else { return }
-        delegate?.toArticleDetail(from: self, article: sourceArticle)
+        myDelegate?.toArticleDetail(from: self, article: sourceArticle)
     }
     
     @IBAction func tableViewCellLongPress(_ sender: UILongPressGestureRecognizer) {
@@ -135,7 +137,7 @@ class NewsListViewController: UIViewController, UITableViewDelegate, UITableView
 
         // 次ページ読み込み判別
         guard let viewModel = viewModel else { return }
-        if  tableView.contentOffset.y + tableView.frame.size.height > tableView.contentSize.height && tableView.isDragging &&
+        if  self.contentOffset.y + self.frame.size.height > self.contentSize.height && self.isDragging &&
             viewModel.newsList.count > viewModel.numReadOfPage * viewModel.page  {
             viewModel.loadNext()
         }
@@ -175,7 +177,7 @@ class NewsListViewController: UIViewController, UITableViewDelegate, UITableView
     }
 
     func speechFinish() {
-        delegate?.endSpeech(from: self)
+        myDelegate?.endSpeech(from: self)
     }
     
     func speechStop(stopText: String) {
@@ -187,11 +189,11 @@ class NewsListViewController: UIViewController, UITableViewDelegate, UITableView
 
     /// 初期設定
     func initSetting() {
-        
-        refreshControl = UIRefreshControl()
-        refreshControl?.addTarget(self, action: #selector(self.refresh(sender:)), for: .valueChanged)
-        tableView.refreshControl = refreshControl
-        
+//        refreshControl = UIRefreshControl()
+//        refreshControl?.addTarget(self, action: #selector(self.refresh(sender:)), for: .valueChanged)
+//        self.refreshControl = refreshControl
+        self.refreshControl?.addTarget(self, action: #selector(self.refresh(sender:)), for: .valueChanged)
+
         refreshView()
     }
     
@@ -208,15 +210,15 @@ class NewsListViewController: UIViewController, UITableViewDelegate, UITableView
     func refreshView() {
         DispatchQueue.mainSyncSafe { [weak self] in
             guard let `self` = self else { return }
-            self.tableView.reloadDataAfter {
-                self.refreshControl.endRefreshing()
+            self.reloadDataAfter {
+                self.refreshControl?.endRefreshing()
             }
         }
     }
     
     /// 表示されている記事の既読状態更新
     func updateVisibleIsRead() {
-        for visibleCell in tableView.visibleCells {
+        for visibleCell in self.visibleCells {
             if let cell = visibleCell as? NewsListCell { cell.updateTextColor() }
         }
     }
@@ -226,11 +228,11 @@ class NewsListViewController: UIViewController, UITableViewDelegate, UITableView
     /// - Parameter gesture: ジェスチャ
     func articleLongPress(gesture: UILongPressGestureRecognizer) {
         guard let viewModel = viewModel else { return }
-        let point = gesture.location(in: tableView)
-        guard let indexPath = tableView.indexPathForRow(at: point) else { return }
+        let point = gesture.location(in: self)
+        guard let indexPath = self.indexPathForRow(at: point) else { return }
         var speechArticles: [Article] = []
         var longPressCellViewModel: NewsListCellViewModel?
-        guard let cell = tableView.cellForRow(at: indexPath) as? NewsListCell, let cellViewModel = cell.viewModel,
+        guard let cell = self.cellForRow(at: indexPath) as? NewsListCell, let cellViewModel = cell.viewModel,
             cellViewModel.dispType == .top || cellViewModel.dispType == .normal else { return }
         longPressCellViewModel = cellViewModel
         
@@ -251,7 +253,7 @@ class NewsListViewController: UIViewController, UITableViewDelegate, UITableView
         let alertController = UIAlertController(title: R.string.localizable.articleLongPressTitle(), message: nil, preferredStyle: .actionSheet)
         let toArticleDetail = UIAlertAction(title: R.string.localizable.articleLongPressToDetail(), style: UIAlertAction.Style.default){ (action: UIAlertAction) in
             if let longPressCellViewModel = longPressCellViewModel, let sourceArticle = longPressCellViewModel.sourceArticle {
-                self.delegate?.toArticleDetail(from: self, article: sourceArticle)
+                self.myDelegate?.toArticleDetail(from: self, article: sourceArticle)
             }
         }
         alertController.addAction(toArticleDetail)
@@ -259,7 +261,7 @@ class NewsListViewController: UIViewController, UITableViewDelegate, UITableView
         // 音声アシスト開始ボタン
         let speechStart = UIAlertAction(title: R.string.localizable.articleLongPressSpeechStart(), style: UIAlertAction.Style.default){ (action: UIAlertAction) in
             SpeechModel.shared.startSpeech(articles: speechArticles)
-            self.delegate?.startSpeech(from: self)
+            self.myDelegate?.startSpeech(from: self)
             SpeechModel.shared.delegate = self
         }
         alertController.addAction(speechStart)
@@ -281,7 +283,7 @@ class NewsListViewController: UIViewController, UITableViewDelegate, UITableView
             let updateViewModel = cellViewModel[row]
             updateViewModel.setSpeechState(isSpeech: isSpeech)
             viewModel?.newsListCellViewModel[row] = updateViewModel
-            if let cell = tableView.cellForRow(at: IndexPath(row: row, section: 0)) as? NewsListCell  {
+            if let cell = self.cellForRow(at: IndexPath(row: row, section: 0)) as? NewsListCell  {
                 cell.setSpeechState(state: isSpeech)
             }
         }
