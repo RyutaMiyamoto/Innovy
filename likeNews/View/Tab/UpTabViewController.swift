@@ -9,7 +9,7 @@
 import UIKit
 import SVProgressHUD
 
-class UpTabViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, NewsListTableViewDelegate {
+class UpTabViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, MainCollectionViewCellDelegate {
 
     /// CollectionView種別
     enum CollectionViewType: Int {
@@ -98,6 +98,7 @@ class UpTabViewController: UIViewController, UICollectionViewDataSource, UIColle
             if let cell = mainCollectionView.dequeueReusableCell(withReuseIdentifier: R.nib.mainCollectionViewCell, for: indexPath) {
                 let mainViewModel = viewModel.mainCollectionViewCellViewModelList[indexPath.row]
                 cell.viewModel = mainViewModel
+                cell.delegate = self
                 return cell
             }
         }
@@ -179,19 +180,19 @@ class UpTabViewController: UIViewController, UICollectionViewDataSource, UIColle
         }
     }
 
-    // MARK: - NewsListTableViewDelegate
+    // MARK: - MainCollectionViewCellDelegate
     
-    func toArticleDetail(from tableView: NewsListTableView, article: Article) {
+    func toArticleDetail(from cell: MainCollectionViewCell, article: Article) {
         // 記事詳細画面に遷移
         performSegue(withIdentifier: R.segue.upTabViewController.articleDetail.identifier, sender: article)
     }
     
-    func startSpeech(from tableView: NewsListTableView) {
+    func startSpeech(from cell: MainCollectionViewCell) {
         // 読み上げ停止ボタン表示
         dispSpeechStopButton()
     }
     
-    func endSpeech(from tableView: NewsListTableView) {
+    func endSpeech(from cell: MainCollectionViewCell) {
         // 読み上げ停止ボタン非表示
         hideSpeechStopButton()
     }
