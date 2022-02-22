@@ -41,8 +41,6 @@ class NewsListTableView: UITableView, NewsListCellDelegate, ArticleDetailViewCon
     var heightAtIndexPath = NSMutableDictionary()
     /// ViewModel
     var viewModel: NewsListTableViewModel?
-    /// 記事更新
-    //var refreshControl: UIRefreshControl!
     /// これから読み込み対象のTableViewCellのIndexPath（Analyticsで使用）
     var analyticsIndexPath = IndexPath(row: 0, section: 0)
     /// スクロール開始Offset。下方向スクロール判別用。（Analyticsで使用）
@@ -189,9 +187,6 @@ class NewsListTableView: UITableView, NewsListCellDelegate, ArticleDetailViewCon
 
     /// 初期設定
     func initSetting() {
-//        refreshControl = UIRefreshControl()
-//        refreshControl?.addTarget(self, action: #selector(self.refresh(sender:)), for: .valueChanged)
-//        self.refreshControl = refreshControl
         self.refreshControl?.addTarget(self, action: #selector(self.refresh(sender:)), for: .valueChanged)
 
         refreshView()

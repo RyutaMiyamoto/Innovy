@@ -16,7 +16,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="260"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hTd-p9-SZX" userLabel="背景" customClass="GADNativeAdView">
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hTd-p9-SZX" userLabel="背景">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="260"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Mb1-UC-0mA">
@@ -142,7 +142,7 @@
                 <outlet property="adBlockView" destination="mgA-3n-0nS" id="wIG-lb-ibb"/>
                 <outlet property="articleImageBackView" destination="9iJ-W0-VfD" id="kfE-0n-Wcx"/>
                 <outlet property="articleImageView" destination="ZRI-ZP-5UM" id="p7U-iv-AX1"/>
-                <outlet property="backView" destination="hTd-p9-SZX" id="Qyk-hr-qmv"/>
+                <outlet property="backView" destination="hTd-p9-SZX" id="jdk-gr-GAx"/>
                 <outlet property="noteLabel" destination="8e1-MI-OFN" id="xn5-69-Roo"/>
                 <outlet property="sourceLabel" destination="Rjs-nc-JFw" id="FH2-jd-9X3"/>
                 <outlet property="titleLabel" destination="hSU-es-KVV" id="IM6-YR-lH1"/>

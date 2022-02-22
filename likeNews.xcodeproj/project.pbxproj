@@ -45,11 +45,9 @@
 		90A9291A1FBFCEA100A476DA /* NewsTopTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90A929191FBFCEA100A476DA /* NewsTopTabBarController.swift */; };
 		90A9291C1FBFCEB900A476DA /* NewsTopTabBarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90A9291B1FBFCEB900A476DA /* NewsTopTabBarViewModel.swift */; };
 		90A9291E1FC0001200A476DA /* UICollectionView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90A9291D1FC0001200A476DA /* UICollectionView+.swift */; };
-		90AAFD9C27707972001B173A /* GoogleMobileAds.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 90AAFD9B27707972001B173A /* GoogleMobileAds.xcframework */; };
 		90AAFD9E27707989001B173A /* FirebaseAnalytics.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 90AAFD9D27707989001B173A /* FirebaseAnalytics.xcframework */; };
 		90AAFDA0277079A0001B173A /* GoogleAppMeasurement.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 90AAFD9F277079A0001B173A /* GoogleAppMeasurement.xcframework */; };
 		90AAFDA2277079AF001B173A /* GoogleAppMeasurementIdentitySupport.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 90AAFDA1277079AF001B173A /* GoogleAppMeasurementIdentitySupport.xcframework */; };
-		90AAFDA427707A36001B173A /* UserMessagingPlatform.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 90AAFDA327707A36001B173A /* UserMessagingPlatform.xcframework */; };
 		90C2A3901FCEE0D500A0769C /* NavigationTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90C2A38F1FCEE0D500A0769C /* NavigationTitleView.swift */; };
 		90C2A3921FCEE0E900A0769C /* NavigationTitleView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 90C2A3911FCEE0E900A0769C /* NavigationTitleView.xib */; };
 		90DCE0401FF5E5D100574584 /* SpeechModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90DCE03F1FF5E5D100574584 /* SpeechModel.swift */; };
@@ -223,11 +221,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				90AAFDA427707A36001B173A /* UserMessagingPlatform.xcframework in Frameworks */,
 				90AAFDA2277079AF001B173A /* GoogleAppMeasurementIdentitySupport.xcframework in Frameworks */,
 				90AAFDA0277079A0001B173A /* GoogleAppMeasurement.xcframework in Frameworks */,
 				90AAFD9E27707989001B173A /* FirebaseAnalytics.xcframework in Frameworks */,
-				90AAFD9C27707972001B173A /* GoogleMobileAds.xcframework in Frameworks */,
 				E625C6062097494900234735 /* CoreLocation.framework in Frameworks */,
 				7E3763DB79853250365A722A /* Pods_likeNews.framework in Frameworks */,
 			);

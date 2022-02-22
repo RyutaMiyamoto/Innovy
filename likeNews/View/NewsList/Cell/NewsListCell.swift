@@ -8,7 +8,7 @@
 
 import UIKit
 import SDWebImage
-import GoogleMobileAds
+import NendAd
 
 protocol NewsListCellDelegate: AnyObject {
     
@@ -19,11 +19,11 @@ protocol NewsListCellDelegate: AnyObject {
     func imageUrlLoadComplete(from cell: NewsListCell)
 }
 
-class NewsListCell: UITableViewCell, GADAdLoaderDelegate, GADNativeAdLoaderDelegate, GADNativeAdDelegate {
-    
+class NewsListCell: UITableViewCell {
+    /// delegate
     weak var delegate: NewsListCellDelegate?
     /// 背景
-    @IBOutlet var backView: GADNativeAdView!
+    @IBOutlet weak var backView: UIView!
     /// 広告表示Block用
     @IBOutlet var adBlockView: UIView!
     /// タイトル
@@ -79,35 +79,6 @@ class NewsListCell: UITableViewCell, GADAdLoaderDelegate, GADNativeAdLoaderDeleg
             }
         }
     }
-    /// AdMobローダ
-    var adLoader: GADAdLoader!
-    
-    // MARK: - GADAdLoaderDelegate
-    
-    func adLoader(_ adLoader: GADAdLoader, didFailToReceiveAdWithError error: Error) {}
-    
-    // MARK: - GADNativeAdLoaderDelegate
-    
-    func adLoader(_ adLoader: GADAdLoader, didReceive nativeAd: GADNativeAd) {
-        viewModel?.setAdData(nativeAd: nativeAd)
-        backView.nativeAd = nativeAd
-        nativeAd.delegate = self
-        setCellInfo()
-    }
-
-    // MARK: - GADNativeAdDelegate
-    
-    func nativeAdDidRecordClick(_ nativeAd: GADNativeAd) {}
-
-    func nativeAdDidRecordImpression(_ nativeAd: GADNativeAd) {}
-
-    func nativeAdWillPresentScreen(_ nativeAd: GADNativeAd) {}
-
-    func nativeAdWillDismissScreen(_ nativeAd: GADNativeAd) {}
-
-    func nativeAdDidDismissScreen(_ nativeAd: GADNativeAd) {}
-
-    func nativeAdWillLeaveApplication(_ nativeAd: GADNativeAd) {}
     
     // MARK: - Private Method
 
@@ -131,14 +102,12 @@ class NewsListCell: UITableViewCell, GADAdLoaderDelegate, GADNativeAdLoaderDeleg
     
     /// 広告読み込み
     func loadAd() {
-        if let viewController = UIApplication.shared.keyWindow?.rootViewController {
-            adLoader = GADAdLoader(adUnitID: Bundle.AdMob(key: .adUnitID),
-                                        rootViewController: viewController,
-                                        adTypes: [.native],
-                                        options: nil)
-            adLoader.delegate = self
-            adLoader.load(GADRequest())
-        }
+        guard let viewModel = viewModel else { return }
+        viewModel.loadAd(completion: { result in
+            guard result else { return }
+            viewModel.isAdLoad = true
+            self.setCellInfo()
+        })
     }
     
     /// セル情報セット
@@ -150,7 +119,6 @@ class NewsListCell: UITableViewCell, GADAdLoaderDelegate, GADNativeAdLoaderDeleg
             self.titleLabel.textColor = viewModel.titleTextColor
             self.sourceLabel.text = viewModel.sourceNameText
             self.noteLabel.text = viewModel.noteText
-            self.adBlockView.isHidden = viewModel.isAdBlockViewHideen
             self.topArticleImageBackView.isHidden = viewModel.topArticleImageHidden
             self.articleImageBackView.isHidden = viewModel.articleImageHidden
             if viewModel.dispType == .ad {
@@ -168,6 +136,5 @@ class NewsListCell: UITableViewCell, GADAdLoaderDelegate, GADNativeAdLoaderDeleg
     func setSpeechState(state: Bool) {
         guard let viewModel = self.viewModel else { return }
         self.backView.backgroundColor = viewModel.isSpeechNow ? .speechCell() : .white
-        self.adBlockView.backgroundColor = viewModel.isSpeechNow ? .speechCell() : .white
     }
 }

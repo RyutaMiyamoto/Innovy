@@ -17,7 +17,6 @@ pod 'Firebase/Messaging', '~> 8.10.0'
 pod 'Firebase/Analytics', '~> 8.10.0'
 pod 'NendSDK_iOS', '~> 7.1.0'
 pod 'TwitterKit'
-pod 'Google-Mobile-Ads-SDK', '~> 8.13.0'
 
   # Pods for likeNews
 
