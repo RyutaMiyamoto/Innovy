@@ -38,7 +38,7 @@
                                 </connections>
                             </collectionView>
                             <collectionView clipsSubviews="YES" tag="2" contentMode="scaleToFill" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="kXz-8s-WhR">
-                                <rect key="frame" x="0.0" y="98" width="320" height="435"/>
+                                <rect key="frame" x="0.0" y="98" width="320" height="421"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="0.0" minimumInteritemSpacing="10" id="Pja-2x-Ac8">
                                     <size key="itemSize" width="50" height="50"/>
@@ -74,7 +74,7 @@
                             <constraint firstItem="kXz-8s-WhR" firstAttribute="leading" secondItem="otP-wd-VvW" secondAttribute="leading" id="Rf5-fk-E70"/>
                             <constraint firstItem="tVZ-IV-FwY" firstAttribute="top" secondItem="zol-kV-2xn" secondAttribute="bottom" id="UFY-mf-mhh"/>
                             <constraint firstAttribute="trailing" secondItem="kXz-8s-WhR" secondAttribute="trailing" id="f8k-Je-jGC"/>
-                            <constraint firstItem="dB4-bK-sqT" firstAttribute="top" secondItem="kXz-8s-WhR" secondAttribute="bottom" constant="-14" id="fpD-J2-hNM"/>
+                            <constraint firstItem="dB4-bK-sqT" firstAttribute="top" secondItem="kXz-8s-WhR" secondAttribute="bottom" id="fpD-J2-hNM"/>
                             <constraint firstItem="edb-Bl-4UD" firstAttribute="trailing" secondItem="otP-wd-VvW" secondAttribute="trailingMargin" id="yj2-yd-sLm"/>
                             <constraint firstItem="tVZ-IV-FwY" firstAttribute="leading" secondItem="otP-wd-VvW" secondAttribute="leading" id="zeO-MM-fwQ"/>
                         </constraints>
