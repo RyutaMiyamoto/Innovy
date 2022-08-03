@@ -7,7 +7,8 @@
 //
 
 import UIKit
-import Firebase
+import FirebaseCore
+import FirebaseMessaging
 import SVProgressHUD
 import UserNotifications
 

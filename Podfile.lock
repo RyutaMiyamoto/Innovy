@@ -1,16 +1,6 @@
 PODS:
   - Alamofire (5.5.0)
   - CTFeedback (1.1.1)
-  - Firebase/Analytics (8.10.0):
-    - Firebase/Core
-  - Firebase/Core (8.10.0):
-    - Firebase/CoreOnly
-    - FirebaseAnalytics (~> 8.10.0)
-  - Firebase/CoreOnly (8.10.0):
-    - FirebaseCore (= 8.10.0)
-  - Firebase/Messaging (8.10.0):
-    - Firebase/CoreOnly
-    - FirebaseMessaging (~> 8.10.0)
   - FirebaseAnalytics (8.10.0):
     - FirebaseAnalytics/AdIdSupport (= 8.10.0)
     - FirebaseCore (~> 8.0)
@@ -76,24 +66,24 @@ PODS:
     - GoogleUtilities/Environment (~> 7.2)
     - nanopb (~> 2.30908.0)
     - PromisesObjC (< 3.0, >= 1.2)
-  - GoogleUtilities/AppDelegateSwizzler (7.6.0):
+  - GoogleUtilities/AppDelegateSwizzler (7.7.0):
     - GoogleUtilities/Environment
     - GoogleUtilities/Logger
     - GoogleUtilities/Network
-  - GoogleUtilities/Environment (7.6.0):
+  - GoogleUtilities/Environment (7.7.0):
     - PromisesObjC (< 3.0, >= 1.2)
-  - GoogleUtilities/Logger (7.6.0):
+  - GoogleUtilities/Logger (7.7.0):
     - GoogleUtilities/Environment
-  - GoogleUtilities/MethodSwizzler (7.6.0):
+  - GoogleUtilities/MethodSwizzler (7.7.0):
     - GoogleUtilities/Logger
-  - GoogleUtilities/Network (7.6.0):
+  - GoogleUtilities/Network (7.7.0):
     - GoogleUtilities/Logger
     - "GoogleUtilities/NSData+zlib"
     - GoogleUtilities/Reachability
-  - "GoogleUtilities/NSData+zlib (7.6.0)"
-  - GoogleUtilities/Reachability (7.6.0):
+  - "GoogleUtilities/NSData+zlib (7.7.0)"
+  - GoogleUtilities/Reachability (7.7.0):
     - GoogleUtilities/Logger
-  - GoogleUtilities/UserDefaults (7.6.0):
+  - GoogleUtilities/UserDefaults (7.7.0):
     - GoogleUtilities/Logger
   - nanopb (2.30908.0):
     - nanopb/decode (= 2.30908.0)
@@ -121,8 +111,8 @@ PODS:
 DEPENDENCIES:
   - Alamofire (~> 5.5)
   - CTFeedback
-  - Firebase/Analytics (~> 8.10.0)
-  - Firebase/Messaging (~> 8.10.0)
+  - FirebaseAnalytics (~> 8.10.0)
+  - FirebaseMessaging (~> 8.10.0)
   - NendSDK_iOS (~> 7.1.0)
   - NoticeObserveKit
   - R.swift (~> 6.1.0)
@@ -136,7 +126,6 @@ SPEC REPOS:
   trunk:
     - Alamofire
     - CTFeedback
-    - Firebase
     - FirebaseAnalytics
     - FirebaseCore
     - FirebaseCoreDiagnostics
@@ -161,7 +150,6 @@ SPEC REPOS:
 SPEC CHECKSUMS:
   Alamofire: 1c4fb5369c3fe93d2857c780d8bbe09f06f97e7c
   CTFeedback: 6f128606e0d26d46075c3fa9fc33884372df8675
-  Firebase: 44213362f1dcc52555b935dc925ed35ac55f1b20
   FirebaseAnalytics: 319c9b3b1bdd400d60e2f415dff0c5f6959e6760
   FirebaseCore: 04186597c095da37d90ff9fd3e53bc61a1ff2440
   FirebaseCoreDiagnostics: 56fb7216d87e0e6ec2feddefa9d8a392fe8b2c18
@@ -169,7 +157,7 @@ SPEC CHECKSUMS:
   FirebaseMessaging: b0aeba17332ee1ee610662b4d1e02a86db82f08f
   GoogleAppMeasurement: a3311dbcf3ea651e5a070fe8559b57c174ada081
   GoogleDataTransport: 629c20a4d363167143f30ea78320d5a7eb8bd940
-  GoogleUtilities: 684ee790a24f73ebb2d1d966e9711c203f2a4237
+  GoogleUtilities: e0913149f6b0625b553d70dae12b49fc62914fd1
   nanopb: a0ba3315591a9ae0a16a309ee504766e90db0c96
   NendSDK_iOS: 852e94a33864118ba12e248c9294f431e45d6bb1
   NoticeObserveKit: 9984e83bde41e2b2cc1894b898952cadc5dab3be
@@ -183,6 +171,6 @@ SPEC CHECKSUMS:
   TwitterKit: 5e4f41d70b9abdb41df5467f52d7aa2c0fd26ebb
   Unbox: d2677af8fde59a30141e02981b11cb6a0e3b6bc5
 
-PODFILE CHECKSUM: 39964d1b5d01d553bad01a78a3222f73e6e9486e
+PODFILE CHECKSUM: ee858151785a9613334fa5f18b241a21910c4302
 
 COCOAPODS: 1.11.2
