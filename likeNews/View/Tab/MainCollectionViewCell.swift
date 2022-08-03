@@ -187,12 +187,13 @@ class MainCollectionViewCell: UICollectionViewCell, UITableViewDelegate, UITable
 
      /// 初期設定
      func initSetting() {
-         
+         // 記事更新制御
          refreshControl = UIRefreshControl()
          refreshControl?.addTarget(self, action: #selector(self.refresh(sender:)), for: .valueChanged)
          tableView.refreshControl = refreshControl
          
-         refreshView()
+         // 記事初回表示
+         refresh(sender: UIRefreshControl())
      }
      
      @objc func refresh(sender: UIRefreshControl) {
