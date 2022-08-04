@@ -37,8 +37,15 @@ class MainCollectionViewCell: UICollectionViewCell, UITableViewDelegate, UITable
             tableView.delegate = self
             tableView.dataSource = self
             tableView.register(R.nib.newsListCell)
+            
+            // ロングタップジェスチャ登録
+            let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(tableViewCellLongPress))
+            longPressGesture.minimumPressDuration = 0.5
+            longPressGesture.allowableMovement = 10
+            tableView.addGestureRecognizer(longPressGesture)
         }
     }
+    
     weak var delegate: MainCollectionViewCellDelegate?
     
     /// セルの高さ
@@ -117,11 +124,11 @@ class MainCollectionViewCell: UICollectionViewCell, UITableViewDelegate, UITable
              let viewModel = cell.viewModel, let sourceArticle = viewModel.sourceArticle else { return }
          delegate?.toArticleDetail(from: self, article: sourceArticle)
      }
-     
-     @IBAction func tableViewCellLongPress(_ sender: UILongPressGestureRecognizer) {
-         guard sender.state == .began else { return }
-         articleLongPress(gesture: sender)
-     }
+    
+    @objc func tableViewCellLongPress(longPressGesture: UILongPressGestureRecognizer) {
+        guard longPressGesture.state == .began else { return }
+        articleLongPress(gesture: longPressGesture)
+    }
      
      // MARK: - UIScrollViewDelegate
      
