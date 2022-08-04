@@ -4,9 +4,9 @@ IOS news application for innovators
 
 # Requirements
 
-- Xcode:10.1+
-- iOS:10.0+
-- Swift:3.2
+- Xcode:13.4.1+
+- iOS:15.0+
+- Swift:5
 
 # Author
 

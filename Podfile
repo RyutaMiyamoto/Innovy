@@ -1,6 +1,6 @@
 use_frameworks!
 # Uncomment this line to define a global platform for your project
-platform :ios, '12.0'
+platform :ios, '15.0'
 # swift_version = '5'
 
 target 'likeNews' do
