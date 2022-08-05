@@ -19,7 +19,7 @@ protocol NewsListCellDelegate: AnyObject {
     func imageUrlLoadComplete(from cell: NewsListCell)
 }
 
-class NewsListCell: UITableViewCell {
+class NewsListCell: UITableViewCell, NADNativeViewRendering {
     /// delegate
     weak var delegate: NewsListCellDelegate?
     /// 背景
@@ -80,6 +80,10 @@ class NewsListCell: UITableViewCell {
         }
     }
     
+    func prTextLabel() -> UILabel! {
+        return self.sourceLabel
+    }
+    
     // MARK: - Private Method
 
     /// 記事画像URL取得
@@ -122,6 +126,9 @@ class NewsListCell: UITableViewCell {
             self.topArticleImageBackView.isHidden = viewModel.topArticleImageHidden
             self.articleImageBackView.isHidden = viewModel.articleImageHidden
             if viewModel.dispType == .ad {
+                if let nativeAd = viewModel.nativeAd {
+                    nativeAd.intoView(self, advertisingExplicitly: .PR)
+                }
                 self.articleImageView.image = viewModel.imageAd
             } else {
                 self.imageUrl = viewModel.imageUrl
