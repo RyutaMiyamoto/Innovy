@@ -125,14 +125,10 @@ class NewsListCell: UITableViewCell, NADNativeViewRendering {
             self.noteLabel.text = viewModel.noteText
             self.topArticleImageBackView.isHidden = viewModel.topArticleImageHidden
             self.articleImageBackView.isHidden = viewModel.articleImageHidden
-            if viewModel.dispType == .ad {
-                if let nativeAd = viewModel.nativeAd {
-                    nativeAd.intoView(self, advertisingExplicitly: .PR)
-                }
-                self.articleImageView.image = viewModel.imageAd
-            } else {
-                self.imageUrl = viewModel.imageUrl
+            if viewModel.dispType == .ad, let nativeAd = viewModel.nativeAd {
+                nativeAd.intoView(self, advertisingExplicitly: .PR)
             }
+            self.imageUrl = viewModel.imageUrl
             self.setSpeechState(state: viewModel.isSpeechNow)
         }
     }
