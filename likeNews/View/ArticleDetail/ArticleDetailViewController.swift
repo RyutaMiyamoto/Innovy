@@ -383,6 +383,9 @@ class ArticleDetailViewController: UIViewController, WKUIDelegate, WKNavigationD
             self.dismiss(animated: true, completion: nil)
         }
         alertController.addAction(okButton)
-        UIApplication.shared.keyWindow?.rootViewController?.present(alertController,animated: true,completion: nil)
+        let scenes = UIApplication.shared.connectedScenes
+        let windowScene = scenes.first as? UIWindowScene
+        let window = windowScene?.windows.first
+        window?.rootViewController?.present(alertController,animated: true,completion: nil)
     }
 }
