@@ -16,7 +16,6 @@ pod 'SVProgressHUD', '~> 2.2.5'
 pod 'FirebaseMessaging', '~> 8.10.0'
 pod 'FirebaseAnalytics', '~> 8.10.0'
 pod 'NendSDK_iOS', '~> 7.1.0'
-pod 'TwitterKit'
 
   # Pods for likeNews
 

@@ -164,7 +164,7 @@ struct R: Rswift.Validatable {
   #endif
 
   #if os(iOS) || os(tvOS)
-  /// This `R.storyboard` struct is generated, and contains static references to 9 storyboards.
+  /// This `R.storyboard` struct is generated, and contains static references to 8 storyboards.
   struct storyboard {
     /// Storyboard `ArticleDetail`.
     static let articleDetail = _R.storyboard.articleDetail()
@@ -180,8 +180,6 @@ struct R: Rswift.Validatable {
     static let newsTop = _R.storyboard.newsTop()
     /// Storyboard `SpeechSetting`.
     static let speechSetting = _R.storyboard.speechSetting()
-    /// Storyboard `Twitter`.
-    static let twitter = _R.storyboard.twitter()
     /// Storyboard `UpTabViewController`.
     static let upTabViewController = _R.storyboard.upTabViewController()
 
@@ -235,13 +233,6 @@ struct R: Rswift.Validatable {
     #endif
 
     #if os(iOS) || os(tvOS)
-    /// `UIStoryboard(name: "Twitter", bundle: ...)`
-    static func twitter(_: Void = ()) -> UIKit.UIStoryboard {
-      return UIKit.UIStoryboard(resource: R.storyboard.twitter)
-    }
-    #endif
-
-    #if os(iOS) || os(tvOS)
     /// `UIStoryboard(name: "UpTabViewController", bundle: ...)`
     static func upTabViewController(_: Void = ()) -> UIKit.UIStoryboard {
       return UIKit.UIStoryboard(resource: R.storyboard.upTabViewController)
@@ -273,7 +264,7 @@ struct R: Rswift.Validatable {
     fileprivate init() {}
   }
 
-  /// This `R.image` struct is generated, and contains static references to 46 images.
+  /// This `R.image` struct is generated, and contains static references to 43 images.
   struct image {
     /// Image `ArticleDetailBackButton`.
     static let articleDetailBackButton = Rswift.ImageResource(bundle: R.hostingBundle, name: "ArticleDetailBackButton")
@@ -285,8 +276,6 @@ struct R: Rswift.Validatable {
     static let articleDetailShareButton = Rswift.ImageResource(bundle: R.hostingBundle, name: "ArticleDetailShareButton")
     /// Image `ArticleDetailShareOpenSafari`.
     static let articleDetailShareOpenSafari = Rswift.ImageResource(bundle: R.hostingBundle, name: "ArticleDetailShareOpenSafari")
-    /// Image `ArticleDetailTwitterButton`.
-    static let articleDetailTwitterButton = Rswift.ImageResource(bundle: R.hostingBundle, name: "ArticleDetailTwitterButton")
     /// Image `CommonArticlePlaceholder`.
     static let commonArticlePlaceholder = Rswift.ImageResource(bundle: R.hostingBundle, name: "CommonArticlePlaceholder")
     /// Image `CommonNavigationTitle`.
@@ -327,10 +316,6 @@ struct R: Rswift.Validatable {
     static let speechQuick = Rswift.ImageResource(bundle: R.hostingBundle, name: "SpeechQuick")
     /// Image `SpeechSlow`.
     static let speechSlow = Rswift.ImageResource(bundle: R.hostingBundle, name: "SpeechSlow")
-    /// Image `TwitterCloseButton`.
-    static let twitterCloseButton = Rswift.ImageResource(bundle: R.hostingBundle, name: "TwitterCloseButton")
-    /// Image `TwitterTweetButton`.
-    static let twitterTweetButton = Rswift.ImageResource(bundle: R.hostingBundle, name: "TwitterTweetButton")
     /// Image `WeatherBrokenCloudsDay`.
     static let weatherBrokenCloudsDay = Rswift.ImageResource(bundle: R.hostingBundle, name: "WeatherBrokenCloudsDay")
     /// Image `WeatherBrokenCloudsNight`.
@@ -400,13 +385,6 @@ struct R: Rswift.Validatable {
     /// `UIImage(named: "ArticleDetailShareOpenSafari", bundle: ..., traitCollection: ...)`
     static func articleDetailShareOpenSafari(compatibleWith traitCollection: UIKit.UITraitCollection? = nil) -> UIKit.UIImage? {
       return UIKit.UIImage(resource: R.image.articleDetailShareOpenSafari, compatibleWith: traitCollection)
-    }
-    #endif
-
-    #if os(iOS) || os(tvOS)
-    /// `UIImage(named: "ArticleDetailTwitterButton", bundle: ..., traitCollection: ...)`
-    static func articleDetailTwitterButton(compatibleWith traitCollection: UIKit.UITraitCollection? = nil) -> UIKit.UIImage? {
-      return UIKit.UIImage(resource: R.image.articleDetailTwitterButton, compatibleWith: traitCollection)
     }
     #endif
 
@@ -551,20 +529,6 @@ struct R: Rswift.Validatable {
     #endif
 
     #if os(iOS) || os(tvOS)
-    /// `UIImage(named: "TwitterCloseButton", bundle: ..., traitCollection: ...)`
-    static func twitterCloseButton(compatibleWith traitCollection: UIKit.UITraitCollection? = nil) -> UIKit.UIImage? {
-      return UIKit.UIImage(resource: R.image.twitterCloseButton, compatibleWith: traitCollection)
-    }
-    #endif
-
-    #if os(iOS) || os(tvOS)
-    /// `UIImage(named: "TwitterTweetButton", bundle: ..., traitCollection: ...)`
-    static func twitterTweetButton(compatibleWith traitCollection: UIKit.UITraitCollection? = nil) -> UIKit.UIImage? {
-      return UIKit.UIImage(resource: R.image.twitterTweetButton, compatibleWith: traitCollection)
-    }
-    #endif
-
-    #if os(iOS) || os(tvOS)
     /// `UIImage(named: "WeatherBrokenCloudsDay", bundle: ..., traitCollection: ...)`
     static func weatherBrokenCloudsDay(compatibleWith traitCollection: UIKit.UITraitCollection? = nil) -> UIKit.UIImage? {
       return UIKit.UIImage(resource: R.image.weatherBrokenCloudsDay, compatibleWith: traitCollection)
@@ -693,7 +657,7 @@ struct R: Rswift.Validatable {
     fileprivate init() {}
   }
 
-  /// This `R.nib` struct is generated, and contains static references to 7 nibs.
+  /// This `R.nib` struct is generated, and contains static references to 6 nibs.
   struct nib {
     /// Nib `EtcCell`.
     static let etcCell = _R.nib._EtcCell()
@@ -707,8 +671,6 @@ struct R: Rswift.Validatable {
     static let newsListCell = _R.nib._NewsListCell()
     /// Nib `SegmentCollectionViewCell`.
     static let segmentCollectionViewCell = _R.nib._SegmentCollectionViewCell()
-    /// Nib `TweetCell`.
-    static let tweetCell = _R.nib._TweetCell()
 
     #if os(iOS) || os(tvOS)
     /// `UINib(name: "EtcCell", in: bundle)`
@@ -758,14 +720,6 @@ struct R: Rswift.Validatable {
     }
     #endif
 
-    #if os(iOS) || os(tvOS)
-    /// `UINib(name: "TweetCell", in: bundle)`
-    @available(*, deprecated, message: "Use UINib(resource: R.nib.tweetCell) instead")
-    static func tweetCell(_: Void = ()) -> UIKit.UINib {
-      return UIKit.UINib(resource: R.nib.tweetCell)
-    }
-    #endif
-
     static func etcCell(owner ownerOrNil: AnyObject?, options optionsOrNil: [UINib.OptionsKey : Any]? = nil) -> EtcCell? {
       return R.nib.etcCell.instantiate(withOwner: ownerOrNil, options: optionsOrNil)[0] as? EtcCell
     }
@@ -790,14 +744,10 @@ struct R: Rswift.Validatable {
       return R.nib.segmentCollectionViewCell.instantiate(withOwner: ownerOrNil, options: optionsOrNil)[0] as? SegmentCollectionViewCell
     }
 
-    static func tweetCell(owner ownerOrNil: AnyObject?, options optionsOrNil: [UINib.OptionsKey : Any]? = nil) -> TweetCell? {
-      return R.nib.tweetCell.instantiate(withOwner: ownerOrNil, options: optionsOrNil)[0] as? TweetCell
-    }
-
     fileprivate init() {}
   }
 
-  /// This `R.reuseIdentifier` struct is generated, and contains static references to 6 reuse identifiers.
+  /// This `R.reuseIdentifier` struct is generated, and contains static references to 5 reuse identifiers.
   struct reuseIdentifier {
     /// Reuse identifier `EtcCell`.
     static let etcCell: Rswift.ReuseIdentifier<EtcCell> = Rswift.ReuseIdentifier(identifier: "EtcCell")
@@ -809,8 +759,6 @@ struct R: Rswift.Validatable {
     static let newsListCell: Rswift.ReuseIdentifier<NewsListCell> = Rswift.ReuseIdentifier(identifier: "NewsListCell")
     /// Reuse identifier `SegmentCollectionViewCell`.
     static let segmentCollectionViewCell: Rswift.ReuseIdentifier<SegmentCollectionViewCell> = Rswift.ReuseIdentifier(identifier: "SegmentCollectionViewCell")
-    /// Reuse identifier `TweetCell`.
-    static let tweetCell: Rswift.ReuseIdentifier<TweetCell> = Rswift.ReuseIdentifier(identifier: "TweetCell")
 
     fileprivate init() {}
   }
@@ -1340,20 +1288,6 @@ struct _R: Rswift.Validatable {
       fileprivate init() {}
     }
 
-    struct _TweetCell: Rswift.NibResourceType, Rswift.ReuseIdentifierType {
-      typealias ReusableType = TweetCell
-
-      let bundle = R.hostingBundle
-      let identifier = "TweetCell"
-      let name = "TweetCell"
-
-      func firstView(owner ownerOrNil: AnyObject?, options optionsOrNil: [UINib.OptionsKey : Any]? = nil) -> TweetCell? {
-        return instantiate(withOwner: ownerOrNil, options: optionsOrNil)[0] as? TweetCell
-      }
-
-      fileprivate init() {}
-    }
-
     fileprivate init() {}
   }
   #endif
@@ -1383,9 +1317,6 @@ struct _R: Rswift.Validatable {
       try speechSetting.validate()
       #endif
       #if os(iOS) || os(tvOS)
-      try twitter.validate()
-      #endif
-      #if os(iOS) || os(tvOS)
       try upTabViewController.validate()
       #endif
     }
@@ -1401,7 +1332,6 @@ struct _R: Rswift.Validatable {
         if UIKit.UIImage(named: "ArticleDetailBackButton", in: R.hostingBundle, compatibleWith: nil) == nil { throw Rswift.ValidationError(description: "[R.swift] Image named 'ArticleDetailBackButton' is used in storyboard 'ArticleDetail', but couldn't be loaded.") }
         if UIKit.UIImage(named: "ArticleDetailClipOnButton", in: R.hostingBundle, compatibleWith: nil) == nil { throw Rswift.ValidationError(description: "[R.swift] Image named 'ArticleDetailClipOnButton' is used in storyboard 'ArticleDetail', but couldn't be loaded.") }
         if UIKit.UIImage(named: "ArticleDetailShareButton", in: R.hostingBundle, compatibleWith: nil) == nil { throw Rswift.ValidationError(description: "[R.swift] Image named 'ArticleDetailShareButton' is used in storyboard 'ArticleDetail', but couldn't be loaded.") }
-        if UIKit.UIImage(named: "ArticleDetailTwitterButton", in: R.hostingBundle, compatibleWith: nil) == nil { throw Rswift.ValidationError(description: "[R.swift] Image named 'ArticleDetailTwitterButton' is used in storyboard 'ArticleDetail', but couldn't be loaded.") }
         if #available(iOS 11.0, tvOS 11.0, *) {
         }
       }
@@ -1510,30 +1440,6 @@ struct _R: Rswift.Validatable {
         if UIKit.UIImage(named: "SpeechSlow", in: R.hostingBundle, compatibleWith: nil) == nil { throw Rswift.ValidationError(description: "[R.swift] Image named 'SpeechSlow' is used in storyboard 'SpeechSetting', but couldn't be loaded.") }
         if #available(iOS 11.0, tvOS 11.0, *) {
         }
-      }
-
-      fileprivate init() {}
-    }
-    #endif
-
-    #if os(iOS) || os(tvOS)
-    struct twitter: Rswift.StoryboardResourceWithInitialControllerType, Rswift.Validatable {
-      typealias InitialController = UIKit.UINavigationController
-
-      let bundle = R.hostingBundle
-      let name = "Twitter"
-      let twitter = StoryboardViewControllerResource<TwitterViewController>(identifier: "Twitter")
-
-      func twitter(_: Void = ()) -> TwitterViewController? {
-        return UIKit.UIStoryboard(resource: self).instantiateViewController(withResource: twitter)
-      }
-
-      static func validate() throws {
-        if UIKit.UIImage(named: "TwitterCloseButton", in: R.hostingBundle, compatibleWith: nil) == nil { throw Rswift.ValidationError(description: "[R.swift] Image named 'TwitterCloseButton' is used in storyboard 'Twitter', but couldn't be loaded.") }
-        if UIKit.UIImage(named: "TwitterTweetButton", in: R.hostingBundle, compatibleWith: nil) == nil { throw Rswift.ValidationError(description: "[R.swift] Image named 'TwitterTweetButton' is used in storyboard 'Twitter', but couldn't be loaded.") }
-        if #available(iOS 11.0, tvOS 11.0, *) {
-        }
-        if _R.storyboard.twitter().twitter() == nil { throw Rswift.ValidationError(description:"[R.swift] ViewController with identifier 'twitter' could not be loaded from storyboard 'Twitter' as 'TwitterViewController'.") }
       }
 
       fileprivate init() {}

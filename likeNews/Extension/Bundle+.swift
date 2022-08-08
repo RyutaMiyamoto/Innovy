@@ -30,18 +30,6 @@ extension Bundle {
         case host = "Host"
         /// Pass
         case pass = "Pass"
-        /// Twitterホスト
-        case twitterHost = "TwitterHost"
-        /// Twitterホストバージョン
-        case twitterHostVersion = "TwitterHostVersion"
-        /// Twitterコンシューマーキー
-        case twitterConsumerKey = "TwitterConsumerKey"
-        /// Twitterコンシューマーキー（シークレット）
-        case twitterConsumerSecret = "TwitterConsumerSecret"
-        /// Twitterトークン
-        case twitterToken = "TwitterToken"
-        /// Twitterトークン（シークレット）
-        case twitterTokenSecret = "TwitterTokenSecret"
         /// OpenWeatherMapホスト
         case weatherHost = "WeatherHost"
         /// OpenWeatherMap API Key

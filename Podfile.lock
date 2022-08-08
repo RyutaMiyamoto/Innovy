@@ -103,9 +103,6 @@ PODS:
     - SDWebImage/Core (= 5.12.1)
   - SDWebImage/Core (5.12.1)
   - SVProgressHUD (2.2.5)
-  - TwitterCore (3.2.0)
-  - TwitterKit (3.4.2):
-    - TwitterCore (>= 3.2.0)
   - Unbox (4.0.0)
 
 DEPENDENCIES:
@@ -119,7 +116,6 @@ DEPENDENCIES:
   - Realm (~> 10.20.1)
   - SDWebImage (~> 5.0)
   - SVProgressHUD (~> 2.2.5)
-  - TwitterKit
   - Unbox (~> 4.0.0)
 
 SPEC REPOS:
@@ -143,8 +139,6 @@ SPEC REPOS:
     - Realm
     - SDWebImage
     - SVProgressHUD
-    - TwitterCore
-    - TwitterKit
     - Unbox
 
 SPEC CHECKSUMS:
@@ -167,10 +161,8 @@ SPEC CHECKSUMS:
   Realm: fac5ecd031fcb81171627b74944c885662d4b266
   SDWebImage: 4dc3e42d9ec0c1028b960a33ac6b637bb432207b
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
-  TwitterCore: 8cbc9ad34d91c63a0035ea05bfbfc0d7ca72a28c
-  TwitterKit: 5e4f41d70b9abdb41df5467f52d7aa2c0fd26ebb
   Unbox: d2677af8fde59a30141e02981b11cb6a0e3b6bc5
 
-PODFILE CHECKSUM: 5e39b720be5cb7155fa3fd8180116ae26fe248f3
+PODFILE CHECKSUM: bf3fa5af5bd38de611d057cece344f56cf735332
 
 COCOAPODS: 1.11.2

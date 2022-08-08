@@ -8,7 +8,6 @@
 
 import UIKit
 import WebKit
-import TwitterKit
 
 protocol ArticleDetailViewControllerDelegate: AnyObject {
     /// 遷移元画面に戻る
@@ -63,8 +62,6 @@ class ArticleDetailViewController: UIViewController, WKUIDelegate, WKNavigationD
         case share
         /// クリップボタン
         case clip
-        /// Twitterボタン
-        case twitter
     }
     
     // MARK: - Life Cycle
@@ -160,10 +157,6 @@ class ArticleDetailViewController: UIViewController, WKUIDelegate, WKNavigationD
         case ButtonType.clip.rawValue:
             // クリップボタン
             clip()
-        
-        case ButtonType.twitter.rawValue:
-            // Twitterボタン
-            twitter()
             
         default: break
         }
@@ -245,16 +238,7 @@ class ArticleDetailViewController: UIViewController, WKUIDelegate, WKNavigationD
         
         present(activityVC, animated: true, completion: nil)
     }
-    
-    /// ツイート
-    private func twitter() {
-        isBack = false
-        guard let navigationController = R.storyboard.twitter.instantiateInitialViewController() else { return }
-        guard let twitterViewController = navigationController.topViewController as? TwitterViewController else { return }
-        twitterViewController.viewModel = TwitterViewModel(article: article)
-        present(navigationController, animated: true, completion: nil)
-    }
-    
+        
     /// ボタンをタップした時のアクション
     ///
     /// - Parameter button: ボタン
