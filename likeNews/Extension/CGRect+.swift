@@ -24,11 +24,4 @@ extension CGRect {
     func screenHeight() -> CGFloat {
         return UIScreen.main.bounds.size.height
     }
-
-    /// ステータスバーの縦幅を取得する
-    ///
-    /// - Returns: 縦幅
-    func statusBarHeight() -> CGFloat {
-        return UIApplication.shared.statusBarFrame.height
-    }
 }
