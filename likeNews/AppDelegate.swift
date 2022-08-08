@@ -7,12 +7,10 @@
 //
 
 import UIKit
-import HockeySDK
-import Firebase
+import FirebaseCore
+import FirebaseMessaging
 import SVProgressHUD
-import TwitterKit
 import UserNotifications
-import GoogleMobileAds
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -49,10 +47,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
     
-    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
-        return Twitter.sharedInstance().application(app, open: url, options: options)
-    }
-    
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         // Push通知設定
         Messaging.messaging().apnsToken = deviceToken
@@ -65,9 +59,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Firebase初期設定
         FirebaseApp.configure()
         
-        // AdMob初期設定
-        GADMobileAds.sharedInstance().start(completionHandler: nil)
-        
         // Push通知設定
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { (granted, _) in
             DispatchQueue.mainSyncSafe {
@@ -75,19 +66,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
 
-        // Twitter設定
-        Twitter.sharedInstance().start(withConsumerKey:Bundle.Api(key: .twitterConsumerKey), consumerSecret:Bundle.Api(key: .twitterConsumerSecret))
-        
         // 古い記事を削除
         NewsListModel().removeOldArticles()
         
         // NavigationBarの初期設定
         setNavigationBar()
-        
-        // HockeyAppの初期設定
-        BITHockeyManager.shared().configure(withIdentifier: Bundle.HockeyApp(key: .Id))
-        BITHockeyManager.shared().start()
-        BITHockeyManager.shared().authenticator.authenticateInstallation()
         
         // SVProgressHUDの設定
         SVProgressHUD.setDefaultMaskType(.clear)

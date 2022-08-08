@@ -9,28 +9,262 @@ import UIKit
 
 /// This `R` struct is generated and contains references to static resources.
 struct R: Rswift.Validatable {
-  fileprivate static let applicationLocale = hostingBundle.preferredLocalizations.first.flatMap(Locale.init) ?? Locale.current
+  fileprivate static let applicationLocale = hostingBundle.preferredLocalizations.first.flatMap { Locale(identifier: $0) } ?? Locale.current
   fileprivate static let hostingBundle = Bundle(for: R.Class.self)
-  
+
+  /// Find first language and bundle for which the table exists
+  fileprivate static func localeBundle(tableName: String, preferredLanguages: [String]) -> (Foundation.Locale, Foundation.Bundle)? {
+    // Filter preferredLanguages to localizations, use first locale
+    var languages = preferredLanguages
+      .map { Locale(identifier: $0) }
+      .prefix(1)
+      .flatMap { locale -> [String] in
+        if hostingBundle.localizations.contains(locale.identifier) {
+          if let language = locale.languageCode, hostingBundle.localizations.contains(language) {
+            return [locale.identifier, language]
+          } else {
+            return [locale.identifier]
+          }
+        } else if let language = locale.languageCode, hostingBundle.localizations.contains(language) {
+          return [language]
+        } else {
+          return []
+        }
+      }
+
+    // If there's no languages, use development language as backstop
+    if languages.isEmpty {
+      if let developmentLocalization = hostingBundle.developmentLocalization {
+        languages = [developmentLocalization]
+      }
+    } else {
+      // Insert Base as second item (between locale identifier and languageCode)
+      languages.insert("Base", at: 1)
+
+      // Add development language as backstop
+      if let developmentLocalization = hostingBundle.developmentLocalization {
+        languages.append(developmentLocalization)
+      }
+    }
+
+    // Find first language for which table exists
+    // Note: key might not exist in chosen language (in that case, key will be shown)
+    for language in languages {
+      if let lproj = hostingBundle.url(forResource: language, withExtension: "lproj"),
+         let lbundle = Bundle(url: lproj)
+      {
+        let strings = lbundle.url(forResource: tableName, withExtension: "strings")
+        let stringsdict = lbundle.url(forResource: tableName, withExtension: "stringsdict")
+
+        if strings != nil || stringsdict != nil {
+          return (Locale(identifier: language), lbundle)
+        }
+      }
+    }
+
+    // If table is available in main bundle, don't look for localized resources
+    let strings = hostingBundle.url(forResource: tableName, withExtension: "strings", subdirectory: nil, localization: nil)
+    let stringsdict = hostingBundle.url(forResource: tableName, withExtension: "stringsdict", subdirectory: nil, localization: nil)
+
+    if strings != nil || stringsdict != nil {
+      return (applicationLocale, hostingBundle)
+    }
+
+    // If table is not found for requested languages, key will be shown
+    return nil
+  }
+
+  /// Load string from Info.plist file
+  fileprivate static func infoPlistString(path: [String], key: String) -> String? {
+    var dict = hostingBundle.infoDictionary
+    for step in path {
+      guard let obj = dict?[step] as? [String: Any] else { return nil }
+      dict = obj
+    }
+    return dict?[key] as? String
+  }
+
   static func validate() throws {
     try intern.validate()
   }
-  
+
+  #if os(iOS) || os(tvOS)
+  /// This `R.segue` struct is generated, and contains static references to 4 view controllers.
+  struct segue {
+    /// This struct is generated for `EtcViewController`, and contains static references to 1 segues.
+    struct etcViewController {
+      /// Segue identifier `SpeechSetting`.
+      static let speechSetting: Rswift.StoryboardSegueIdentifier<UIKit.UIStoryboardSegue, EtcViewController, SpeechSettingViewController> = Rswift.StoryboardSegueIdentifier(identifier: "SpeechSetting")
+
+      #if os(iOS) || os(tvOS)
+      /// Optionally returns a typed version of segue `SpeechSetting`.
+      /// Returns nil if either the segue identifier, the source, destination, or segue types don't match.
+      /// For use inside `prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?)`.
+      static func speechSetting(segue: UIKit.UIStoryboardSegue) -> Rswift.TypedStoryboardSegueInfo<UIKit.UIStoryboardSegue, EtcViewController, SpeechSettingViewController>? {
+        return Rswift.TypedStoryboardSegueInfo(segueIdentifier: R.segue.etcViewController.speechSetting, segue: segue)
+      }
+      #endif
+
+      fileprivate init() {}
+    }
+
+    /// This struct is generated for `NewsClipViewController`, and contains static references to 1 segues.
+    struct newsClipViewController {
+      /// Segue identifier `ArticleDetail`.
+      static let articleDetail: Rswift.StoryboardSegueIdentifier<UIKit.UIStoryboardSegue, NewsClipViewController, ArticleDetailViewController> = Rswift.StoryboardSegueIdentifier(identifier: "ArticleDetail")
+
+      #if os(iOS) || os(tvOS)
+      /// Optionally returns a typed version of segue `ArticleDetail`.
+      /// Returns nil if either the segue identifier, the source, destination, or segue types don't match.
+      /// For use inside `prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?)`.
+      static func articleDetail(segue: UIKit.UIStoryboardSegue) -> Rswift.TypedStoryboardSegueInfo<UIKit.UIStoryboardSegue, NewsClipViewController, ArticleDetailViewController>? {
+        return Rswift.TypedStoryboardSegueInfo(segueIdentifier: R.segue.newsClipViewController.articleDetail, segue: segue)
+      }
+      #endif
+
+      fileprivate init() {}
+    }
+
+    /// This struct is generated for `NewsSearchViewController`, and contains static references to 1 segues.
+    struct newsSearchViewController {
+      /// Segue identifier `ArticleDetail`.
+      static let articleDetail: Rswift.StoryboardSegueIdentifier<UIKit.UIStoryboardSegue, NewsSearchViewController, ArticleDetailViewController> = Rswift.StoryboardSegueIdentifier(identifier: "ArticleDetail")
+
+      #if os(iOS) || os(tvOS)
+      /// Optionally returns a typed version of segue `ArticleDetail`.
+      /// Returns nil if either the segue identifier, the source, destination, or segue types don't match.
+      /// For use inside `prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?)`.
+      static func articleDetail(segue: UIKit.UIStoryboardSegue) -> Rswift.TypedStoryboardSegueInfo<UIKit.UIStoryboardSegue, NewsSearchViewController, ArticleDetailViewController>? {
+        return Rswift.TypedStoryboardSegueInfo(segueIdentifier: R.segue.newsSearchViewController.articleDetail, segue: segue)
+      }
+      #endif
+
+      fileprivate init() {}
+    }
+
+    /// This struct is generated for `UpTabViewController`, and contains static references to 1 segues.
+    struct upTabViewController {
+      /// Segue identifier `ArticleDetail`.
+      static let articleDetail: Rswift.StoryboardSegueIdentifier<UIKit.UIStoryboardSegue, UpTabViewController, ArticleDetailViewController> = Rswift.StoryboardSegueIdentifier(identifier: "ArticleDetail")
+
+      #if os(iOS) || os(tvOS)
+      /// Optionally returns a typed version of segue `ArticleDetail`.
+      /// Returns nil if either the segue identifier, the source, destination, or segue types don't match.
+      /// For use inside `prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?)`.
+      static func articleDetail(segue: UIKit.UIStoryboardSegue) -> Rswift.TypedStoryboardSegueInfo<UIKit.UIStoryboardSegue, UpTabViewController, ArticleDetailViewController>? {
+        return Rswift.TypedStoryboardSegueInfo(segueIdentifier: R.segue.upTabViewController.articleDetail, segue: segue)
+      }
+      #endif
+
+      fileprivate init() {}
+    }
+
+    fileprivate init() {}
+  }
+  #endif
+
+  #if os(iOS) || os(tvOS)
+  /// This `R.storyboard` struct is generated, and contains static references to 8 storyboards.
+  struct storyboard {
+    /// Storyboard `ArticleDetail`.
+    static let articleDetail = _R.storyboard.articleDetail()
+    /// Storyboard `Etc`.
+    static let etc = _R.storyboard.etc()
+    /// Storyboard `LaunchScreen`.
+    static let launchScreen = _R.storyboard.launchScreen()
+    /// Storyboard `NewsClip`.
+    static let newsClip = _R.storyboard.newsClip()
+    /// Storyboard `NewsSearch`.
+    static let newsSearch = _R.storyboard.newsSearch()
+    /// Storyboard `NewsTop`.
+    static let newsTop = _R.storyboard.newsTop()
+    /// Storyboard `SpeechSetting`.
+    static let speechSetting = _R.storyboard.speechSetting()
+    /// Storyboard `UpTabViewController`.
+    static let upTabViewController = _R.storyboard.upTabViewController()
+
+    #if os(iOS) || os(tvOS)
+    /// `UIStoryboard(name: "ArticleDetail", bundle: ...)`
+    static func articleDetail(_: Void = ()) -> UIKit.UIStoryboard {
+      return UIKit.UIStoryboard(resource: R.storyboard.articleDetail)
+    }
+    #endif
+
+    #if os(iOS) || os(tvOS)
+    /// `UIStoryboard(name: "Etc", bundle: ...)`
+    static func etc(_: Void = ()) -> UIKit.UIStoryboard {
+      return UIKit.UIStoryboard(resource: R.storyboard.etc)
+    }
+    #endif
+
+    #if os(iOS) || os(tvOS)
+    /// `UIStoryboard(name: "LaunchScreen", bundle: ...)`
+    static func launchScreen(_: Void = ()) -> UIKit.UIStoryboard {
+      return UIKit.UIStoryboard(resource: R.storyboard.launchScreen)
+    }
+    #endif
+
+    #if os(iOS) || os(tvOS)
+    /// `UIStoryboard(name: "NewsClip", bundle: ...)`
+    static func newsClip(_: Void = ()) -> UIKit.UIStoryboard {
+      return UIKit.UIStoryboard(resource: R.storyboard.newsClip)
+    }
+    #endif
+
+    #if os(iOS) || os(tvOS)
+    /// `UIStoryboard(name: "NewsSearch", bundle: ...)`
+    static func newsSearch(_: Void = ()) -> UIKit.UIStoryboard {
+      return UIKit.UIStoryboard(resource: R.storyboard.newsSearch)
+    }
+    #endif
+
+    #if os(iOS) || os(tvOS)
+    /// `UIStoryboard(name: "NewsTop", bundle: ...)`
+    static func newsTop(_: Void = ()) -> UIKit.UIStoryboard {
+      return UIKit.UIStoryboard(resource: R.storyboard.newsTop)
+    }
+    #endif
+
+    #if os(iOS) || os(tvOS)
+    /// `UIStoryboard(name: "SpeechSetting", bundle: ...)`
+    static func speechSetting(_: Void = ()) -> UIKit.UIStoryboard {
+      return UIKit.UIStoryboard(resource: R.storyboard.speechSetting)
+    }
+    #endif
+
+    #if os(iOS) || os(tvOS)
+    /// `UIStoryboard(name: "UpTabViewController", bundle: ...)`
+    static func upTabViewController(_: Void = ()) -> UIKit.UIStoryboard {
+      return UIKit.UIStoryboard(resource: R.storyboard.upTabViewController)
+    }
+    #endif
+
+    fileprivate init() {}
+  }
+  #endif
+
+  /// This `R.entitlements` struct is generated, and contains static references to 1 properties.
+  struct entitlements {
+    static let apsEnvironment = infoPlistString(path: [], key: "aps-environment") ?? "development"
+
+    fileprivate init() {}
+  }
+
   /// This `R.file` struct is generated, and contains static references to 1 files.
   struct file {
     /// Resource file `GoogleService-Info.plist`.
     static let googleServiceInfoPlist = Rswift.FileResource(bundle: R.hostingBundle, name: "GoogleService-Info", pathExtension: "plist")
-    
+
     /// `bundle.url(forResource: "GoogleService-Info", withExtension: "plist")`
     static func googleServiceInfoPlist(_: Void = ()) -> Foundation.URL? {
       let fileResource = R.file.googleServiceInfoPlist
       return fileResource.bundle.url(forResource: fileResource)
     }
-    
+
     fileprivate init() {}
   }
-  
-  /// This `R.image` struct is generated, and contains static references to 46 images.
+
+  /// This `R.image` struct is generated, and contains static references to 43 images.
   struct image {
     /// Image `ArticleDetailBackButton`.
     static let articleDetailBackButton = Rswift.ImageResource(bundle: R.hostingBundle, name: "ArticleDetailBackButton")
@@ -42,8 +276,6 @@ struct R: Rswift.Validatable {
     static let articleDetailShareButton = Rswift.ImageResource(bundle: R.hostingBundle, name: "ArticleDetailShareButton")
     /// Image `ArticleDetailShareOpenSafari`.
     static let articleDetailShareOpenSafari = Rswift.ImageResource(bundle: R.hostingBundle, name: "ArticleDetailShareOpenSafari")
-    /// Image `ArticleDetailTwitterButton`.
-    static let articleDetailTwitterButton = Rswift.ImageResource(bundle: R.hostingBundle, name: "ArticleDetailTwitterButton")
     /// Image `CommonArticlePlaceholder`.
     static let commonArticlePlaceholder = Rswift.ImageResource(bundle: R.hostingBundle, name: "CommonArticlePlaceholder")
     /// Image `CommonNavigationTitle`.
@@ -84,10 +316,6 @@ struct R: Rswift.Validatable {
     static let speechQuick = Rswift.ImageResource(bundle: R.hostingBundle, name: "SpeechQuick")
     /// Image `SpeechSlow`.
     static let speechSlow = Rswift.ImageResource(bundle: R.hostingBundle, name: "SpeechSlow")
-    /// Image `TwitterCloseButton`.
-    static let twitterCloseButton = Rswift.ImageResource(bundle: R.hostingBundle, name: "TwitterCloseButton")
-    /// Image `TwitterTweetButton`.
-    static let twitterTweetButton = Rswift.ImageResource(bundle: R.hostingBundle, name: "TwitterTweetButton")
     /// Image `WeatherBrokenCloudsDay`.
     static let weatherBrokenCloudsDay = Rswift.ImageResource(bundle: R.hostingBundle, name: "WeatherBrokenCloudsDay")
     /// Image `WeatherBrokenCloudsNight`.
@@ -124,241 +352,312 @@ struct R: Rswift.Validatable {
     static let weatherThunderstormDay = Rswift.ImageResource(bundle: R.hostingBundle, name: "WeatherThunderstormDay")
     /// Image `WeatherThunderstormNight`.
     static let weatherThunderstormNight = Rswift.ImageResource(bundle: R.hostingBundle, name: "WeatherThunderstormNight")
-    
+
+    #if os(iOS) || os(tvOS)
     /// `UIImage(named: "ArticleDetailBackButton", bundle: ..., traitCollection: ...)`
     static func articleDetailBackButton(compatibleWith traitCollection: UIKit.UITraitCollection? = nil) -> UIKit.UIImage? {
       return UIKit.UIImage(resource: R.image.articleDetailBackButton, compatibleWith: traitCollection)
     }
-    
+    #endif
+
+    #if os(iOS) || os(tvOS)
     /// `UIImage(named: "ArticleDetailClipOffButton", bundle: ..., traitCollection: ...)`
     static func articleDetailClipOffButton(compatibleWith traitCollection: UIKit.UITraitCollection? = nil) -> UIKit.UIImage? {
       return UIKit.UIImage(resource: R.image.articleDetailClipOffButton, compatibleWith: traitCollection)
     }
-    
+    #endif
+
+    #if os(iOS) || os(tvOS)
     /// `UIImage(named: "ArticleDetailClipOnButton", bundle: ..., traitCollection: ...)`
     static func articleDetailClipOnButton(compatibleWith traitCollection: UIKit.UITraitCollection? = nil) -> UIKit.UIImage? {
       return UIKit.UIImage(resource: R.image.articleDetailClipOnButton, compatibleWith: traitCollection)
     }
-    
+    #endif
+
+    #if os(iOS) || os(tvOS)
     /// `UIImage(named: "ArticleDetailShareButton", bundle: ..., traitCollection: ...)`
     static func articleDetailShareButton(compatibleWith traitCollection: UIKit.UITraitCollection? = nil) -> UIKit.UIImage? {
       return UIKit.UIImage(resource: R.image.articleDetailShareButton, compatibleWith: traitCollection)
     }
-    
+    #endif
+
+    #if os(iOS) || os(tvOS)
     /// `UIImage(named: "ArticleDetailShareOpenSafari", bundle: ..., traitCollection: ...)`
     static func articleDetailShareOpenSafari(compatibleWith traitCollection: UIKit.UITraitCollection? = nil) -> UIKit.UIImage? {
       return UIKit.UIImage(resource: R.image.articleDetailShareOpenSafari, compatibleWith: traitCollection)
     }
-    
-    /// `UIImage(named: "ArticleDetailTwitterButton", bundle: ..., traitCollection: ...)`
-    static func articleDetailTwitterButton(compatibleWith traitCollection: UIKit.UITraitCollection? = nil) -> UIKit.UIImage? {
-      return UIKit.UIImage(resource: R.image.articleDetailTwitterButton, compatibleWith: traitCollection)
-    }
-    
+    #endif
+
+    #if os(iOS) || os(tvOS)
     /// `UIImage(named: "CommonArticlePlaceholder", bundle: ..., traitCollection: ...)`
     static func commonArticlePlaceholder(compatibleWith traitCollection: UIKit.UITraitCollection? = nil) -> UIKit.UIImage? {
       return UIKit.UIImage(resource: R.image.commonArticlePlaceholder, compatibleWith: traitCollection)
     }
-    
+    #endif
+
+    #if os(iOS) || os(tvOS)
     /// `UIImage(named: "CommonNavigationTitle", bundle: ..., traitCollection: ...)`
     static func commonNavigationTitle(compatibleWith traitCollection: UIKit.UITraitCollection? = nil) -> UIKit.UIImage? {
       return UIKit.UIImage(resource: R.image.commonNavigationTitle, compatibleWith: traitCollection)
     }
-    
+    #endif
+
+    #if os(iOS) || os(tvOS)
     /// `UIImage(named: "CommonSpeechStop", bundle: ..., traitCollection: ...)`
     static func commonSpeechStop(compatibleWith traitCollection: UIKit.UITraitCollection? = nil) -> UIKit.UIImage? {
       return UIKit.UIImage(resource: R.image.commonSpeechStop, compatibleWith: traitCollection)
     }
-    
+    #endif
+
+    #if os(iOS) || os(tvOS)
     /// `UIImage(named: "EtcCacheClear", bundle: ..., traitCollection: ...)`
     static func etcCacheClear(compatibleWith traitCollection: UIKit.UITraitCollection? = nil) -> UIKit.UIImage? {
       return UIKit.UIImage(resource: R.image.etcCacheClear, compatibleWith: traitCollection)
     }
-    
+    #endif
+
+    #if os(iOS) || os(tvOS)
     /// `UIImage(named: "EtcDispArticleNum", bundle: ..., traitCollection: ...)`
     static func etcDispArticleNum(compatibleWith traitCollection: UIKit.UITraitCollection? = nil) -> UIKit.UIImage? {
       return UIKit.UIImage(resource: R.image.etcDispArticleNum, compatibleWith: traitCollection)
     }
-    
+    #endif
+
+    #if os(iOS) || os(tvOS)
     /// `UIImage(named: "EtcDispThumbnail", bundle: ..., traitCollection: ...)`
     static func etcDispThumbnail(compatibleWith traitCollection: UIKit.UITraitCollection? = nil) -> UIKit.UIImage? {
       return UIKit.UIImage(resource: R.image.etcDispThumbnail, compatibleWith: traitCollection)
     }
-    
+    #endif
+
+    #if os(iOS) || os(tvOS)
     /// `UIImage(named: "EtcInquiry", bundle: ..., traitCollection: ...)`
     static func etcInquiry(compatibleWith traitCollection: UIKit.UITraitCollection? = nil) -> UIKit.UIImage? {
       return UIKit.UIImage(resource: R.image.etcInquiry, compatibleWith: traitCollection)
     }
-    
+    #endif
+
+    #if os(iOS) || os(tvOS)
     /// `UIImage(named: "EtcNextPage", bundle: ..., traitCollection: ...)`
     static func etcNextPage(compatibleWith traitCollection: UIKit.UITraitCollection? = nil) -> UIKit.UIImage? {
       return UIKit.UIImage(resource: R.image.etcNextPage, compatibleWith: traitCollection)
     }
-    
+    #endif
+
+    #if os(iOS) || os(tvOS)
     /// `UIImage(named: "EtcSpeech", bundle: ..., traitCollection: ...)`
     static func etcSpeech(compatibleWith traitCollection: UIKit.UITraitCollection? = nil) -> UIKit.UIImage? {
       return UIKit.UIImage(resource: R.image.etcSpeech, compatibleWith: traitCollection)
     }
-    
+    #endif
+
+    #if os(iOS) || os(tvOS)
     /// `UIImage(named: "LaunchScreenLogo", bundle: ..., traitCollection: ...)`
     static func launchScreenLogo(compatibleWith traitCollection: UIKit.UITraitCollection? = nil) -> UIKit.UIImage? {
       return UIKit.UIImage(resource: R.image.launchScreenLogo, compatibleWith: traitCollection)
     }
-    
+    #endif
+
+    #if os(iOS) || os(tvOS)
     /// `UIImage(named: "NewsClipNonArticle", bundle: ..., traitCollection: ...)`
     static func newsClipNonArticle(compatibleWith traitCollection: UIKit.UITraitCollection? = nil) -> UIKit.UIImage? {
       return UIKit.UIImage(resource: R.image.newsClipNonArticle, compatibleWith: traitCollection)
     }
-    
+    #endif
+
+    #if os(iOS) || os(tvOS)
     /// `UIImage(named: "NewsSearchNonArticle", bundle: ..., traitCollection: ...)`
     static func newsSearchNonArticle(compatibleWith traitCollection: UIKit.UITraitCollection? = nil) -> UIKit.UIImage? {
       return UIKit.UIImage(resource: R.image.newsSearchNonArticle, compatibleWith: traitCollection)
     }
-    
+    #endif
+
+    #if os(iOS) || os(tvOS)
     /// `UIImage(named: "NewsTopTabClip", bundle: ..., traitCollection: ...)`
     static func newsTopTabClip(compatibleWith traitCollection: UIKit.UITraitCollection? = nil) -> UIKit.UIImage? {
       return UIKit.UIImage(resource: R.image.newsTopTabClip, compatibleWith: traitCollection)
     }
-    
+    #endif
+
+    #if os(iOS) || os(tvOS)
     /// `UIImage(named: "NewsTopTabEtc", bundle: ..., traitCollection: ...)`
     static func newsTopTabEtc(compatibleWith traitCollection: UIKit.UITraitCollection? = nil) -> UIKit.UIImage? {
       return UIKit.UIImage(resource: R.image.newsTopTabEtc, compatibleWith: traitCollection)
     }
-    
+    #endif
+
+    #if os(iOS) || os(tvOS)
     /// `UIImage(named: "NewsTopTabList", bundle: ..., traitCollection: ...)`
     static func newsTopTabList(compatibleWith traitCollection: UIKit.UITraitCollection? = nil) -> UIKit.UIImage? {
       return UIKit.UIImage(resource: R.image.newsTopTabList, compatibleWith: traitCollection)
     }
-    
+    #endif
+
+    #if os(iOS) || os(tvOS)
     /// `UIImage(named: "NewsTopTabSearch", bundle: ..., traitCollection: ...)`
     static func newsTopTabSearch(compatibleWith traitCollection: UIKit.UITraitCollection? = nil) -> UIKit.UIImage? {
       return UIKit.UIImage(resource: R.image.newsTopTabSearch, compatibleWith: traitCollection)
     }
-    
+    #endif
+
+    #if os(iOS) || os(tvOS)
     /// `UIImage(named: "SpeechHigh", bundle: ..., traitCollection: ...)`
     static func speechHigh(compatibleWith traitCollection: UIKit.UITraitCollection? = nil) -> UIKit.UIImage? {
       return UIKit.UIImage(resource: R.image.speechHigh, compatibleWith: traitCollection)
     }
-    
+    #endif
+
+    #if os(iOS) || os(tvOS)
     /// `UIImage(named: "SpeechLow", bundle: ..., traitCollection: ...)`
     static func speechLow(compatibleWith traitCollection: UIKit.UITraitCollection? = nil) -> UIKit.UIImage? {
       return UIKit.UIImage(resource: R.image.speechLow, compatibleWith: traitCollection)
     }
-    
+    #endif
+
+    #if os(iOS) || os(tvOS)
     /// `UIImage(named: "SpeechQuick", bundle: ..., traitCollection: ...)`
     static func speechQuick(compatibleWith traitCollection: UIKit.UITraitCollection? = nil) -> UIKit.UIImage? {
       return UIKit.UIImage(resource: R.image.speechQuick, compatibleWith: traitCollection)
     }
-    
+    #endif
+
+    #if os(iOS) || os(tvOS)
     /// `UIImage(named: "SpeechSlow", bundle: ..., traitCollection: ...)`
     static func speechSlow(compatibleWith traitCollection: UIKit.UITraitCollection? = nil) -> UIKit.UIImage? {
       return UIKit.UIImage(resource: R.image.speechSlow, compatibleWith: traitCollection)
     }
-    
-    /// `UIImage(named: "TwitterCloseButton", bundle: ..., traitCollection: ...)`
-    static func twitterCloseButton(compatibleWith traitCollection: UIKit.UITraitCollection? = nil) -> UIKit.UIImage? {
-      return UIKit.UIImage(resource: R.image.twitterCloseButton, compatibleWith: traitCollection)
-    }
-    
-    /// `UIImage(named: "TwitterTweetButton", bundle: ..., traitCollection: ...)`
-    static func twitterTweetButton(compatibleWith traitCollection: UIKit.UITraitCollection? = nil) -> UIKit.UIImage? {
-      return UIKit.UIImage(resource: R.image.twitterTweetButton, compatibleWith: traitCollection)
-    }
-    
+    #endif
+
+    #if os(iOS) || os(tvOS)
     /// `UIImage(named: "WeatherBrokenCloudsDay", bundle: ..., traitCollection: ...)`
     static func weatherBrokenCloudsDay(compatibleWith traitCollection: UIKit.UITraitCollection? = nil) -> UIKit.UIImage? {
       return UIKit.UIImage(resource: R.image.weatherBrokenCloudsDay, compatibleWith: traitCollection)
     }
-    
+    #endif
+
+    #if os(iOS) || os(tvOS)
     /// `UIImage(named: "WeatherBrokenCloudsNight", bundle: ..., traitCollection: ...)`
     static func weatherBrokenCloudsNight(compatibleWith traitCollection: UIKit.UITraitCollection? = nil) -> UIKit.UIImage? {
       return UIKit.UIImage(resource: R.image.weatherBrokenCloudsNight, compatibleWith: traitCollection)
     }
-    
+    #endif
+
+    #if os(iOS) || os(tvOS)
     /// `UIImage(named: "WeatherClearSkyDay", bundle: ..., traitCollection: ...)`
     static func weatherClearSkyDay(compatibleWith traitCollection: UIKit.UITraitCollection? = nil) -> UIKit.UIImage? {
       return UIKit.UIImage(resource: R.image.weatherClearSkyDay, compatibleWith: traitCollection)
     }
-    
+    #endif
+
+    #if os(iOS) || os(tvOS)
     /// `UIImage(named: "WeatherClearSkyNight", bundle: ..., traitCollection: ...)`
     static func weatherClearSkyNight(compatibleWith traitCollection: UIKit.UITraitCollection? = nil) -> UIKit.UIImage? {
       return UIKit.UIImage(resource: R.image.weatherClearSkyNight, compatibleWith: traitCollection)
     }
-    
+    #endif
+
+    #if os(iOS) || os(tvOS)
     /// `UIImage(named: "WeatherFewCloudsDay", bundle: ..., traitCollection: ...)`
     static func weatherFewCloudsDay(compatibleWith traitCollection: UIKit.UITraitCollection? = nil) -> UIKit.UIImage? {
       return UIKit.UIImage(resource: R.image.weatherFewCloudsDay, compatibleWith: traitCollection)
     }
-    
+    #endif
+
+    #if os(iOS) || os(tvOS)
     /// `UIImage(named: "WeatherFewCloudsNight", bundle: ..., traitCollection: ...)`
     static func weatherFewCloudsNight(compatibleWith traitCollection: UIKit.UITraitCollection? = nil) -> UIKit.UIImage? {
       return UIKit.UIImage(resource: R.image.weatherFewCloudsNight, compatibleWith: traitCollection)
     }
-    
+    #endif
+
+    #if os(iOS) || os(tvOS)
     /// `UIImage(named: "WeatherMistDay", bundle: ..., traitCollection: ...)`
     static func weatherMistDay(compatibleWith traitCollection: UIKit.UITraitCollection? = nil) -> UIKit.UIImage? {
       return UIKit.UIImage(resource: R.image.weatherMistDay, compatibleWith: traitCollection)
     }
-    
+    #endif
+
+    #if os(iOS) || os(tvOS)
     /// `UIImage(named: "WeatherMistNight", bundle: ..., traitCollection: ...)`
     static func weatherMistNight(compatibleWith traitCollection: UIKit.UITraitCollection? = nil) -> UIKit.UIImage? {
       return UIKit.UIImage(resource: R.image.weatherMistNight, compatibleWith: traitCollection)
     }
-    
+    #endif
+
+    #if os(iOS) || os(tvOS)
     /// `UIImage(named: "WeatherRainDay", bundle: ..., traitCollection: ...)`
     static func weatherRainDay(compatibleWith traitCollection: UIKit.UITraitCollection? = nil) -> UIKit.UIImage? {
       return UIKit.UIImage(resource: R.image.weatherRainDay, compatibleWith: traitCollection)
     }
-    
+    #endif
+
+    #if os(iOS) || os(tvOS)
     /// `UIImage(named: "WeatherRainNight", bundle: ..., traitCollection: ...)`
     static func weatherRainNight(compatibleWith traitCollection: UIKit.UITraitCollection? = nil) -> UIKit.UIImage? {
       return UIKit.UIImage(resource: R.image.weatherRainNight, compatibleWith: traitCollection)
     }
-    
+    #endif
+
+    #if os(iOS) || os(tvOS)
     /// `UIImage(named: "WeatherScatteredCloudsDay", bundle: ..., traitCollection: ...)`
     static func weatherScatteredCloudsDay(compatibleWith traitCollection: UIKit.UITraitCollection? = nil) -> UIKit.UIImage? {
       return UIKit.UIImage(resource: R.image.weatherScatteredCloudsDay, compatibleWith: traitCollection)
     }
-    
+    #endif
+
+    #if os(iOS) || os(tvOS)
     /// `UIImage(named: "WeatherScatteredCloudsNight", bundle: ..., traitCollection: ...)`
     static func weatherScatteredCloudsNight(compatibleWith traitCollection: UIKit.UITraitCollection? = nil) -> UIKit.UIImage? {
       return UIKit.UIImage(resource: R.image.weatherScatteredCloudsNight, compatibleWith: traitCollection)
     }
-    
+    #endif
+
+    #if os(iOS) || os(tvOS)
     /// `UIImage(named: "WeatherShowerRainDay", bundle: ..., traitCollection: ...)`
     static func weatherShowerRainDay(compatibleWith traitCollection: UIKit.UITraitCollection? = nil) -> UIKit.UIImage? {
       return UIKit.UIImage(resource: R.image.weatherShowerRainDay, compatibleWith: traitCollection)
     }
-    
+    #endif
+
+    #if os(iOS) || os(tvOS)
     /// `UIImage(named: "WeatherShowerRainNight", bundle: ..., traitCollection: ...)`
     static func weatherShowerRainNight(compatibleWith traitCollection: UIKit.UITraitCollection? = nil) -> UIKit.UIImage? {
       return UIKit.UIImage(resource: R.image.weatherShowerRainNight, compatibleWith: traitCollection)
     }
-    
+    #endif
+
+    #if os(iOS) || os(tvOS)
     /// `UIImage(named: "WeatherSnowDay", bundle: ..., traitCollection: ...)`
     static func weatherSnowDay(compatibleWith traitCollection: UIKit.UITraitCollection? = nil) -> UIKit.UIImage? {
       return UIKit.UIImage(resource: R.image.weatherSnowDay, compatibleWith: traitCollection)
     }
-    
+    #endif
+
+    #if os(iOS) || os(tvOS)
     /// `UIImage(named: "WeatherSnowNight", bundle: ..., traitCollection: ...)`
     static func weatherSnowNight(compatibleWith traitCollection: UIKit.UITraitCollection? = nil) -> UIKit.UIImage? {
       return UIKit.UIImage(resource: R.image.weatherSnowNight, compatibleWith: traitCollection)
     }
-    
+    #endif
+
+    #if os(iOS) || os(tvOS)
     /// `UIImage(named: "WeatherThunderstormDay", bundle: ..., traitCollection: ...)`
     static func weatherThunderstormDay(compatibleWith traitCollection: UIKit.UITraitCollection? = nil) -> UIKit.UIImage? {
       return UIKit.UIImage(resource: R.image.weatherThunderstormDay, compatibleWith: traitCollection)
     }
-    
+    #endif
+
+    #if os(iOS) || os(tvOS)
     /// `UIImage(named: "WeatherThunderstormNight", bundle: ..., traitCollection: ...)`
     static func weatherThunderstormNight(compatibleWith traitCollection: UIKit.UITraitCollection? = nil) -> UIKit.UIImage? {
       return UIKit.UIImage(resource: R.image.weatherThunderstormNight, compatibleWith: traitCollection)
     }
-    
+    #endif
+
     fileprivate init() {}
   }
-  
-  /// This `R.nib` struct is generated, and contains static references to 7 nibs.
+
+  /// This `R.nib` struct is generated, and contains static references to 6 nibs.
   struct nib {
     /// Nib `EtcCell`.
     static let etcCell = _R.nib._EtcCell()
@@ -372,83 +671,83 @@ struct R: Rswift.Validatable {
     static let newsListCell = _R.nib._NewsListCell()
     /// Nib `SegmentCollectionViewCell`.
     static let segmentCollectionViewCell = _R.nib._SegmentCollectionViewCell()
-    /// Nib `TweetCell`.
-    static let tweetCell = _R.nib._TweetCell()
-    
+
+    #if os(iOS) || os(tvOS)
     /// `UINib(name: "EtcCell", in: bundle)`
     @available(*, deprecated, message: "Use UINib(resource: R.nib.etcCell) instead")
     static func etcCell(_: Void = ()) -> UIKit.UINib {
       return UIKit.UINib(resource: R.nib.etcCell)
     }
-    
+    #endif
+
+    #if os(iOS) || os(tvOS)
     /// `UINib(name: "EtcWeatherCell", in: bundle)`
     @available(*, deprecated, message: "Use UINib(resource: R.nib.etcWeatherCell) instead")
     static func etcWeatherCell(_: Void = ()) -> UIKit.UINib {
       return UIKit.UINib(resource: R.nib.etcWeatherCell)
     }
-    
+    #endif
+
+    #if os(iOS) || os(tvOS)
     /// `UINib(name: "MainCollectionViewCell", in: bundle)`
     @available(*, deprecated, message: "Use UINib(resource: R.nib.mainCollectionViewCell) instead")
     static func mainCollectionViewCell(_: Void = ()) -> UIKit.UINib {
       return UIKit.UINib(resource: R.nib.mainCollectionViewCell)
     }
-    
+    #endif
+
+    #if os(iOS) || os(tvOS)
     /// `UINib(name: "NavigationTitleView", in: bundle)`
     @available(*, deprecated, message: "Use UINib(resource: R.nib.navigationTitleView) instead")
     static func navigationTitleView(_: Void = ()) -> UIKit.UINib {
       return UIKit.UINib(resource: R.nib.navigationTitleView)
     }
-    
+    #endif
+
+    #if os(iOS) || os(tvOS)
     /// `UINib(name: "NewsListCell", in: bundle)`
     @available(*, deprecated, message: "Use UINib(resource: R.nib.newsListCell) instead")
     static func newsListCell(_: Void = ()) -> UIKit.UINib {
       return UIKit.UINib(resource: R.nib.newsListCell)
     }
-    
+    #endif
+
+    #if os(iOS) || os(tvOS)
     /// `UINib(name: "SegmentCollectionViewCell", in: bundle)`
     @available(*, deprecated, message: "Use UINib(resource: R.nib.segmentCollectionViewCell) instead")
     static func segmentCollectionViewCell(_: Void = ()) -> UIKit.UINib {
       return UIKit.UINib(resource: R.nib.segmentCollectionViewCell)
     }
-    
-    /// `UINib(name: "TweetCell", in: bundle)`
-    @available(*, deprecated, message: "Use UINib(resource: R.nib.tweetCell) instead")
-    static func tweetCell(_: Void = ()) -> UIKit.UINib {
-      return UIKit.UINib(resource: R.nib.tweetCell)
-    }
-    
+    #endif
+
     static func etcCell(owner ownerOrNil: AnyObject?, options optionsOrNil: [UINib.OptionsKey : Any]? = nil) -> EtcCell? {
       return R.nib.etcCell.instantiate(withOwner: ownerOrNil, options: optionsOrNil)[0] as? EtcCell
     }
-    
+
     static func etcWeatherCell(owner ownerOrNil: AnyObject?, options optionsOrNil: [UINib.OptionsKey : Any]? = nil) -> EtcWeatherCell? {
       return R.nib.etcWeatherCell.instantiate(withOwner: ownerOrNil, options: optionsOrNil)[0] as? EtcWeatherCell
     }
-    
+
     static func mainCollectionViewCell(owner ownerOrNil: AnyObject?, options optionsOrNil: [UINib.OptionsKey : Any]? = nil) -> MainCollectionViewCell? {
       return R.nib.mainCollectionViewCell.instantiate(withOwner: ownerOrNil, options: optionsOrNil)[0] as? MainCollectionViewCell
     }
-    
+
     static func navigationTitleView(owner ownerOrNil: AnyObject?, options optionsOrNil: [UINib.OptionsKey : Any]? = nil) -> NavigationTitleView? {
       return R.nib.navigationTitleView.instantiate(withOwner: ownerOrNil, options: optionsOrNil)[0] as? NavigationTitleView
     }
-    
+
     static func newsListCell(owner ownerOrNil: AnyObject?, options optionsOrNil: [UINib.OptionsKey : Any]? = nil) -> NewsListCell? {
       return R.nib.newsListCell.instantiate(withOwner: ownerOrNil, options: optionsOrNil)[0] as? NewsListCell
     }
-    
+
     static func segmentCollectionViewCell(owner ownerOrNil: AnyObject?, options optionsOrNil: [UINib.OptionsKey : Any]? = nil) -> SegmentCollectionViewCell? {
       return R.nib.segmentCollectionViewCell.instantiate(withOwner: ownerOrNil, options: optionsOrNil)[0] as? SegmentCollectionViewCell
     }
-    
-    static func tweetCell(owner ownerOrNil: AnyObject?, options optionsOrNil: [UINib.OptionsKey : Any]? = nil) -> TweetCell? {
-      return R.nib.tweetCell.instantiate(withOwner: ownerOrNil, options: optionsOrNil)[0] as? TweetCell
-    }
-    
+
     fileprivate init() {}
   }
-  
-  /// This `R.reuseIdentifier` struct is generated, and contains static references to 6 reuse identifiers.
+
+  /// This `R.reuseIdentifier` struct is generated, and contains static references to 5 reuse identifiers.
   struct reuseIdentifier {
     /// Reuse identifier `EtcCell`.
     static let etcCell: Rswift.ReuseIdentifier<EtcCell> = Rswift.ReuseIdentifier(identifier: "EtcCell")
@@ -460,153 +759,10 @@ struct R: Rswift.Validatable {
     static let newsListCell: Rswift.ReuseIdentifier<NewsListCell> = Rswift.ReuseIdentifier(identifier: "NewsListCell")
     /// Reuse identifier `SegmentCollectionViewCell`.
     static let segmentCollectionViewCell: Rswift.ReuseIdentifier<SegmentCollectionViewCell> = Rswift.ReuseIdentifier(identifier: "SegmentCollectionViewCell")
-    /// Reuse identifier `TweetCell`.
-    static let tweetCell: Rswift.ReuseIdentifier<TweetCell> = Rswift.ReuseIdentifier(identifier: "TweetCell")
-    
+
     fileprivate init() {}
   }
-  
-  /// This `R.segue` struct is generated, and contains static references to 4 view controllers.
-  struct segue {
-    /// This struct is generated for `EtcViewController`, and contains static references to 1 segues.
-    struct etcViewController {
-      /// Segue identifier `SpeechSetting`.
-      static let speechSetting: Rswift.StoryboardSegueIdentifier<UIKit.UIStoryboardSegue, EtcViewController, SpeechSettingViewController> = Rswift.StoryboardSegueIdentifier(identifier: "SpeechSetting")
-      
-      /// Optionally returns a typed version of segue `SpeechSetting`.
-      /// Returns nil if either the segue identifier, the source, destination, or segue types don't match.
-      /// For use inside `prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?)`.
-      static func speechSetting(segue: UIKit.UIStoryboardSegue) -> Rswift.TypedStoryboardSegueInfo<UIKit.UIStoryboardSegue, EtcViewController, SpeechSettingViewController>? {
-        return Rswift.TypedStoryboardSegueInfo(segueIdentifier: R.segue.etcViewController.speechSetting, segue: segue)
-      }
-      
-      fileprivate init() {}
-    }
-    
-    /// This struct is generated for `NewsClipViewController`, and contains static references to 1 segues.
-    struct newsClipViewController {
-      /// Segue identifier `ArticleDetail`.
-      static let articleDetail: Rswift.StoryboardSegueIdentifier<UIKit.UIStoryboardSegue, NewsClipViewController, ArticleDetailViewController> = Rswift.StoryboardSegueIdentifier(identifier: "ArticleDetail")
-      
-      /// Optionally returns a typed version of segue `ArticleDetail`.
-      /// Returns nil if either the segue identifier, the source, destination, or segue types don't match.
-      /// For use inside `prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?)`.
-      static func articleDetail(segue: UIKit.UIStoryboardSegue) -> Rswift.TypedStoryboardSegueInfo<UIKit.UIStoryboardSegue, NewsClipViewController, ArticleDetailViewController>? {
-        return Rswift.TypedStoryboardSegueInfo(segueIdentifier: R.segue.newsClipViewController.articleDetail, segue: segue)
-      }
-      
-      fileprivate init() {}
-    }
-    
-    /// This struct is generated for `NewsSearchViewController`, and contains static references to 1 segues.
-    struct newsSearchViewController {
-      /// Segue identifier `ArticleDetail`.
-      static let articleDetail: Rswift.StoryboardSegueIdentifier<UIKit.UIStoryboardSegue, NewsSearchViewController, ArticleDetailViewController> = Rswift.StoryboardSegueIdentifier(identifier: "ArticleDetail")
-      
-      /// Optionally returns a typed version of segue `ArticleDetail`.
-      /// Returns nil if either the segue identifier, the source, destination, or segue types don't match.
-      /// For use inside `prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?)`.
-      static func articleDetail(segue: UIKit.UIStoryboardSegue) -> Rswift.TypedStoryboardSegueInfo<UIKit.UIStoryboardSegue, NewsSearchViewController, ArticleDetailViewController>? {
-        return Rswift.TypedStoryboardSegueInfo(segueIdentifier: R.segue.newsSearchViewController.articleDetail, segue: segue)
-      }
-      
-      fileprivate init() {}
-    }
-    
-    /// This struct is generated for `UpTabViewController`, and contains static references to 1 segues.
-    struct upTabViewController {
-      /// Segue identifier `ArticleDetail`.
-      static let articleDetail: Rswift.StoryboardSegueIdentifier<UIKit.UIStoryboardSegue, UpTabViewController, ArticleDetailViewController> = Rswift.StoryboardSegueIdentifier(identifier: "ArticleDetail")
-      
-      /// Optionally returns a typed version of segue `ArticleDetail`.
-      /// Returns nil if either the segue identifier, the source, destination, or segue types don't match.
-      /// For use inside `prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?)`.
-      static func articleDetail(segue: UIKit.UIStoryboardSegue) -> Rswift.TypedStoryboardSegueInfo<UIKit.UIStoryboardSegue, UpTabViewController, ArticleDetailViewController>? {
-        return Rswift.TypedStoryboardSegueInfo(segueIdentifier: R.segue.upTabViewController.articleDetail, segue: segue)
-      }
-      
-      fileprivate init() {}
-    }
-    
-    fileprivate init() {}
-  }
-  
-  /// This `R.storyboard` struct is generated, and contains static references to 10 storyboards.
-  struct storyboard {
-    /// Storyboard `ArticleDetail`.
-    static let articleDetail = _R.storyboard.articleDetail()
-    /// Storyboard `Etc`.
-    static let etc = _R.storyboard.etc()
-    /// Storyboard `LaunchScreen`.
-    static let launchScreen = _R.storyboard.launchScreen()
-    /// Storyboard `NewsClip`.
-    static let newsClip = _R.storyboard.newsClip()
-    /// Storyboard `NewsList`.
-    static let newsList = _R.storyboard.newsList()
-    /// Storyboard `NewsSearch`.
-    static let newsSearch = _R.storyboard.newsSearch()
-    /// Storyboard `NewsTop`.
-    static let newsTop = _R.storyboard.newsTop()
-    /// Storyboard `SpeechSetting`.
-    static let speechSetting = _R.storyboard.speechSetting()
-    /// Storyboard `Twitter`.
-    static let twitter = _R.storyboard.twitter()
-    /// Storyboard `UpTabViewController`.
-    static let upTabViewController = _R.storyboard.upTabViewController()
-    
-    /// `UIStoryboard(name: "ArticleDetail", bundle: ...)`
-    static func articleDetail(_: Void = ()) -> UIKit.UIStoryboard {
-      return UIKit.UIStoryboard(resource: R.storyboard.articleDetail)
-    }
-    
-    /// `UIStoryboard(name: "Etc", bundle: ...)`
-    static func etc(_: Void = ()) -> UIKit.UIStoryboard {
-      return UIKit.UIStoryboard(resource: R.storyboard.etc)
-    }
-    
-    /// `UIStoryboard(name: "LaunchScreen", bundle: ...)`
-    static func launchScreen(_: Void = ()) -> UIKit.UIStoryboard {
-      return UIKit.UIStoryboard(resource: R.storyboard.launchScreen)
-    }
-    
-    /// `UIStoryboard(name: "NewsClip", bundle: ...)`
-    static func newsClip(_: Void = ()) -> UIKit.UIStoryboard {
-      return UIKit.UIStoryboard(resource: R.storyboard.newsClip)
-    }
-    
-    /// `UIStoryboard(name: "NewsList", bundle: ...)`
-    static func newsList(_: Void = ()) -> UIKit.UIStoryboard {
-      return UIKit.UIStoryboard(resource: R.storyboard.newsList)
-    }
-    
-    /// `UIStoryboard(name: "NewsSearch", bundle: ...)`
-    static func newsSearch(_: Void = ()) -> UIKit.UIStoryboard {
-      return UIKit.UIStoryboard(resource: R.storyboard.newsSearch)
-    }
-    
-    /// `UIStoryboard(name: "NewsTop", bundle: ...)`
-    static func newsTop(_: Void = ()) -> UIKit.UIStoryboard {
-      return UIKit.UIStoryboard(resource: R.storyboard.newsTop)
-    }
-    
-    /// `UIStoryboard(name: "SpeechSetting", bundle: ...)`
-    static func speechSetting(_: Void = ()) -> UIKit.UIStoryboard {
-      return UIKit.UIStoryboard(resource: R.storyboard.speechSetting)
-    }
-    
-    /// `UIStoryboard(name: "Twitter", bundle: ...)`
-    static func twitter(_: Void = ()) -> UIKit.UIStoryboard {
-      return UIKit.UIStoryboard(resource: R.storyboard.twitter)
-    }
-    
-    /// `UIStoryboard(name: "UpTabViewController", bundle: ...)`
-    static func upTabViewController(_: Void = ()) -> UIKit.UIStoryboard {
-      return UIKit.UIStoryboard(resource: R.storyboard.upTabViewController)
-    }
-    
-    fileprivate init() {}
-  }
-  
+
   /// This `R.string` struct is generated, and contains static references to 1 localization tables.
   struct string {
     /// This `R.string.localizable` struct is generated, and contains static references to 26 localization keys.
@@ -663,465 +819,654 @@ struct R: Rswift.Validatable {
       static let articleLongPressTitle = Rswift.StringResource(key: "ArticleLongPressTitle", tableName: "Localizable", bundle: R.hostingBundle, locales: [], comment: nil)
       /// Value: 閉じる
       static let close = Rswift.StringResource(key: "Close", tableName: "Localizable", bundle: R.hostingBundle, locales: [], comment: nil)
-      
+
       /// Value: 
-      static func emptyString(_: Void = ()) -> String {
-        return NSLocalizedString("EmptyString", bundle: R.hostingBundle, comment: "")
+      static func emptyString(preferredLanguages: [String]? = nil) -> String {
+        guard let preferredLanguages = preferredLanguages else {
+          return NSLocalizedString("EmptyString", bundle: hostingBundle, comment: "")
+        }
+
+        guard let (_, bundle) = localeBundle(tableName: "Localizable", preferredLanguages: preferredLanguages) else {
+          return "EmptyString"
+        }
+
+        return NSLocalizedString("EmptyString", bundle: bundle, comment: "")
       }
-      
+
       /// Value: OK
-      static func ok(_: Void = ()) -> String {
-        return NSLocalizedString("Ok", bundle: R.hostingBundle, comment: "")
+      static func ok(preferredLanguages: [String]? = nil) -> String {
+        guard let preferredLanguages = preferredLanguages else {
+          return NSLocalizedString("Ok", bundle: hostingBundle, comment: "")
+        }
+
+        guard let (_, bundle) = localeBundle(tableName: "Localizable", preferredLanguages: preferredLanguages) else {
+          return "Ok"
+        }
+
+        return NSLocalizedString("Ok", bundle: bundle, comment: "")
       }
-      
+
       /// Value: いいえ
-      static func no(_: Void = ()) -> String {
-        return NSLocalizedString("No", bundle: R.hostingBundle, comment: "")
+      static func no(preferredLanguages: [String]? = nil) -> String {
+        guard let preferredLanguages = preferredLanguages else {
+          return NSLocalizedString("No", bundle: hostingBundle, comment: "")
+        }
+
+        guard let (_, bundle) = localeBundle(tableName: "Localizable", preferredLanguages: preferredLanguages) else {
+          return "No"
+        }
+
+        return NSLocalizedString("No", bundle: bundle, comment: "")
       }
-      
+
       /// Value: この位置から聞く
-      static func articleLongPressSpeechStart(_: Void = ()) -> String {
-        return NSLocalizedString("ArticleLongPressSpeechStart", bundle: R.hostingBundle, comment: "")
+      static func articleLongPressSpeechStart(preferredLanguages: [String]? = nil) -> String {
+        guard let preferredLanguages = preferredLanguages else {
+          return NSLocalizedString("ArticleLongPressSpeechStart", bundle: hostingBundle, comment: "")
+        }
+
+        guard let (_, bundle) = localeBundle(tableName: "Localizable", preferredLanguages: preferredLanguages) else {
+          return "ArticleLongPressSpeechStart"
+        }
+
+        return NSLocalizedString("ArticleLongPressSpeechStart", bundle: bundle, comment: "")
       }
-      
+
       /// Value: この記事はあなたが初めて注目しました。
-      static func detailAttentionFirst(_: Void = ()) -> String {
-        return NSLocalizedString("DetailAttentionFirst", bundle: R.hostingBundle, comment: "")
+      static func detailAttentionFirst(preferredLanguages: [String]? = nil) -> String {
+        guard let preferredLanguages = preferredLanguages else {
+          return NSLocalizedString("DetailAttentionFirst", bundle: hostingBundle, comment: "")
+        }
+
+        guard let (_, bundle) = localeBundle(tableName: "Localizable", preferredLanguages: preferredLanguages) else {
+          return "DetailAttentionFirst"
+        }
+
+        return NSLocalizedString("DetailAttentionFirst", bundle: bundle, comment: "")
       }
-      
+
       /// Value: この音声でご案内します
-      static func speechSettingConfirm(_: Void = ()) -> String {
-        return NSLocalizedString("SpeechSettingConfirm", bundle: R.hostingBundle, comment: "")
+      static func speechSettingConfirm(preferredLanguages: [String]? = nil) -> String {
+        guard let preferredLanguages = preferredLanguages else {
+          return NSLocalizedString("SpeechSettingConfirm", bundle: hostingBundle, comment: "")
+        }
+
+        guard let (_, bundle) = localeBundle(tableName: "Localizable", preferredLanguages: preferredLanguages) else {
+          return "SpeechSettingConfirm"
+        }
+
+        return NSLocalizedString("SpeechSettingConfirm", bundle: bundle, comment: "")
       }
-      
+
       /// Value: これでニュースの読み上げを終わります
-      static func speechEnd(_: Void = ()) -> String {
-        return NSLocalizedString("SpeechEnd", bundle: R.hostingBundle, comment: "")
+      static func speechEnd(preferredLanguages: [String]? = nil) -> String {
+        guard let preferredLanguages = preferredLanguages else {
+          return NSLocalizedString("SpeechEnd", bundle: hostingBundle, comment: "")
+        }
+
+        guard let (_, bundle) = localeBundle(tableName: "Localizable", preferredLanguages: preferredLanguages) else {
+          return "SpeechEnd"
+        }
+
+        return NSLocalizedString("SpeechEnd", bundle: bundle, comment: "")
       }
-      
+
       /// Value: はい
-      static func yes(_: Void = ()) -> String {
-        return NSLocalizedString("Yes", bundle: R.hostingBundle, comment: "")
+      static func yes(preferredLanguages: [String]? = nil) -> String {
+        guard let preferredLanguages = preferredLanguages else {
+          return NSLocalizedString("Yes", bundle: hostingBundle, comment: "")
+        }
+
+        guard let (_, bundle) = localeBundle(tableName: "Localizable", preferredLanguages: preferredLanguages) else {
+          return "Yes"
+        }
+
+        return NSLocalizedString("Yes", bundle: bundle, comment: "")
       }
-      
+
       /// Value: キャッシュをクリアしました。
-      static func etcClearCacheAfterMessage(_: Void = ()) -> String {
-        return NSLocalizedString("EtcClearCacheAfterMessage", bundle: R.hostingBundle, comment: "")
+      static func etcClearCacheAfterMessage(preferredLanguages: [String]? = nil) -> String {
+        guard let preferredLanguages = preferredLanguages else {
+          return NSLocalizedString("EtcClearCacheAfterMessage", bundle: hostingBundle, comment: "")
+        }
+
+        guard let (_, bundle) = localeBundle(tableName: "Localizable", preferredLanguages: preferredLanguages) else {
+          return "EtcClearCacheAfterMessage"
+        }
+
+        return NSLocalizedString("EtcClearCacheAfterMessage", bundle: bundle, comment: "")
       }
-      
+
       /// Value: キャンセル
-      static func cancel(_: Void = ()) -> String {
-        return NSLocalizedString("Cancel", bundle: R.hostingBundle, comment: "")
+      static func cancel(preferredLanguages: [String]? = nil) -> String {
+        guard let preferredLanguages = preferredLanguages else {
+          return NSLocalizedString("Cancel", bundle: hostingBundle, comment: "")
+        }
+
+        guard let (_, bundle) = localeBundle(tableName: "Localizable", preferredLanguages: preferredLanguages) else {
+          return "Cancel"
+        }
+
+        return NSLocalizedString("Cancel", bundle: bundle, comment: "")
       }
-      
+
       /// Value: ニュースを読み上げます
-      static func speechStart(_: Void = ()) -> String {
-        return NSLocalizedString("SpeechStart", bundle: R.hostingBundle, comment: "")
+      static func speechStart(preferredLanguages: [String]? = nil) -> String {
+        guard let preferredLanguages = preferredLanguages else {
+          return NSLocalizedString("SpeechStart", bundle: hostingBundle, comment: "")
+        }
+
+        guard let (_, bundle) = localeBundle(tableName: "Localizable", preferredLanguages: preferredLanguages) else {
+          return "SpeechStart"
+        }
+
+        return NSLocalizedString("SpeechStart", bundle: bundle, comment: "")
       }
-      
+
       /// Value: 人の方が この記事に注目しています！
-      static func detailAttentionMoreAfter(_: Void = ()) -> String {
-        return NSLocalizedString("DetailAttentionMoreAfter", bundle: R.hostingBundle, comment: "")
+      static func detailAttentionMoreAfter(preferredLanguages: [String]? = nil) -> String {
+        guard let preferredLanguages = preferredLanguages else {
+          return NSLocalizedString("DetailAttentionMoreAfter", bundle: hostingBundle, comment: "")
+        }
+
+        guard let (_, bundle) = localeBundle(tableName: "Localizable", preferredLanguages: preferredLanguages) else {
+          return "DetailAttentionMoreAfter"
+        }
+
+        return NSLocalizedString("DetailAttentionMoreAfter", bundle: bundle, comment: "")
       }
-      
+
       /// Value: 他に
-      static func detailAttentionMoreBefore(_: Void = ()) -> String {
-        return NSLocalizedString("DetailAttentionMoreBefore", bundle: R.hostingBundle, comment: "")
+      static func detailAttentionMoreBefore(preferredLanguages: [String]? = nil) -> String {
+        guard let preferredLanguages = preferredLanguages else {
+          return NSLocalizedString("DetailAttentionMoreBefore", bundle: hostingBundle, comment: "")
+        }
+
+        guard let (_, bundle) = localeBundle(tableName: "Localizable", preferredLanguages: preferredLanguages) else {
+          return "DetailAttentionMoreBefore"
+        }
+
+        return NSLocalizedString("DetailAttentionMoreBefore", bundle: bundle, comment: "")
       }
-      
+
       /// Value: 内部キャッシュをクリアします。 よろしいですか？ キャッシュをクリアすると内部で保持している記事画像が削除されます。
-      static func etcClearCacheBeforeMessage(_: Void = ()) -> String {
-        return NSLocalizedString("EtcClearCacheBeforeMessage", bundle: R.hostingBundle, comment: "")
+      static func etcClearCacheBeforeMessage(preferredLanguages: [String]? = nil) -> String {
+        guard let preferredLanguages = preferredLanguages else {
+          return NSLocalizedString("EtcClearCacheBeforeMessage", bundle: hostingBundle, comment: "")
+        }
+
+        guard let (_, bundle) = localeBundle(tableName: "Localizable", preferredLanguages: preferredLanguages) else {
+          return "EtcClearCacheBeforeMessage"
+        }
+
+        return NSLocalizedString("EtcClearCacheBeforeMessage", bundle: bundle, comment: "")
       }
-      
+
       /// Value: 再度データをダウンロードします。電波が届いていることを確認してOKボタンを押してください。
-      static func initActErrorMessage(_: Void = ()) -> String {
-        return NSLocalizedString("InitActErrorMessage", bundle: R.hostingBundle, comment: "")
+      static func initActErrorMessage(preferredLanguages: [String]? = nil) -> String {
+        guard let preferredLanguages = preferredLanguages else {
+          return NSLocalizedString("InitActErrorMessage", bundle: hostingBundle, comment: "")
+        }
+
+        guard let (_, bundle) = localeBundle(tableName: "Localizable", preferredLanguages: preferredLanguages) else {
+          return "InitActErrorMessage"
+        }
+
+        return NSLocalizedString("InitActErrorMessage", bundle: bundle, comment: "")
       }
-      
+
       /// Value: 推奨
-      static func etcWeatherLocationAuthorizationTitle(_: Void = ()) -> String {
-        return NSLocalizedString("EtcWeatherLocationAuthorizationTitle", bundle: R.hostingBundle, comment: "")
+      static func etcWeatherLocationAuthorizationTitle(preferredLanguages: [String]? = nil) -> String {
+        guard let preferredLanguages = preferredLanguages else {
+          return NSLocalizedString("EtcWeatherLocationAuthorizationTitle", bundle: hostingBundle, comment: "")
+        }
+
+        guard let (_, bundle) = localeBundle(tableName: "Localizable", preferredLanguages: preferredLanguages) else {
+          return "EtcWeatherLocationAuthorizationTitle"
+        }
+
+        return NSLocalizedString("EtcWeatherLocationAuthorizationTitle", bundle: bundle, comment: "")
       }
-      
+
       /// Value: 次です
-      static func speechNextArticle(_: Void = ()) -> String {
-        return NSLocalizedString("SpeechNextArticle", bundle: R.hostingBundle, comment: "")
+      static func speechNextArticle(preferredLanguages: [String]? = nil) -> String {
+        guard let preferredLanguages = preferredLanguages else {
+          return NSLocalizedString("SpeechNextArticle", bundle: hostingBundle, comment: "")
+        }
+
+        guard let (_, bundle) = localeBundle(tableName: "Localizable", preferredLanguages: preferredLanguages) else {
+          return "SpeechNextArticle"
+        }
+
+        return NSLocalizedString("SpeechNextArticle", bundle: bundle, comment: "")
       }
-      
+
       /// Value: 現在地の天気を取得するには、[設定]->[イノービィ]->[位置情報]から位置情報の利用を許可してください。
-      static func etcWeatherLocationAuthorizationMessage(_: Void = ()) -> String {
-        return NSLocalizedString("EtcWeatherLocationAuthorizationMessage", bundle: R.hostingBundle, comment: "")
+      static func etcWeatherLocationAuthorizationMessage(preferredLanguages: [String]? = nil) -> String {
+        guard let preferredLanguages = preferredLanguages else {
+          return NSLocalizedString("EtcWeatherLocationAuthorizationMessage", bundle: hostingBundle, comment: "")
+        }
+
+        guard let (_, bundle) = localeBundle(tableName: "Localizable", preferredLanguages: preferredLanguages) else {
+          return "EtcWeatherLocationAuthorizationMessage"
+        }
+
+        return NSLocalizedString("EtcWeatherLocationAuthorizationMessage", bundle: bundle, comment: "")
       }
-      
+
       /// Value: 確認
-      static func etcClearCacheBeforeTitle(_: Void = ()) -> String {
-        return NSLocalizedString("EtcClearCacheBeforeTitle", bundle: R.hostingBundle, comment: "")
+      static func etcClearCacheBeforeTitle(preferredLanguages: [String]? = nil) -> String {
+        guard let preferredLanguages = preferredLanguages else {
+          return NSLocalizedString("EtcClearCacheBeforeTitle", bundle: hostingBundle, comment: "")
+        }
+
+        guard let (_, bundle) = localeBundle(tableName: "Localizable", preferredLanguages: preferredLanguages) else {
+          return "EtcClearCacheBeforeTitle"
+        }
+
+        return NSLocalizedString("EtcClearCacheBeforeTitle", bundle: bundle, comment: "")
       }
-      
+
       /// Value: 記事をクリップしました。
-      static func detailOnClip(_: Void = ()) -> String {
-        return NSLocalizedString("DetailOnClip", bundle: R.hostingBundle, comment: "")
+      static func detailOnClip(preferredLanguages: [String]? = nil) -> String {
+        guard let preferredLanguages = preferredLanguages else {
+          return NSLocalizedString("DetailOnClip", bundle: hostingBundle, comment: "")
+        }
+
+        guard let (_, bundle) = localeBundle(tableName: "Localizable", preferredLanguages: preferredLanguages) else {
+          return "DetailOnClip"
+        }
+
+        return NSLocalizedString("DetailOnClip", bundle: bundle, comment: "")
       }
-      
+
       /// Value: 詳細を見る
-      static func articleLongPressToDetail(_: Void = ()) -> String {
-        return NSLocalizedString("ArticleLongPressToDetail", bundle: R.hostingBundle, comment: "")
+      static func articleLongPressToDetail(preferredLanguages: [String]? = nil) -> String {
+        guard let preferredLanguages = preferredLanguages else {
+          return NSLocalizedString("ArticleLongPressToDetail", bundle: hostingBundle, comment: "")
+        }
+
+        guard let (_, bundle) = localeBundle(tableName: "Localizable", preferredLanguages: preferredLanguages) else {
+          return "ArticleLongPressToDetail"
+        }
+
+        return NSLocalizedString("ArticleLongPressToDetail", bundle: bundle, comment: "")
       }
-      
+
       /// Value: 通信エラー
-      static func detailNetworkErrorTitle(_: Void = ()) -> String {
-        return NSLocalizedString("DetailNetworkErrorTitle", bundle: R.hostingBundle, comment: "")
+      static func detailNetworkErrorTitle(preferredLanguages: [String]? = nil) -> String {
+        guard let preferredLanguages = preferredLanguages else {
+          return NSLocalizedString("DetailNetworkErrorTitle", bundle: hostingBundle, comment: "")
+        }
+
+        guard let (_, bundle) = localeBundle(tableName: "Localizable", preferredLanguages: preferredLanguages) else {
+          return "DetailNetworkErrorTitle"
+        }
+
+        return NSLocalizedString("DetailNetworkErrorTitle", bundle: bundle, comment: "")
       }
-      
+
       /// Value: 通信エラー
-      static func initActErrorTitle(_: Void = ()) -> String {
-        return NSLocalizedString("InitActErrorTitle", bundle: R.hostingBundle, comment: "")
+      static func initActErrorTitle(preferredLanguages: [String]? = nil) -> String {
+        guard let preferredLanguages = preferredLanguages else {
+          return NSLocalizedString("InitActErrorTitle", bundle: hostingBundle, comment: "")
+        }
+
+        guard let (_, bundle) = localeBundle(tableName: "Localizable", preferredLanguages: preferredLanguages) else {
+          return "InitActErrorTitle"
+        }
+
+        return NSLocalizedString("InitActErrorTitle", bundle: bundle, comment: "")
       }
-      
+
       /// Value: 通信状況を確認してもう一度記事をタップしてください。
-      static func detailNetworkErrorMessage(_: Void = ()) -> String {
-        return NSLocalizedString("DetailNetworkErrorMessage", bundle: R.hostingBundle, comment: "")
+      static func detailNetworkErrorMessage(preferredLanguages: [String]? = nil) -> String {
+        guard let preferredLanguages = preferredLanguages else {
+          return NSLocalizedString("DetailNetworkErrorMessage", bundle: hostingBundle, comment: "")
+        }
+
+        guard let (_, bundle) = localeBundle(tableName: "Localizable", preferredLanguages: preferredLanguages) else {
+          return "DetailNetworkErrorMessage"
+        }
+
+        return NSLocalizedString("DetailNetworkErrorMessage", bundle: bundle, comment: "")
       }
-      
+
       /// Value: 選択してください
-      static func articleLongPressTitle(_: Void = ()) -> String {
-        return NSLocalizedString("ArticleLongPressTitle", bundle: R.hostingBundle, comment: "")
+      static func articleLongPressTitle(preferredLanguages: [String]? = nil) -> String {
+        guard let preferredLanguages = preferredLanguages else {
+          return NSLocalizedString("ArticleLongPressTitle", bundle: hostingBundle, comment: "")
+        }
+
+        guard let (_, bundle) = localeBundle(tableName: "Localizable", preferredLanguages: preferredLanguages) else {
+          return "ArticleLongPressTitle"
+        }
+
+        return NSLocalizedString("ArticleLongPressTitle", bundle: bundle, comment: "")
       }
-      
+
       /// Value: 閉じる
-      static func close(_: Void = ()) -> String {
-        return NSLocalizedString("Close", bundle: R.hostingBundle, comment: "")
+      static func close(preferredLanguages: [String]? = nil) -> String {
+        guard let preferredLanguages = preferredLanguages else {
+          return NSLocalizedString("Close", bundle: hostingBundle, comment: "")
+        }
+
+        guard let (_, bundle) = localeBundle(tableName: "Localizable", preferredLanguages: preferredLanguages) else {
+          return "Close"
+        }
+
+        return NSLocalizedString("Close", bundle: bundle, comment: "")
       }
-      
+
       fileprivate init() {}
     }
-    
+
     fileprivate init() {}
   }
-  
+
   fileprivate struct intern: Rswift.Validatable {
     fileprivate static func validate() throws {
       try _R.validate()
     }
-    
+
     fileprivate init() {}
   }
-  
+
   fileprivate class Class {}
-  
+
   fileprivate init() {}
 }
 
 struct _R: Rswift.Validatable {
   static func validate() throws {
-    try storyboard.validate()
+    #if os(iOS) || os(tvOS)
     try nib.validate()
+    #endif
+    #if os(iOS) || os(tvOS)
+    try storyboard.validate()
+    #endif
   }
-  
+
+  #if os(iOS) || os(tvOS)
   struct nib: Rswift.Validatable {
     static func validate() throws {
       try _EtcCell.validate()
       try _NavigationTitleView.validate()
     }
-    
+
     struct _EtcCell: Rswift.NibResourceType, Rswift.ReuseIdentifierType, Rswift.Validatable {
       typealias ReusableType = EtcCell
-      
+
       let bundle = R.hostingBundle
       let identifier = "EtcCell"
       let name = "EtcCell"
-      
+
       func firstView(owner ownerOrNil: AnyObject?, options optionsOrNil: [UINib.OptionsKey : Any]? = nil) -> EtcCell? {
         return instantiate(withOwner: ownerOrNil, options: optionsOrNil)[0] as? EtcCell
       }
-      
+
       static func validate() throws {
         if UIKit.UIImage(named: "EtcInquiry", in: R.hostingBundle, compatibleWith: nil) == nil { throw Rswift.ValidationError(description: "[R.swift] Image named 'EtcInquiry' is used in nib 'EtcCell', but couldn't be loaded.") }
         if UIKit.UIImage(named: "EtcNextPage", in: R.hostingBundle, compatibleWith: nil) == nil { throw Rswift.ValidationError(description: "[R.swift] Image named 'EtcNextPage' is used in nib 'EtcCell', but couldn't be loaded.") }
-        if #available(iOS 11.0, *) {
+        if #available(iOS 11.0, tvOS 11.0, *) {
         }
       }
-      
+
       fileprivate init() {}
     }
-    
+
     struct _EtcWeatherCell: Rswift.NibResourceType, Rswift.ReuseIdentifierType {
       typealias ReusableType = EtcWeatherCell
-      
+
       let bundle = R.hostingBundle
       let identifier = "EtcWeatherCell"
       let name = "EtcWeatherCell"
-      
+
       func firstView(owner ownerOrNil: AnyObject?, options optionsOrNil: [UINib.OptionsKey : Any]? = nil) -> EtcWeatherCell? {
         return instantiate(withOwner: ownerOrNil, options: optionsOrNil)[0] as? EtcWeatherCell
       }
-      
+
       fileprivate init() {}
     }
-    
+
     struct _MainCollectionViewCell: Rswift.NibResourceType, Rswift.ReuseIdentifierType {
       typealias ReusableType = MainCollectionViewCell
-      
+
       let bundle = R.hostingBundle
       let identifier = "MainCollectionViewCell"
       let name = "MainCollectionViewCell"
-      
+
       func firstView(owner ownerOrNil: AnyObject?, options optionsOrNil: [UINib.OptionsKey : Any]? = nil) -> MainCollectionViewCell? {
         return instantiate(withOwner: ownerOrNil, options: optionsOrNil)[0] as? MainCollectionViewCell
       }
-      
+
       fileprivate init() {}
     }
-    
+
     struct _NavigationTitleView: Rswift.NibResourceType, Rswift.Validatable {
       let bundle = R.hostingBundle
       let name = "NavigationTitleView"
-      
+
       func firstView(owner ownerOrNil: AnyObject?, options optionsOrNil: [UINib.OptionsKey : Any]? = nil) -> NavigationTitleView? {
         return instantiate(withOwner: ownerOrNil, options: optionsOrNil)[0] as? NavigationTitleView
       }
-      
+
       static func validate() throws {
         if UIKit.UIImage(named: "CommonNavigationTitle", in: R.hostingBundle, compatibleWith: nil) == nil { throw Rswift.ValidationError(description: "[R.swift] Image named 'CommonNavigationTitle' is used in nib 'NavigationTitleView', but couldn't be loaded.") }
-        if #available(iOS 11.0, *) {
+        if #available(iOS 11.0, tvOS 11.0, *) {
         }
       }
-      
+
       fileprivate init() {}
     }
-    
+
     struct _NewsListCell: Rswift.NibResourceType, Rswift.ReuseIdentifierType {
       typealias ReusableType = NewsListCell
-      
+
       let bundle = R.hostingBundle
       let identifier = "NewsListCell"
       let name = "NewsListCell"
-      
+
       func firstView(owner ownerOrNil: AnyObject?, options optionsOrNil: [UINib.OptionsKey : Any]? = nil) -> NewsListCell? {
         return instantiate(withOwner: ownerOrNil, options: optionsOrNil)[0] as? NewsListCell
       }
-      
+
       fileprivate init() {}
     }
-    
+
     struct _SegmentCollectionViewCell: Rswift.NibResourceType, Rswift.ReuseIdentifierType {
       typealias ReusableType = SegmentCollectionViewCell
-      
+
       let bundle = R.hostingBundle
       let identifier = "SegmentCollectionViewCell"
       let name = "SegmentCollectionViewCell"
-      
+
       func firstView(owner ownerOrNil: AnyObject?, options optionsOrNil: [UINib.OptionsKey : Any]? = nil) -> SegmentCollectionViewCell? {
         return instantiate(withOwner: ownerOrNil, options: optionsOrNil)[0] as? SegmentCollectionViewCell
       }
-      
+
       fileprivate init() {}
     }
-    
-    struct _TweetCell: Rswift.NibResourceType, Rswift.ReuseIdentifierType {
-      typealias ReusableType = TweetCell
-      
-      let bundle = R.hostingBundle
-      let identifier = "TweetCell"
-      let name = "TweetCell"
-      
-      func firstView(owner ownerOrNil: AnyObject?, options optionsOrNil: [UINib.OptionsKey : Any]? = nil) -> TweetCell? {
-        return instantiate(withOwner: ownerOrNil, options: optionsOrNil)[0] as? TweetCell
-      }
-      
-      fileprivate init() {}
-    }
-    
+
     fileprivate init() {}
   }
-  
+  #endif
+
+  #if os(iOS) || os(tvOS)
   struct storyboard: Rswift.Validatable {
     static func validate() throws {
+      #if os(iOS) || os(tvOS)
       try articleDetail.validate()
+      #endif
+      #if os(iOS) || os(tvOS)
       try etc.validate()
+      #endif
+      #if os(iOS) || os(tvOS)
       try launchScreen.validate()
+      #endif
+      #if os(iOS) || os(tvOS)
       try newsClip.validate()
-      try newsList.validate()
+      #endif
+      #if os(iOS) || os(tvOS)
       try newsSearch.validate()
+      #endif
+      #if os(iOS) || os(tvOS)
       try newsTop.validate()
+      #endif
+      #if os(iOS) || os(tvOS)
       try speechSetting.validate()
-      try twitter.validate()
+      #endif
+      #if os(iOS) || os(tvOS)
       try upTabViewController.validate()
+      #endif
     }
-    
+
+    #if os(iOS) || os(tvOS)
     struct articleDetail: Rswift.StoryboardResourceWithInitialControllerType, Rswift.Validatable {
       typealias InitialController = ArticleDetailViewController
-      
+
       let bundle = R.hostingBundle
       let name = "ArticleDetail"
-      
+
       static func validate() throws {
         if UIKit.UIImage(named: "ArticleDetailBackButton", in: R.hostingBundle, compatibleWith: nil) == nil { throw Rswift.ValidationError(description: "[R.swift] Image named 'ArticleDetailBackButton' is used in storyboard 'ArticleDetail', but couldn't be loaded.") }
         if UIKit.UIImage(named: "ArticleDetailClipOnButton", in: R.hostingBundle, compatibleWith: nil) == nil { throw Rswift.ValidationError(description: "[R.swift] Image named 'ArticleDetailClipOnButton' is used in storyboard 'ArticleDetail', but couldn't be loaded.") }
         if UIKit.UIImage(named: "ArticleDetailShareButton", in: R.hostingBundle, compatibleWith: nil) == nil { throw Rswift.ValidationError(description: "[R.swift] Image named 'ArticleDetailShareButton' is used in storyboard 'ArticleDetail', but couldn't be loaded.") }
-        if UIKit.UIImage(named: "ArticleDetailTwitterButton", in: R.hostingBundle, compatibleWith: nil) == nil { throw Rswift.ValidationError(description: "[R.swift] Image named 'ArticleDetailTwitterButton' is used in storyboard 'ArticleDetail', but couldn't be loaded.") }
-        if #available(iOS 11.0, *) {
+        if #available(iOS 11.0, tvOS 11.0, *) {
         }
       }
-      
+
       fileprivate init() {}
     }
-    
+    #endif
+
+    #if os(iOS) || os(tvOS)
     struct etc: Rswift.StoryboardResourceWithInitialControllerType, Rswift.Validatable {
       typealias InitialController = UIKit.UINavigationController
-      
+
       let bundle = R.hostingBundle
       let name = "Etc"
-      
+
       static func validate() throws {
         if UIKit.UIImage(named: "NewsTopTabEtc", in: R.hostingBundle, compatibleWith: nil) == nil { throw Rswift.ValidationError(description: "[R.swift] Image named 'NewsTopTabEtc' is used in storyboard 'Etc', but couldn't be loaded.") }
-        if #available(iOS 11.0, *) {
+        if #available(iOS 11.0, tvOS 11.0, *) {
         }
       }
-      
+
       fileprivate init() {}
     }
-    
+    #endif
+
+    #if os(iOS) || os(tvOS)
     struct launchScreen: Rswift.StoryboardResourceWithInitialControllerType, Rswift.Validatable {
       typealias InitialController = UIKit.UIViewController
-      
+
       let bundle = R.hostingBundle
       let name = "LaunchScreen"
-      
+
       static func validate() throws {
         if UIKit.UIImage(named: "LaunchScreenLogo", in: R.hostingBundle, compatibleWith: nil) == nil { throw Rswift.ValidationError(description: "[R.swift] Image named 'LaunchScreenLogo' is used in storyboard 'LaunchScreen', but couldn't be loaded.") }
-        if #available(iOS 11.0, *) {
+        if #available(iOS 11.0, tvOS 11.0, *) {
         }
       }
-      
+
       fileprivate init() {}
     }
-    
+    #endif
+
+    #if os(iOS) || os(tvOS)
     struct newsClip: Rswift.StoryboardResourceWithInitialControllerType, Rswift.Validatable {
       typealias InitialController = UIKit.UINavigationController
-      
+
       let bundle = R.hostingBundle
       let name = "NewsClip"
-      
+
       static func validate() throws {
         if UIKit.UIImage(named: "NewsClipNonArticle", in: R.hostingBundle, compatibleWith: nil) == nil { throw Rswift.ValidationError(description: "[R.swift] Image named 'NewsClipNonArticle' is used in storyboard 'NewsClip', but couldn't be loaded.") }
         if UIKit.UIImage(named: "NewsTopTabClip", in: R.hostingBundle, compatibleWith: nil) == nil { throw Rswift.ValidationError(description: "[R.swift] Image named 'NewsTopTabClip' is used in storyboard 'NewsClip', but couldn't be loaded.") }
-        if #available(iOS 11.0, *) {
+        if #available(iOS 11.0, tvOS 11.0, *) {
         }
       }
-      
+
       fileprivate init() {}
     }
-    
-    struct newsList: Rswift.StoryboardResourceWithInitialControllerType, Rswift.Validatable {
-      typealias InitialController = NewsListViewController
-      
-      let bundle = R.hostingBundle
-      let name = "NewsList"
-      let newsList = StoryboardViewControllerResource<NewsListViewController>(identifier: "NewsList")
-      
-      func newsList(_: Void = ()) -> NewsListViewController? {
-        return UIKit.UIStoryboard(resource: self).instantiateViewController(withResource: newsList)
-      }
-      
-      static func validate() throws {
-        if #available(iOS 11.0, *) {
-        }
-        if _R.storyboard.newsList().newsList() == nil { throw Rswift.ValidationError(description:"[R.swift] ViewController with identifier 'newsList' could not be loaded from storyboard 'NewsList' as 'NewsListViewController'.") }
-      }
-      
-      fileprivate init() {}
-    }
-    
+    #endif
+
+    #if os(iOS) || os(tvOS)
     struct newsSearch: Rswift.StoryboardResourceWithInitialControllerType, Rswift.Validatable {
       typealias InitialController = UIKit.UINavigationController
-      
+
       let bundle = R.hostingBundle
       let name = "NewsSearch"
-      
+
       static func validate() throws {
         if UIKit.UIImage(named: "NewsSearchNonArticle", in: R.hostingBundle, compatibleWith: nil) == nil { throw Rswift.ValidationError(description: "[R.swift] Image named 'NewsSearchNonArticle' is used in storyboard 'NewsSearch', but couldn't be loaded.") }
         if UIKit.UIImage(named: "NewsTopTabSearch", in: R.hostingBundle, compatibleWith: nil) == nil { throw Rswift.ValidationError(description: "[R.swift] Image named 'NewsTopTabSearch' is used in storyboard 'NewsSearch', but couldn't be loaded.") }
-        if #available(iOS 11.0, *) {
+        if #available(iOS 11.0, tvOS 11.0, *) {
         }
       }
-      
+
       fileprivate init() {}
     }
-    
+    #endif
+
+    #if os(iOS) || os(tvOS)
     struct newsTop: Rswift.StoryboardResourceWithInitialControllerType, Rswift.Validatable {
       typealias InitialController = NewsTopTabBarController
-      
+
       let bundle = R.hostingBundle
       let name = "NewsTop"
-      
+
       static func validate() throws {
-        if #available(iOS 11.0, *) {
+        if #available(iOS 11.0, tvOS 11.0, *) {
         }
       }
-      
+
       fileprivate init() {}
     }
-    
+    #endif
+
+    #if os(iOS) || os(tvOS)
     struct speechSetting: Rswift.StoryboardResourceWithInitialControllerType, Rswift.Validatable {
       typealias InitialController = SpeechSettingViewController
-      
+
       let bundle = R.hostingBundle
       let name = "SpeechSetting"
-      
+
       static func validate() throws {
         if UIKit.UIImage(named: "SpeechHigh", in: R.hostingBundle, compatibleWith: nil) == nil { throw Rswift.ValidationError(description: "[R.swift] Image named 'SpeechHigh' is used in storyboard 'SpeechSetting', but couldn't be loaded.") }
         if UIKit.UIImage(named: "SpeechLow", in: R.hostingBundle, compatibleWith: nil) == nil { throw Rswift.ValidationError(description: "[R.swift] Image named 'SpeechLow' is used in storyboard 'SpeechSetting', but couldn't be loaded.") }
         if UIKit.UIImage(named: "SpeechQuick", in: R.hostingBundle, compatibleWith: nil) == nil { throw Rswift.ValidationError(description: "[R.swift] Image named 'SpeechQuick' is used in storyboard 'SpeechSetting', but couldn't be loaded.") }
         if UIKit.UIImage(named: "SpeechSlow", in: R.hostingBundle, compatibleWith: nil) == nil { throw Rswift.ValidationError(description: "[R.swift] Image named 'SpeechSlow' is used in storyboard 'SpeechSetting', but couldn't be loaded.") }
-        if #available(iOS 11.0, *) {
+        if #available(iOS 11.0, tvOS 11.0, *) {
         }
       }
-      
+
       fileprivate init() {}
     }
-    
-    struct twitter: Rswift.StoryboardResourceWithInitialControllerType, Rswift.Validatable {
-      typealias InitialController = UIKit.UINavigationController
-      
-      let bundle = R.hostingBundle
-      let name = "Twitter"
-      let twitter = StoryboardViewControllerResource<TwitterViewController>(identifier: "Twitter")
-      
-      func twitter(_: Void = ()) -> TwitterViewController? {
-        return UIKit.UIStoryboard(resource: self).instantiateViewController(withResource: twitter)
-      }
-      
-      static func validate() throws {
-        if UIKit.UIImage(named: "TwitterCloseButton", in: R.hostingBundle, compatibleWith: nil) == nil { throw Rswift.ValidationError(description: "[R.swift] Image named 'TwitterCloseButton' is used in storyboard 'Twitter', but couldn't be loaded.") }
-        if UIKit.UIImage(named: "TwitterTweetButton", in: R.hostingBundle, compatibleWith: nil) == nil { throw Rswift.ValidationError(description: "[R.swift] Image named 'TwitterTweetButton' is used in storyboard 'Twitter', but couldn't be loaded.") }
-        if #available(iOS 11.0, *) {
-        }
-        if _R.storyboard.twitter().twitter() == nil { throw Rswift.ValidationError(description:"[R.swift] ViewController with identifier 'twitter' could not be loaded from storyboard 'Twitter' as 'TwitterViewController'.") }
-      }
-      
-      fileprivate init() {}
-    }
-    
+    #endif
+
+    #if os(iOS) || os(tvOS)
     struct upTabViewController: Rswift.StoryboardResourceWithInitialControllerType, Rswift.Validatable {
       typealias InitialController = UIKit.UINavigationController
-      
+
       let bundle = R.hostingBundle
       let name = "UpTabViewController"
-      
+
       static func validate() throws {
         if UIKit.UIImage(named: "CommonSpeechStop", in: R.hostingBundle, compatibleWith: nil) == nil { throw Rswift.ValidationError(description: "[R.swift] Image named 'CommonSpeechStop' is used in storyboard 'UpTabViewController', but couldn't be loaded.") }
         if UIKit.UIImage(named: "NewsTopTabList", in: R.hostingBundle, compatibleWith: nil) == nil { throw Rswift.ValidationError(description: "[R.swift] Image named 'NewsTopTabList' is used in storyboard 'UpTabViewController', but couldn't be loaded.") }
-        if #available(iOS 11.0, *) {
+        if #available(iOS 11.0, tvOS 11.0, *) {
         }
       }
-      
+
       fileprivate init() {}
     }
-    
+    #endif
+
     fileprivate init() {}
   }
-  
+  #endif
+
   fileprivate init() {}
 }

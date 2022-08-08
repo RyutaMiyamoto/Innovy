@@ -1,25 +1,21 @@
 use_frameworks!
 # Uncomment this line to define a global platform for your project
-platform :ios, '11.0'
-swift_version = '5.0'
+platform :ios, '15.0'
+# swift_version = '5'
 
 target 'likeNews' do
 
-pod 'R.swift', '~> 5.0.3'
-pod 'Alamofire', '~> 5.0.0-rc.3'
-pod 'SDWebImage', '~> 5.4.1'
+pod 'R.swift', '~> 6.1.0'
+pod 'Alamofire', '~> 5.5'
+pod 'SDWebImage', '~> 5.0'
 pod 'NoticeObserveKit'
-pod 'Unbox'
-pod 'Realm', '~> 4.3.0'
+pod 'Unbox', '~> 4.0.0'
+pod 'Realm', '~> 10.20.1'
 pod 'CTFeedback'
-pod 'SVProgressHUD'
-pod‘HockeySDK', '~> 5.1.4'
-pod 'Firebase/Core'
-pod 'Firebase/Messaging'
-pod 'Fabric', '~> 1.10.2'
-pod 'Crashlytics', '~> 3.14.0'
-pod 'TwitterKit'
-pod 'Google-Mobile-Ads-SDK'
+pod 'SVProgressHUD', '~> 2.2.5'
+pod 'FirebaseMessaging', '~> 8.10.0'
+pod 'FirebaseAnalytics', '~> 8.10.0'
+pod 'NendSDK_iOS', '~> 7.1.0'
 
   # Pods for likeNews
 

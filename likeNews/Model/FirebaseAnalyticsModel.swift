@@ -66,7 +66,7 @@ class FirebaseAnalyticsModel {
     ///   - screenName: スクリーン名
     ///   - screenClass: クラス
     func sendScreen(screenName: ScreenName, screenClass: String?) {
-        Analytics.setScreenName(screenName.rawValue, screenClass: screenClass)
+        Analytics.logEvent(screenName.rawValue, parameters: [screenName.rawValue: screenClass as Any])
     }
     
     /// イベントトラッキング送信

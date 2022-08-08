@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 import Realm
-import GoogleMobileAds
+import NendAd
 
 class NewsListCellViewModel: NewsListModel {
     
@@ -25,8 +25,6 @@ class NewsListCellViewModel: NewsListModel {
     
     /// 表示種別
     var dispType: DispType = .normal
-    /// 広告表示BlockView表示有無
-    var isAdBlockViewHideen = true
     /// タイトル
     var titleText = ""
     /// タイトル色
@@ -63,7 +61,7 @@ class NewsListCellViewModel: NewsListModel {
     var isLoad = false
     /// 既読状態
     var isRead: Bool {
-        guard let sourceArticle = sourceArticle, let article = NewsListModel.shared.articles(title: sourceArticle.title).first else { return false }
+        guard let article = NewsListModel.shared.articles(title: titleText).first else { return false }
         return article.isRead
     }
     /// 広告ロード状態（true:ロード済み）
@@ -72,7 +70,11 @@ class NewsListCellViewModel: NewsListModel {
     var isSpeechNow = false
     /// indexPath
     var indexPath = IndexPath()
-    
+    // Nendクライアント
+    private var nendClient: NADNativeClient!
+    // 広告
+    var nativeAd: NADNative?
+
     /// init
     ///
     /// - Parameters:
@@ -103,7 +105,6 @@ class NewsListCellViewModel: NewsListModel {
         indexPath = index
         dispType = type
         
-        isAdBlockViewHideen = dispType == .ad
         topArticleImageHidden = !(dispType == .top) || !UserDefaults.standard.isDispThumbnail
         articleImageHidden = !(dispType == .normal || dispType == .ad) || !UserDefaults.standard.isDispThumbnail
     }
@@ -120,16 +121,25 @@ class NewsListCellViewModel: NewsListModel {
         isSpeechNow = isSpeech
     }
     
-    /// 広告情報を反映する
-    /// - Parameter nativeAd: 広告情報
-    func setAdData(nativeAd: GADUnifiedNativeAd) {
-        guard let title = nativeAd.body,
-            let source = nativeAd.advertiser,
-            let image = nativeAd.icon?.image else { return }
-        titleText = title
-        imageAd = image
-        sourceNameText = source
-        noteText = "PR"
-        isAdLoad = true
+    /// 広告のロード
+    func loadAd(completion: @escaping (Bool)->Void) {
+        guard let spotId = Int(Bundle.Nend(key: .spotId)) else { completion(false)
+                                                                return }
+        nendClient = NADNativeClient(spotID: spotId, apiKey: Bundle.Nend(key: .apiKey))
+        nendClient.disableAutoReload()
+        nendClient.load() { (ad, error) in
+            if let nativeAd = ad {
+                self.nativeAd = nativeAd
+                self.titleText = nativeAd.longText
+                self.sourceNameText = nativeAd.prText(for: .PR)
+                self.noteText = ""
+                self.articleUrl = ""
+                self.imageUrl = nativeAd.imageUrl
+                completion(true)
+            } else {
+                completion(false)
+            }
+        }
     }
+
 }

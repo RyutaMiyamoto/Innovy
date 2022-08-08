@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol EtcCellDelegate: class {
+protocol EtcCellDelegate: AnyObject {
     /// スイッチ切り替え
     ///
     /// - Parameters:

@@ -9,7 +9,7 @@
 import Foundation
 import AVFoundation
 
-protocol SpeechModelDelegate: class {
+protocol SpeechModelDelegate: AnyObject {
     
     /// 1件読み上げ完了
     ///
