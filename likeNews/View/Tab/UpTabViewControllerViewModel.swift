@@ -60,7 +60,7 @@ class UpTabViewControllerViewModel {
             
             // メイン
             cellSizeMain.append(CGSize(width: CGRect().screenWidth(),
-                                       height: CGRect().screenHeight() - UIApplication.shared.statusBarFrame.size.height - 155))
+                                       height: CGRect().screenHeight() - CGRect().statusBarHeight() - 155))
         }
     }
     
