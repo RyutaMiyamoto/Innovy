@@ -53,10 +53,15 @@ class EtcViewController: UIViewController, UITableViewDelegate, UITableViewDataS
         
         FirebaseAnalyticsModel.shared.sendScreen(screenName: .etc, screenClass: classForCoder.description())
         
+        // 前回レビュー促進ダイアログを表示してから一定期間表示がない場合のみ再表示する。
+        if UserDefaults().previousDateRequestReview.dayAfter(day: 120) > Date() { return }
         // レビュー促進ダイアログ表示
         DispatchQueue.mainSyncSafe { [weak self] in
             guard let _ = self else { return }
-            SKStoreReviewController.requestReview()
+            if let scene = UIApplication.shared.connectedScenes.first(where: { $0.activationState == .foregroundActive }) as? UIWindowScene {
+                SKStoreReviewController.requestReview(in: scene)
+                UserDefaults().previousDateRequestReview = Date()
+            }
         }
     }
     

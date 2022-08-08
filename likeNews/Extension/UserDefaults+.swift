@@ -19,6 +19,8 @@ extension UserDefaults {
         case speechRate
         /// 読み上げ機能（高さ）
         case speechPitch
+        /// 前回レビュー促進ダイアログを表示した日時
+        case previousDateRequestReview
     }
     
     /// サムネイル表示有無
@@ -74,6 +76,20 @@ extension UserDefaults {
         }
         set {
             setValue(newValue, forKeyPath: UserDefaults.key.speechPitch.rawValue)
+        }
+    }
+    
+    /// 前回レビュー促進ダイアログを表示した日時
+    var previousDateRequestReview: Date {
+        get {
+            let setKey = UserDefaults.key.previousDateRequestReview
+            guard let result = UserDefaults.standard.object(forKey: setKey.rawValue) as? Date else {
+                return Date().dayBefore(day: 365)
+            }
+            return result
+        }
+        set {
+            setValue(newValue, forKeyPath: UserDefaults.key.previousDateRequestReview.rawValue)
         }
     }
 }
