@@ -233,6 +233,7 @@ class MainCollectionViewCell: UICollectionViewCell, UITableViewDelegate, UITable
      ///
      /// - Parameter gesture: ジェスチャ
      func articleLongPress(gesture: UILongPressGestureRecognizer) {
+         guard let rootViewController = UIApplication.rootViewController() else { return }
          guard let viewModel = viewModel else { return }
          let point = gesture.location(in: tableView)
          guard let indexPath = tableView.indexPathForRow(at: point) else { return }
@@ -275,7 +276,7 @@ class MainCollectionViewCell: UICollectionViewCell, UITableViewDelegate, UITable
          // キャンセルボタン
          let cancel = UIAlertAction(title: R.string.localizable.cancel(), style: UIAlertAction.Style.cancel, handler: nil)
          alertController.addAction(cancel)
-         UIApplication.shared.keyWindow?.rootViewController?.present(alertController,animated: true,completion: nil)
+         rootViewController.present(alertController,animated: true,completion: nil)
      }
      
      /// スピーチ状態をセットする

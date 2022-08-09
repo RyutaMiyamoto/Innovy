@@ -33,6 +33,7 @@
 		9035F9B01F270FF100056A39 /* UpTabViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9035F9921F270FF100056A39 /* UpTabViewController.storyboard */; };
 		9035F9B11F270FF100056A39 /* UpTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9035F9931F270FF100056A39 /* UpTabViewController.swift */; };
 		9035F9B21F270FF100056A39 /* UpTabViewControllerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9035F9941F270FF100056A39 /* UpTabViewControllerViewModel.swift */; };
+		90413D9228A1DE7C009F017D /* UIApplication+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90413D9128A1DE7C009F017D /* UIApplication+.swift */; };
 		906620301F2735600001F2D8 /* R.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9066202F1F2735600001F2D8 /* R.generated.swift */; };
 		906620321F274D380001F2D8 /* ExclusiveTouch+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 906620311F274D380001F2D8 /* ExclusiveTouch+.swift */; };
 		907A8FDF278B277C003A54D3 /* MainCollectionViewCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 907A8FDE278B277C003A54D3 /* MainCollectionViewCellViewModel.swift */; };
@@ -144,6 +145,7 @@
 		9035F9921F270FF100056A39 /* UpTabViewController.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = UpTabViewController.storyboard; path = ../Tab/UpTabViewController.storyboard; sourceTree = "<group>"; };
 		9035F9931F270FF100056A39 /* UpTabViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpTabViewController.swift; sourceTree = "<group>"; };
 		9035F9941F270FF100056A39 /* UpTabViewControllerViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpTabViewControllerViewModel.swift; sourceTree = "<group>"; };
+		90413D9128A1DE7C009F017D /* UIApplication+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+.swift"; sourceTree = "<group>"; };
 		9066202F1F2735600001F2D8 /* R.generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = R.generated.swift; sourceTree = "<group>"; };
 		906620311F274D380001F2D8 /* ExclusiveTouch+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ExclusiveTouch+.swift"; sourceTree = "<group>"; };
 		907A8FDE278B277C003A54D3 /* MainCollectionViewCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCollectionViewCellViewModel.swift; sourceTree = "<group>"; };
@@ -319,6 +321,7 @@
 		9035F96E1F270FF100056A39 /* Extension */ = {
 			isa = PBXGroup;
 			children = (
+				90413D9128A1DE7C009F017D /* UIApplication+.swift */,
 				E67F1A151FBB161E00B7F136 /* UserDefaults+.swift */,
 				C10FC3B320E6FAD2003550B5 /* Array+.swift */,
 				E6BCEBD61F9B8D6D006B8A81 /* Bundle+.swift */,
@@ -808,6 +811,7 @@
 				E6AF5FE01F499F9F005090E6 /* NewsSearchViewController.swift in Sources */,
 				9035F9B21F270FF100056A39 /* UpTabViewControllerViewModel.swift in Sources */,
 				9035F9981F270FF100056A39 /* NewsListModel.swift in Sources */,
+				90413D9228A1DE7C009F017D /* UIApplication+.swift in Sources */,
 				907A8FDF278B277C003A54D3 /* MainCollectionViewCellViewModel.swift in Sources */,
 				E6AF5FF31F4F0364005090E6 /* NewsClipViewController.swift in Sources */,
 				9035F9971F270FF100056A39 /* UIStoryboard+.swift in Sources */,

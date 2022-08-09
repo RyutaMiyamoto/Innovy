@@ -370,6 +370,7 @@ class ArticleDetailViewController: UIViewController, WKUIDelegate, WKNavigationD
     ///
     /// - Parameter isTop: 詳細先頭画面有無（true:先頭画面）
     func networkError(isTop: Bool) {
+        guard let rootViewController = UIApplication.rootViewController() else { return }
         // 先頭画面以外は何もしない
         if !isTop { return }
         
@@ -383,9 +384,6 @@ class ArticleDetailViewController: UIViewController, WKUIDelegate, WKNavigationD
             self.dismiss(animated: true, completion: nil)
         }
         alertController.addAction(okButton)
-        let scenes = UIApplication.shared.connectedScenes
-        let windowScene = scenes.first as? UIWindowScene
-        let window = windowScene?.windows.first
-        window?.rootViewController?.present(alertController,animated: true,completion: nil)
+        rootViewController.present(alertController,animated: true,completion: nil)
     }
 }
