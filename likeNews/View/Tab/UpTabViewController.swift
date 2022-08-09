@@ -147,7 +147,7 @@ class UpTabViewController: UIViewController, UICollectionViewDataSource, UIColle
                 return viewModel.cellSizeMain[indexPath.row]
             } else {
                 return CGSize(width: CGFloat(viewModel.genreList.count) / CGRect().screenWidth(),
-                              height: CGRect().screenHeight() - UIApplication.shared.statusBarFrame.size.height - 155)
+                              height: CGRect().screenHeight() - CGRect().statusBarHeight() - 155)
             }
         }
         return CGSize.zero

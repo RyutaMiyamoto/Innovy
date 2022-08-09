@@ -3,6 +3,9 @@ use_frameworks!
 platform :ios, '15.0'
 # swift_version = '5'
 
+install! 'cocoapods',
+            :warn_for_unused_master_specs_repo => false
+
 target 'likeNews' do
 
 pod 'R.swift', '~> 6.1.0'

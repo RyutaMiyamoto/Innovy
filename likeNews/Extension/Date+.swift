@@ -38,6 +38,15 @@ extension Date {
         return self.addingTimeInterval(TimeInterval(-(daySecond * day)))
     }
     
+    /// ○日後の日付を返す
+    ///
+    /// - Parameter day: ◯日後
+    /// - Returns: ○日後の日付
+    func dayAfter(day: Int) -> Date {
+        let daySecond = Int(60 * 60 * 24)
+        return self.addingTimeInterval(TimeInterval(+(daySecond * day)))
+    }
+    
     /// 指定された日付の曜日を1文字で返す
     ///
     /// - Returns: 曜日（月曜日の場合：月）
