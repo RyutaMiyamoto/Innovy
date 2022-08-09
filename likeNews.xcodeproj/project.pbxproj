@@ -37,8 +37,6 @@
 		906620301F2735600001F2D8 /* R.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9066202F1F2735600001F2D8 /* R.generated.swift */; };
 		906620321F274D380001F2D8 /* ExclusiveTouch+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 906620311F274D380001F2D8 /* ExclusiveTouch+.swift */; };
 		907A8FDF278B277C003A54D3 /* MainCollectionViewCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 907A8FDE278B277C003A54D3 /* MainCollectionViewCellViewModel.swift */; };
-		9084347F2772EA730019CA3D /* NewsListTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9084347E2772EA730019CA3D /* NewsListTableView.swift */; };
-		908434832772EED60019CA3D /* NewsListTableViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 908434822772EED60019CA3D /* NewsListTableViewModel.swift */; };
 		908A082C20B435AB00385034 /* Collection+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 908A082B20B435AB00385034 /* Collection+.swift */; };
 		90A0A3EE20971982000063F2 /* EtcWeatherCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90A0A3EC20971982000063F2 /* EtcWeatherCell.swift */; };
 		90A0A3EF20971982000063F2 /* EtcWeatherCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 90A0A3ED20971982000063F2 /* EtcWeatherCell.xib */; };
@@ -149,8 +147,6 @@
 		9066202F1F2735600001F2D8 /* R.generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = R.generated.swift; sourceTree = "<group>"; };
 		906620311F274D380001F2D8 /* ExclusiveTouch+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ExclusiveTouch+.swift"; sourceTree = "<group>"; };
 		907A8FDE278B277C003A54D3 /* MainCollectionViewCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCollectionViewCellViewModel.swift; sourceTree = "<group>"; };
-		9084347E2772EA730019CA3D /* NewsListTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsListTableView.swift; sourceTree = "<group>"; };
-		908434822772EED60019CA3D /* NewsListTableViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsListTableViewModel.swift; sourceTree = "<group>"; };
 		908A082B20B435AB00385034 /* Collection+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Collection+.swift"; sourceTree = "<group>"; };
 		90A0A3EC20971982000063F2 /* EtcWeatherCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EtcWeatherCell.swift; sourceTree = "<group>"; };
 		90A0A3ED20971982000063F2 /* EtcWeatherCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EtcWeatherCell.xib; sourceTree = "<group>"; };
@@ -419,7 +415,6 @@
 		9035F98C1F270FF100056A39 /* Tab */ = {
 			isa = PBXGroup;
 			children = (
-				9084347D2772EA5A0019CA3D /* NewsList */,
 				9035F98D1F270FF100056A39 /* MainCollectionViewCell.swift */,
 				907A8FDE278B277C003A54D3 /* MainCollectionViewCellViewModel.swift */,
 				9035F98E1F270FF100056A39 /* MainCollectionViewCell.xib */,
@@ -430,15 +425,6 @@
 				9035F9941F270FF100056A39 /* UpTabViewControllerViewModel.swift */,
 			);
 			path = Tab;
-			sourceTree = "<group>";
-		};
-		9084347D2772EA5A0019CA3D /* NewsList */ = {
-			isa = PBXGroup;
-			children = (
-				9084347E2772EA730019CA3D /* NewsListTableView.swift */,
-				908434822772EED60019CA3D /* NewsListTableViewModel.swift */,
-			);
-			path = NewsList;
 			sourceTree = "<group>";
 		};
 		90C2A38E1FCEE06500A0769C /* Common */ = {
@@ -804,7 +790,6 @@
 				9035F9AD1F270FF100056A39 /* SegmentCollectionViewCell.swift in Sources */,
 				E6B4550D1F5D7CDF00935BB3 /* UITableView+.swift in Sources */,
 				E6BCEBDA1F9B9223006B8A81 /* EtcCell.swift in Sources */,
-				908434832772EED60019CA3D /* NewsListTableViewModel.swift in Sources */,
 				9035F9B11F270FF100056A39 /* UpTabViewController.swift in Sources */,
 				E6AF5FE61F499FC7005090E6 /* NewsSearchViewModel.swift in Sources */,
 				906620301F2735600001F2D8 /* R.generated.swift in Sources */,
@@ -816,7 +801,6 @@
 				E6AF5FF31F4F0364005090E6 /* NewsClipViewController.swift in Sources */,
 				9035F9971F270FF100056A39 /* UIStoryboard+.swift in Sources */,
 				90DCE0401FF5E5D100574584 /* SpeechModel.swift in Sources */,
-				9084347F2772EA730019CA3D /* NewsListTableView.swift in Sources */,
 				E68AF1311F34982A0002A3A7 /* Date+.swift in Sources */,
 				9035F9A31F270FF100056A39 /* NewsListCellViewModel.swift in Sources */,
 				90A9291C1FBFCEB900A476DA /* NewsTopTabBarViewModel.swift in Sources */,

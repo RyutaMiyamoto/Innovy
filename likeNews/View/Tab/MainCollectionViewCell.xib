@@ -2,7 +2,6 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_0" orientation="portrait" appearance="light"/>
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -20,7 +19,7 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vvl-Tt-kwA" userLabel="背景">
                         <rect key="frame" x="0.0" y="13" width="44" height="31"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="BLF-Hj-m8f" customClass="NewsListTableView" customModule="likeNews" customModuleProvider="target">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="BLF-Hj-m8f">
                                 <rect key="frame" x="0.0" y="0.0" width="44" height="31"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <gestureRecognizers/>
@@ -50,7 +49,7 @@
             <size key="customSize" width="84" height="67"/>
             <connections>
                 <outlet property="backView" destination="vvl-Tt-kwA" id="5iQ-3O-ilU"/>
-                <outlet property="tableView" destination="BLF-Hj-m8f" id="m6H-3X-aex"/>
+                <outlet property="tableView" destination="BLF-Hj-m8f" id="4Ya-I1-JfP"/>
             </connections>
             <point key="canvasLocation" x="-161.25" y="32.74647887323944"/>
         </collectionViewCell>

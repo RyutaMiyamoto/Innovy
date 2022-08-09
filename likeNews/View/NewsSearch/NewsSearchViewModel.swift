@@ -39,7 +39,7 @@ class NewsSearchViewModel {
         newsList = !articles.isEmpty ?
             articles : NewsListModel.shared.articles(words: searchWord.replacingOccurrences(of: "　", with: " ").components(separatedBy: " "))
         isNonArticleViewHidden = !newsList.isEmpty
-        newsListCellViewModel = NewsListTableViewModel.createNewsListCellViewModel(articles: newsList, isDispTop: false)
+        newsListCellViewModel = MainCollectionViewCellViewModel.createNewsListCellViewModel(articles: newsList, isDispTop: false)
     }
     
     /// ニュース読み込み
@@ -56,7 +56,7 @@ class NewsSearchViewModel {
     
     /// 次の記事を読み込む（広告含む）
     func loadNext() {
-        let nextViewModelList = NewsListTableViewModel.createNewsListCellNextViewModel(articles: newsList, viewModelList: newsListCellViewModel, page: page)
+        let nextViewModelList = MainCollectionViewCellViewModel.createNewsListCellNextViewModel(articles: newsList, viewModelList: newsListCellViewModel, page: page)
         page += 1
         newsListCellViewModel = nextViewModelList
     }

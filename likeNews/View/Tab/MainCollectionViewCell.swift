@@ -32,7 +32,7 @@ class MainCollectionViewCell: UICollectionViewCell, UITableViewDelegate, UITable
     /// 背景
     @IBOutlet weak var backView: UIView!
     // ニュース一覧
-    @IBOutlet weak var tableView: NewsListTableView! {
+    @IBOutlet weak var tableView: UITableView! {
         didSet {
             tableView.delegate = self
             tableView.dataSource = self
@@ -50,7 +50,7 @@ class MainCollectionViewCell: UICollectionViewCell, UITableViewDelegate, UITable
     
     /// セルの高さ
      var heightAtIndexPath = NSMutableDictionary()
-     /// ViewModel
+    /// ViewModel
     var viewModel: MainCollectionViewCellViewModel? {
         didSet {
             initSetting()
