@@ -9,7 +9,7 @@
 import UIKit
 import CoreLocation
 
-protocol EtcWeatherCellDelegate: class {
+protocol EtcWeatherCellDelegate: AnyObject {
     
     /// 天気情報更新完了
     ///
@@ -82,11 +82,32 @@ class EtcWeatherCell: UITableViewCell, CLLocationManagerDelegate {
         update(location: location)
     }
     
+    // MARK: - CLLocationManagerDelegate
+    
+    func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
+        let status = manager.authorizationStatus
+         switch status {
+           case .authorizedAlways, .authorizedWhenInUse:
+             // 常に利用許可、使用中のみ利用許可 時に天気情報を更新する
+             if let location = manager.location {
+                 update(location: location)
+             }
+           default:
+             break
+         }
+    }
+    
     // MARK: - Private Method
     
     /// 天気情報を更新する（外部呼び出し用）
     func updateWeather() {
-        switch CLLocationManager.authorizationStatus() {
+        let manager = CLLocationManager()
+        switch manager.authorizationStatus {
+          case .authorizedAlways, .authorizedWhenInUse:
+            // 常に利用許可、使用中のみ利用許可 時に天気情報を更新する
+            if let location = manager.location {
+                update(location: location)
+            }
         case .notDetermined:
             // まだユーザに許可を求めていない。
             locationManager.requestWhenInUseAuthorization()
@@ -97,9 +118,9 @@ class EtcWeatherCell: UITableViewCell, CLLocationManagerDelegate {
                 delegate?.showAlertAuthorizationLocation(cell: self)
             }
             update()
-        default: break
+        default:
+            break
         }
-        
         if CLLocationManager.locationServicesEnabled() {
             locationManager.startUpdatingLocation()
         }

@@ -11,23 +11,23 @@ import Realm
 
 class TArticle: RLMObject {
     /// ジャンル名
-    dynamic var genreName = String()
+    @objc dynamic var genreName = String()
     /// 情報元名
-    dynamic var sourceName = String()
+    @objc dynamic var sourceName = String()
     /// タイトル
-    dynamic var title = ""
+    @objc dynamic var title = ""
     /// 記事URL
-    dynamic var url = ""
+    @objc dynamic var url = ""
     /// 更新日付
-    dynamic var date: Date?
+    @objc dynamic var date: Date?
     /// 画像リンク
-    dynamic var imageUrl = ""
+    @objc dynamic var imageUrl = ""
     /// スコア
-    dynamic var score = 0
+    @objc dynamic var score = 0
     /// クリップ日付
-    dynamic var clipDate: Date?
+    @objc dynamic var clipDate: Date?
     /// 既読有無
-    dynamic var isRead = false
+    @objc dynamic var isRead = false
     
     override class func primaryKey() -> String? {
         return "title"

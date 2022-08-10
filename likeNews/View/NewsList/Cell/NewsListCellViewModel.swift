@@ -37,6 +37,8 @@ class NewsListCellViewModel: NewsListModel {
     var articleUrl = ""
     /// 記事画像URL
     var imageUrl = ""
+    /// 記事画像（AdMob用）
+    var imageAd = UIImage()
     /// 記事画像表示有無
     var articleImageHidden = true
     /// 記事画像表示有無（一覧先頭用）
@@ -59,7 +61,7 @@ class NewsListCellViewModel: NewsListModel {
     var isLoad = false
     /// 既読状態
     var isRead: Bool {
-        guard let sourceArticle = sourceArticle, let article = NewsListModel.shared.articles(title: sourceArticle.title).first else { return false }
+        guard let article = NewsListModel.shared.articles(title: titleText).first else { return false }
         return article.isRead
     }
     /// 広告ロード状態（true:ロード済み）
@@ -72,7 +74,7 @@ class NewsListCellViewModel: NewsListModel {
     private var nendClient: NADNativeClient!
     // 広告
     var nativeAd: NADNative?
-    
+
     /// init
     ///
     /// - Parameters:
@@ -112,9 +114,18 @@ class NewsListCellViewModel: NewsListModel {
         sourceArticle?.isRead = isRead
     }
     
+    /// スピーチ状態をセットする
+    ///
+    /// - Parameter isSpeech: スピーチ状態（true:読み上げ中、false:読んでいない）
+    func setSpeechState(isSpeech: Bool) {
+        isSpeechNow = isSpeech
+    }
+    
     /// 広告のロード
     func loadAd(completion: @escaping (Bool)->Void) {
-        nendClient = NADNativeClient(spotId: Bundle.Nend(key: .spotId), apiKey: Bundle.Nend(key: .apiKey))
+        guard let spotId = Int(Bundle.Nend(key: .spotId)) else { completion(false)
+                                                                return }
+        nendClient = NADNativeClient(spotID: spotId, apiKey: Bundle.Nend(key: .apiKey))
         nendClient.disableAutoReload()
         nendClient.load() { (ad, error) in
             if let nativeAd = ad {
@@ -130,11 +141,5 @@ class NewsListCellViewModel: NewsListModel {
             }
         }
     }
-    
-    /// スピーチ状態をセットする
-    ///
-    /// - Parameter isSpeech: スピーチ状態（true:読み上げ中、false:読んでいない）
-    func setSpeechState(isSpeech: Bool) {
-        isSpeechNow = isSpeech
-    }
+
 }

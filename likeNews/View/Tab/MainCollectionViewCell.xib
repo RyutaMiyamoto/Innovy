@@ -1,17 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12120" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
-    <device id="retina4_0" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_0" orientation="portrait" appearance="light"/>
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="MainCollectionViewCell" id="gTV-IL-0wX" customClass="MainCollectionViewCell" customModule="UpTabViewController" customModuleProvider="target">
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="MainCollectionViewCell" id="gTV-IL-0wX" customClass="MainCollectionViewCell" customModule="likeNews" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="44" height="44"/>
             <autoresizingMask key="autoresizingMask"/>
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -19,22 +17,46 @@
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vvl-Tt-kwA" userLabel="背景">
-                        <rect key="frame" x="0.0" y="0.0" width="44" height="44"/>
+                        <rect key="frame" x="0.0" y="13" width="44" height="31"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="BLF-Hj-m8f">
+                                <rect key="frame" x="0.0" y="0.0" width="44" height="31"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <gestureRecognizers/>
+                                <connections>
+                                    <outlet property="dataSource" destination="-1" id="0fv-rn-war"/>
+                                    <outlet property="delegate" destination="-1" id="EyG-Vg-f1k"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <gestureRecognizers/>
+                        <constraints>
+                            <constraint firstItem="BLF-Hj-m8f" firstAttribute="top" secondItem="vvl-Tt-kwA" secondAttribute="top" id="0uf-WP-CvU"/>
+                            <constraint firstItem="BLF-Hj-m8f" firstAttribute="leading" secondItem="vvl-Tt-kwA" secondAttribute="leading" id="39V-Ez-BjH"/>
+                            <constraint firstAttribute="trailing" secondItem="BLF-Hj-m8f" secondAttribute="trailing" id="5FL-fc-KZz"/>
+                            <constraint firstAttribute="bottom" secondItem="BLF-Hj-m8f" secondAttribute="bottom" id="gEn-Qn-8Zo"/>
+                        </constraints>
                     </view>
                 </subviews>
             </view>
             <constraints>
                 <constraint firstAttribute="bottom" secondItem="vvl-Tt-kwA" secondAttribute="bottom" id="Vld-19-Mue"/>
-                <constraint firstItem="vvl-Tt-kwA" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="Zam-cA-hEl"/>
+                <constraint firstItem="vvl-Tt-kwA" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="13" id="Zam-cA-hEl"/>
                 <constraint firstAttribute="trailing" secondItem="vvl-Tt-kwA" secondAttribute="trailing" id="vcx-vn-PTw"/>
                 <constraint firstItem="vvl-Tt-kwA" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="xjF-zT-B6X"/>
             </constraints>
             <size key="customSize" width="84" height="67"/>
             <connections>
                 <outlet property="backView" destination="vvl-Tt-kwA" id="5iQ-3O-ilU"/>
+                <outlet property="tableView" destination="BLF-Hj-m8f" id="4Ya-I1-JfP"/>
             </connections>
-            <point key="canvasLocation" x="-160" y="33.5"/>
+            <point key="canvasLocation" x="-161.25" y="32.74647887323944"/>
         </collectionViewCell>
     </objects>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
 </document>

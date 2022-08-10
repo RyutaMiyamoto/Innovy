@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Alamofire
 import Unbox
 
 /// 記事情報

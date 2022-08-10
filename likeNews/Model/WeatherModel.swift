@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Alamofire
 import Unbox
 import CoreLocation
 
@@ -146,20 +145,20 @@ class WeatherModel {
         let url = Bundle.Api(key: .weatherHost) + "/data/2.5/weather"
         let params = ["appid": Bundle.Api(key: .weatherApiKey),
                       "lat": location.coordinate.latitude.description, "lon": location.coordinate.longitude.description]
-        
-        Alamofire.request(url, parameters: params).responseData { response in
-            guard let responce = response.result.value else {
+        ApiModel().requestApi(url: url, method: .get, params: params, completion: { data in
+            guard let data = data else {
                 completion(nil)
                 return
             }
-            var weather = self.parseJsonWeather(at: responce)
+            var weather = self.parseJsonWeather(at: data)
             WeatherModel.shared.address(location: location, completion: { address in
                 if let address = address {
                     weather.cityName = address.city + address.town
                     completion(weather)
                 }
             })
-        }
+            return
+        })
     }
     
     /// ロケーションで指定された地域の住所情報を取得する
@@ -172,15 +171,15 @@ class WeatherModel {
         let url = Bundle.Api(key: .locationHost) + "/api/json"
         let params = ["method": "searchByGeoLocation",
                       "x": location.coordinate.longitude.description, "y": location.coordinate.latitude.description]
-        
-        Alamofire.request(url, parameters: params).responseData { response in
-            guard let responce = response.result.value else {
+        ApiModel().requestApi(url: url, method: .get, params: params, completion: { data in
+            guard let data = data else {
                 completion(nil)
                 return
             }
-            let address = self.parseJsonAddress(at: responce)
+            let address = self.parseJsonAddress(at: data)
             completion(address)
-        }
+            return
+        })
     }
     
     /// 天気JSONをパースする

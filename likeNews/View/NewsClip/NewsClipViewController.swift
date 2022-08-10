@@ -35,10 +35,12 @@ class NewsClipViewController: UIViewController, UITableViewDelegate, UITableView
             self.tableView.reloadData()
         }
     }
-
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
+        FirebaseAnalyticsModel.shared.sendScreen(screenName: .newsClip, screenClass: classForCoder.description())
+
         viewModel.createCellViewModel()
         nonArticleView.isHidden = viewModel.isNonArticleViewHidden
     }
@@ -50,14 +52,14 @@ class NewsClipViewController: UIViewController, UITableViewDelegate, UITableView
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return UITableViewAutomaticDimension
+        return UITableView.automaticDimension
     }
     
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
         if let height = heightAtIndexPath.object(forKey: indexPath) as? NSNumber {
             return CGFloat(height.floatValue)
         } else {
-            return UITableViewAutomaticDimension
+            return UITableView.automaticDimension
         }
     }
     
@@ -67,7 +69,7 @@ class NewsClipViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: R.nib.newsListCell),
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: R.nib.newsListCell, for: indexPath),
             let cellViewModel = viewModel.newsListCellViewModel[safe: indexPath.row] else { return UITableViewCell() }
         cell.viewModel = cellViewModel
         cell.articleImageUrl()
