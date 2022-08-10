@@ -1,11 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="iuF-Gp-buA">
-    <device id="retina4_0" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="iuF-Gp-buA">
+    <device id="retina4_0" orientation="portrait" appearance="light"/>
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -21,6 +18,13 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="s9s-k7-5Qk">
+                                <rect key="frame" x="0.0" y="44" width="320" height="482"/>
+                                <wkWebViewConfiguration key="configuration">
+                                    <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
+                                    <wkPreferences key="preferences"/>
+                                </wkWebViewConfiguration>
+                            </wkWebView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Pa4-uX-CFu" userLabel="ツールView">
                                 <rect key="frame" x="0.0" y="524" width="320" height="44"/>
                                 <subviews>
@@ -50,7 +54,7 @@
                                         </connections>
                                     </button>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="adP-WR-5Vk">
-                                        <rect key="frame" x="82" y="0.0" width="156" height="44"/>
+                                        <rect key="frame" x="110" y="0.0" width="100" height="44"/>
                                         <subviews>
                                             <button opaque="NO" tag="102" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NtZ-Bv-O8D" userLabel="クリップボタン">
                                                 <rect key="frame" x="0.0" y="0.0" width="44" height="44"/>
@@ -64,19 +68,8 @@
                                                     <action selector="tapButton:" destination="iuF-Gp-buA" eventType="touchUpInside" id="Wbh-kf-UWk"/>
                                                 </connections>
                                             </button>
-                                            <button opaque="NO" tag="103" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cL3-AU-nDG" userLabel="Twitterボタン">
-                                                <rect key="frame" x="56" y="0.0" width="44" height="44"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="44" id="ZcE-Tg-xcp"/>
-                                                    <constraint firstAttribute="width" constant="44" id="d2F-Nr-e5d"/>
-                                                </constraints>
-                                                <state key="normal" image="ArticleDetailTwitterButton"/>
-                                                <connections>
-                                                    <action selector="tapButton:" destination="iuF-Gp-buA" eventType="touchUpInside" id="ASL-SX-P5C"/>
-                                                </connections>
-                                            </button>
                                             <button opaque="NO" tag="101" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0f2-dc-AG7" userLabel="共有ボタン">
-                                                <rect key="frame" x="112" y="0.0" width="44" height="44"/>
+                                                <rect key="frame" x="56" y="0.0" width="44" height="44"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="44" id="biu-J9-oFm"/>
                                                     <constraint firstAttribute="width" constant="44" id="nCn-oo-9Jb"/>
@@ -108,7 +101,7 @@
                                 </constraints>
                             </view>
                             <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dBw-77-U88" userLabel="注目View">
-                                <rect key="frame" x="100" y="124" width="230" height="70"/>
+                                <rect key="frame" x="100" y="104" width="230" height="70"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ラベル" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qos-BN-FJw">
                                         <rect key="frame" x="12" y="25.5" width="206" height="19.5"/>
@@ -136,9 +129,16 @@
                         <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="Pa4-uX-CFu" firstAttribute="leading" secondItem="UVu-Ca-RXQ" secondAttribute="leading" id="9Tg-09-NJ5"/>
+                            <constraint firstItem="s9s-k7-5Qk" firstAttribute="trailing" secondItem="Pa4-uX-CFu" secondAttribute="trailing" id="Eo9-82-heq"/>
+                            <constraint firstItem="s9s-k7-5Qk" firstAttribute="top" secondItem="BcB-LQ-jKI" secondAttribute="bottom" id="FNc-Mj-tCH"/>
+                            <constraint firstItem="s9s-k7-5Qk" firstAttribute="top" secondItem="UVu-Ca-RXQ" secondAttribute="topMargin" id="L8g-5m-5CP"/>
+                            <constraint firstItem="s9s-k7-5Qk" firstAttribute="leading" secondItem="Pa4-uX-CFu" secondAttribute="leading" id="Pru-MT-njK"/>
                             <constraint firstAttribute="trailing" secondItem="Pa4-uX-CFu" secondAttribute="trailing" id="XVd-bK-V1F"/>
+                            <constraint firstItem="s9s-k7-5Qk" firstAttribute="leading" secondItem="UVu-Ca-RXQ" secondAttribute="leading" id="isw-Rk-Uac"/>
                             <constraint firstItem="dBw-77-U88" firstAttribute="top" secondItem="BcB-LQ-jKI" secondAttribute="bottom" constant="60" id="k36-YW-RI6"/>
+                            <constraint firstAttribute="trailing" secondItem="s9s-k7-5Qk" secondAttribute="trailing" id="ktl-of-RGQ"/>
                             <constraint firstItem="dBw-77-U88" firstAttribute="leading" secondItem="UVu-Ca-RXQ" secondAttribute="leading" constant="100" id="mbi-is-kIA"/>
+                            <constraint firstItem="GGL-ra-dJp" firstAttribute="top" secondItem="s9s-k7-5Qk" secondAttribute="bottom" constant="42" id="v1m-le-eWt"/>
                             <constraint firstItem="GGL-ra-dJp" firstAttribute="top" secondItem="Pa4-uX-CFu" secondAttribute="bottom" id="wR9-U0-AYE"/>
                             <constraint firstAttribute="trailing" secondItem="dBw-77-U88" secondAttribute="trailing" constant="-10" id="wdH-zh-RJj"/>
                         </constraints>
@@ -154,14 +154,15 @@
                         <outlet property="attentionViewLeftMargin" destination="mbi-is-kIA" id="CIb-KK-f4p"/>
                         <outlet property="clipButton" destination="NtZ-Bv-O8D" id="qSq-Sl-2Wn"/>
                         <outlet property="progressView" destination="xTd-uz-v7Q" id="sq5-xd-BHv"/>
+                        <outlet property="webView" destination="s9s-k7-5Qk" id="zcK-o8-kCB"/>
                     </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="7VR-Ck-Dku" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <swipeGestureRecognizer direction="right" id="erG-ea-iWG">
                     <connections>
                         <action selector="rightSwipeGesture:" destination="iuF-Gp-buA" id="1pr-yO-exX"/>
                     </connections>
                 </swipeGestureRecognizer>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="7VR-Ck-Dku" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="140.625" y="490.14084507042253"/>
         </scene>
@@ -170,6 +171,5 @@
         <image name="ArticleDetailBackButton" width="24" height="24"/>
         <image name="ArticleDetailClipOnButton" width="22" height="21"/>
         <image name="ArticleDetailShareButton" width="24" height="24"/>
-        <image name="ArticleDetailTwitterButton" width="24" height="20"/>
     </resources>
 </document>

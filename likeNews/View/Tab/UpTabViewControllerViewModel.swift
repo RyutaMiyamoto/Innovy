@@ -10,8 +10,8 @@ import Foundation
 import UIKit
 
 class UpTabViewControllerViewModel {
-    /// タブ情報
-    var sourceTabInfo:[(viewController: UIViewController, title: String)] = []
+    /// ジャンルリスト
+    var genreList: [String] = []
     /// 余白
     var collectionViewEdgeInsetsSegment = UIEdgeInsets.zero
     /// セルサイズ（セグメント）
@@ -20,6 +20,8 @@ class UpTabViewControllerViewModel {
     var cellSizeMain:[CGSize] = []
     /// ニュース一覧
     var newsListType = NewsListType()
+    /// メインViewModelリスト
+    var mainCollectionViewCellViewModelList: [MainCollectionViewCellViewModel] = []
     /// セグメントViewModelリスト
     var segmentCollectionViewCellViewModelList: [SegmentCollectionViewCellViewModel] = []
     /// 選択状態Viewの表示位置リスト
@@ -28,10 +30,11 @@ class UpTabViewControllerViewModel {
     /// 初期設定
     ///
     /// - Parameter tabinfo: タブ情報
-    func setInfo(tabinfo: [(viewController: UIViewController, title: String)]) {
-        sourceTabInfo = tabinfo
+    func setInfo(genreList: [String]) {
+        self.genreList = genreList
         createCellSize()
         createEdgeInsets()
+        mainCollectionViewCellViewModelList = createMainCollectionViewCellViewModel()
         segmentCollectionViewCellViewModelList = createSegmentCollectionViewCellViewModel()
     }
     
@@ -44,9 +47,9 @@ class UpTabViewControllerViewModel {
         let segmentCellBothMargin:CGFloat = 82
         // 選択状態Cellの横位置
         var selectedStateViewOriginX: CGFloat = 0
-        for tabInfo in sourceTabInfo {
+        for genre in genreList {
             // セグメント
-            let titleLabelWidth = tabInfo.title.labelWidth(height: 22, font: UIFont.boldSystemFont(ofSize: 18))
+            let titleLabelWidth = genre.labelWidth(height: 22, font: UIFont.boldSystemFont(ofSize: 18))
             let segmentCellWidth = titleLabelWidth + segmentCellBothMargin
             // 選択状態View
             if selectedStateViewOriginX == 0 { selectedStateViewOriginX = CGRect().screenWidth() * 0.5 - segmentCellWidth * 0.5 }
@@ -57,7 +60,7 @@ class UpTabViewControllerViewModel {
             
             // メイン
             cellSizeMain.append(CGSize(width: CGRect().screenWidth(),
-                                       height: CGRect().screenHeight() - UIApplication.shared.statusBarFrame.size.height - 155))
+                                       height: CGRect().screenHeight() - CGRect().statusBarHeight() - 155))
         }
     }
     
@@ -68,20 +71,32 @@ class UpTabViewControllerViewModel {
             let center = CGRect().screenWidth() * 0.5
             let leftMargin = center - cellSizeFirst.width * 0.5
             let rightMargin = center - cellSizeLast.width * 0.5
-            collectionViewEdgeInsetsSegment = UIEdgeInsetsMake(0, leftMargin, 0, rightMargin)
+            collectionViewEdgeInsetsSegment = UIEdgeInsets(top: 0, left: leftMargin, bottom: 0, right: rightMargin)
         }
     }
 
+    /// メインViewModelリストを作成する
+    ///
+    /// - Returns: メインViewModelリスト
+    private func createMainCollectionViewCellViewModel() -> [MainCollectionViewCellViewModel] {
+        var viewModelList: [MainCollectionViewCellViewModel] = []
+        for genre in genreList {
+            let viewModel = MainCollectionViewCellViewModel(genre: genre)
+            viewModelList.append(viewModel)
+        }
+        return viewModelList
+    }
+    
     /// セグメントViewModelリストを作成する
     ///
     /// - Returns: セグメントViewModelリスト
     private func createSegmentCollectionViewCellViewModel() -> [SegmentCollectionViewCellViewModel] {
+        guard let titleStart = genreList.first else { return [] }
         var viewModelList: [SegmentCollectionViewCellViewModel] = []
-        guard let titleStart = sourceTabInfo.first?.title else { return viewModelList }
-        for tabInfo in sourceTabInfo {
+        for genre in genreList {
             let viewModel = SegmentCollectionViewCellViewModel()
-            viewModel.titleText = tabInfo.title
-            viewModel.titleColor = tabInfo.title == titleStart ? .darkGray : .lightGray
+            viewModel.titleText = genre
+            viewModel.titleColor = genre == titleStart ? .darkGray : .lightGray
             viewModelList.append(viewModel)
         }
         return viewModelList

@@ -4,32 +4,20 @@
 <dict>
 	<key>API</key>
 	<dict>
+		<key>GistGenre</key>
+		<string>/RyutaMiyamoto/a939ea434672c18a39a3487882b923ad/raw/</string>
+		<key>GistHost</key>
+		<string>https://gist.githubusercontent.com</string>
 		<key>Host</key>
 		<string>https://pfslink.xsrv.jp/app/likeNews</string>
 		<key>LocationHost</key>
 		<string>https://geoapi.heartrails.com</string>
 		<key>Pass</key>
 		<string>875eru</string>
-		<key>TwitterConsumerKey</key>
-		<string>AAA</string>
-		<key>TwitterConsumerSecret</key>
-		<string>AAA</string>
-		<key>TwitterHost</key>
-		<string>https://api.twitter.com</string>
-		<key>TwitterHostVersion</key>
-		<string>1.1</string>
-		<key>TwitterToken</key>
-		<string>AAA</string>
-		<key>TwitterTokenSecret</key>
-		<string>AAA</string>
 		<key>WeatherApiKey</key>
 		<string>AAA</string>
 		<key>WeatherHost</key>
 		<string>https://api.openweathermap.org</string>
-		<key>GistHost</key>
-		<string>https://gist.githubusercontent.com</string>
-		<key>GistGenre</key>
-		<string>/RyutaMiyamoto/a939ea434672c18a39a3487882b923ad/raw/</string>
 	</dict>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>ja_JP</string>
@@ -46,16 +34,7 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.15</string>
-	<key>CFBundleURLTypes</key>
-	<array>
-		<dict>
-			<key>CFBundleURLSchemes</key>
-			<array>
-				<string>twitterkit-AAA</string>
-			</array>
-		</dict>
-	</array>
+	<string>$(MARKETING_VERSION)</string>
 	<key>CFBundleVersion</key>
 	<string>1.0.0</string>
 	<key>FirebaseAppDelegateProxyEnabled</key>
@@ -63,13 +42,8 @@
 	<key>HockeyApp</key>
 	<dict>
 		<key>Id</key>
-		<string>AAA</string>
+		<string>979c1ae0fd31443fbbbdc2be374537b2</string>
 	</dict>
-	<key>LSApplicationQueriesSchemes</key>
-	<array>
-		<string>twitter</string>
-		<string>twitterauth</string>
-	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>Mail</key>
@@ -388,16 +362,6 @@
 				<key>NSTemporaryExceptionAllowsInsecureHTTPLoads</key>
 				<true/>
 			</dict>
-			<key>gaku-sha.com</key>
-			<dict>
-				<key>NSTemporaryExceptionAllowsInsecureHTTPLoads</key>
-				<true/>
-			</dict>
-			<key>www.hakuhodody-holdings.co.jp</key>
-			<dict>
-				<key>NSTemporaryExceptionAllowsInsecureHTTPLoads</key>
-				<true/>
-			</dict>
 		</dict>
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
@@ -413,7 +377,6 @@
 	</dict>
 	<key>UIBackgroundModes</key>
 	<array>
-		<string>audio</string>
 		<string>remote-notification</string>
 	</array>
 	<key>UILaunchStoryboardName</key>

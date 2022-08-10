@@ -1,14 +1,14 @@
 //
-//  NewsListViewModel.swift
+//  MainCollectionViewCellModel.swift
 //  likeNews
 //
-//  Created by Ryuta Miyamoto on 2017/04/14.
-//  Copyright © 2017年 R.Miyamoto. All rights reserved.
+//  Created by R.miyamoto on 2022/01/09.
+//  Copyright © 2022 R.Miyamoto. All rights reserved.
 //
 
 import Foundation
 
-class NewsListViewModel {
+class MainCollectionViewCellViewModel {
     
     var newsListCellViewModel: [NewsListCellViewModel]! {
         didSet {
@@ -26,7 +26,7 @@ class NewsListViewModel {
     let numReadOfPage = 25
     /// 現在のページ
     var page = 1
-    
+        
     private var didChange: (() -> Void)?
     
     func bind(didChange: @escaping () -> Void) {
@@ -107,7 +107,7 @@ class NewsListViewModel {
     private func createCellViewModel(articles: [Article] = []) {
         page = 1
         newsList = !articles.isEmpty ? articles : NewsListModel.shared.articles(genre: genre)
-        newsListCellViewModel = NewsListViewModel.createNewsListCellViewModel(articles: newsList)
+        newsListCellViewModel = MainCollectionViewCellViewModel.createNewsListCellViewModel(articles: newsList)
     }
     
     /// ニュース読み込み
@@ -126,8 +126,9 @@ class NewsListViewModel {
     /// 次の記事を読み込む（広告含む）
     func loadNext() {
         guard let viewModelList = newsListCellViewModel else { return }
-        let nextViewModelList = NewsListViewModel.createNewsListCellNextViewModel(articles: newsList, viewModelList: viewModelList, page: page)
+        let nextViewModelList = MainCollectionViewCellViewModel.createNewsListCellNextViewModel(articles: newsList, viewModelList: viewModelList, page: page)
         page += 1
         newsListCellViewModel = nextViewModelList
     }
 }
+

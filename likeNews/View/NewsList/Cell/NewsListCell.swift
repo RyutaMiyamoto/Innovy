@@ -8,8 +8,9 @@
 
 import UIKit
 import SDWebImage
+import NendAd
 
-protocol NewsListCellDelegate: class {
+protocol NewsListCellDelegate: AnyObject {
     
     /// 画像URL読み込み完了
     ///
@@ -18,12 +19,13 @@ protocol NewsListCellDelegate: class {
     func imageUrlLoadComplete(from cell: NewsListCell)
 }
 
-class NewsListCell: UITableViewCell {
+class NewsListCell: UITableViewCell, NADNativeViewRendering {
+    /// delegate
     weak var delegate: NewsListCellDelegate?
     /// 背景
-    @IBOutlet var backView: UIView!
-    /// 背景(広告用)
-    @IBOutlet weak var backAdView: UIView!
+    @IBOutlet weak var backView: UIView!
+    /// 広告表示Block用
+    @IBOutlet var adBlockView: UIView!
     /// タイトル
     @IBOutlet var titleLabel: UILabel!
     /// 情報元
@@ -37,15 +39,13 @@ class NewsListCell: UITableViewCell {
     /// 記事画像（一覧先頭用）
     @IBOutlet var topArticleImageView: UIImageView! {
         didSet {
-            topArticleImageView.sd_setShowActivityIndicatorView(true)
-            topArticleImageView.sd_setIndicatorStyle(.gray)
+            topArticleImageView.sd_imageIndicator = SDWebImageProgressIndicator.default
         }
     }
     /// 記事画像
     @IBOutlet var articleImageView: UIImageView! {
         didSet {
-            articleImageView.sd_setShowActivityIndicatorView(true)
-            articleImageView.sd_setIndicatorStyle(.gray)
+            articleImageView.sd_imageIndicator = SDWebImageProgressIndicator.default
         }
     }
     
@@ -80,6 +80,12 @@ class NewsListCell: UITableViewCell {
         }
     }
     
+    func prTextLabel() -> UILabel! {
+        return self.sourceLabel
+    }
+    
+    // MARK: - Private Method
+
     /// 記事画像URL取得
     func articleImageUrl() {
         // サムネイル非表示設定時は画像を非表示にする
@@ -119,14 +125,10 @@ class NewsListCell: UITableViewCell {
             self.noteLabel.text = viewModel.noteText
             self.topArticleImageBackView.isHidden = viewModel.topArticleImageHidden
             self.articleImageBackView.isHidden = viewModel.articleImageHidden
-            self.imageUrl = viewModel.imageUrl
             if viewModel.dispType == .ad, let nativeAd = viewModel.nativeAd {
-                // 広告ビューと広告明示にクリックイベントを追加
-                backAdView.isHidden = false
-                nativeAd.activateAdView(backAdView, withPrLabel: self.sourceLabel)
-            } else {
-                backAdView.isHidden = true
+                nativeAd.intoView(self, advertisingExplicitly: .PR)
             }
+            self.imageUrl = viewModel.imageUrl
             self.setSpeechState(state: viewModel.isSpeechNow)
         }
     }

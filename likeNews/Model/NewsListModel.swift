@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Alamofire
 import Realm
 import SDWebImage
 
@@ -55,7 +54,7 @@ class NewsListModel: NewsListType {
         
         // ジャンル、またはワード指定がない場合はスコア順に並び替え
         if !condition.genre.isEmpty {
-            guard let index = NewsListModel.shared.genreList.index(of: condition.genre) else { return "" }
+            guard let index = NewsListModel.shared.genreList.firstIndex(of: condition.genre) else { return "" }
             conditionStr.append("&genre=" + index.description)
         } else if condition.word.isEmpty {
             conditionStr.append("&score=1")
@@ -111,12 +110,12 @@ class NewsListModel: NewsListType {
             url = createUrlBase(type: .getNews) + createGetNewsCondition(condition: condition)
         }
         
-        Alamofire.request(url).responseData { response in
-            guard let responce = response.result.value else {
+        ApiModel().requestApi(url: url, method: .get, params: nil, completion: { data in
+            guard let data = data else {
                 completion([])
                 return
             }
-            let news = self.parseJsonNews(at: responce)
+            let news = self.parseJsonNews(at: data)
             DispatchQueue.mainSyncSafe  {
                 var saveArticles: [Article] = []
                 for article in news {
@@ -131,7 +130,8 @@ class NewsListModel: NewsListType {
                 }
                 completion(news)
             }
-        }
+            return
+        })
     }
     
     /// タイトルと一致した記事のスコアを+1する
@@ -149,10 +149,10 @@ class NewsListModel: NewsListType {
             !title.isEmpty {
             url = url + "&title=" + title
         }
-        Alamofire.request(url).responseData { response in
+        ApiModel().requestApi(url: url, method: .post, params: nil, completion: { data in
             completion(true)
             return
-        }
+        })
     }
     
     /// ジャンル別記事情報をRealmから取得する
@@ -257,7 +257,7 @@ class NewsListModel: NewsListType {
                 urlList.append(url)
             }
         }
-        let imagePrefetcher = SDWebImagePrefetcher.shared()
+        let imagePrefetcher = SDWebImagePrefetcher.shared
         imagePrefetcher.prefetchURLs(urlList)
     }
     
@@ -269,7 +269,7 @@ class NewsListModel: NewsListType {
         let gistFileList = ["new", "pop", "startup", "service", "design", "cryptocurrency", "worktechnique",
                             "useful", "consideration", "life", "product"]
         if !genreName.isEmpty {
-            guard let index = NewsListModel.shared.genreList.index(of: genreName),
+            guard let index = NewsListModel.shared.genreList.firstIndex(of: genreName),
                 let fileName = gistFileList[safe: index] else { return "" }
             return fileName
         }

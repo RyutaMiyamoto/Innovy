@@ -8,7 +8,6 @@
 
 import UIKit
 import SVProgressHUD
-import FirebaseAnalytics
 
 class NewsSearchViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, NewsListCellDelegate, ArticleDetailViewControllerDelegate {
     /// 記事無しView
@@ -65,6 +64,12 @@ class NewsSearchViewController: UIViewController, UITableViewDelegate, UITableVi
             }
         }
     }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        FirebaseAnalyticsModel.shared.sendScreen(screenName: .newsSearch, screenClass: classForCoder.description())
+    }
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
@@ -75,7 +80,7 @@ class NewsSearchViewController: UIViewController, UITableViewDelegate, UITableVi
 
     // MARK: - User Event
     
-    func tapCloseButton(sender: UIButton) {
+    @objc func tapCloseButton(sender: UIButton) {
         // キーボードを閉じる
         searchBar.resignFirstResponder()
     }
@@ -104,14 +109,14 @@ class NewsSearchViewController: UIViewController, UITableViewDelegate, UITableVi
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return UITableViewAutomaticDimension
+        return UITableView.automaticDimension
     }
     
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
         if let height = heightAtIndexPath.object(forKey: indexPath) as? NSNumber {
             return CGFloat(height.floatValue)
         } else {
-            return UITableViewAutomaticDimension
+            return UITableView.automaticDimension
         }
     }
     
@@ -121,14 +126,18 @@ class NewsSearchViewController: UIViewController, UITableViewDelegate, UITableVi
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: R.nib.newsListCell),
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: R.nib.newsListCell, for: indexPath),
             let cellViewModel = viewModel.newsListCellViewModel[safe: indexPath.row] else { return UITableViewCell() }
         cell.viewModel = cellViewModel
-        cell.articleImageUrl()
-        cell.delegate = self
-        if cellViewModel.dispType == .ad, !cellViewModel.isAdLoad {
-            cell.loadAd()
+        switch cellViewModel.dispType {
+        case .normal, .top:
+            cell.articleImageUrl()
+        case .ad:
+            if !cellViewModel.isAdLoad {
+                cell.loadAd()
+            }
         }
+        cell.delegate = self
         return cell
     }
     
@@ -177,20 +186,15 @@ class NewsSearchViewController: UIViewController, UITableViewDelegate, UITableVi
         
         refreshControl = UIRefreshControl()
         refreshControl?.addTarget(self, action: #selector(self.refresh(sender:)), for: .valueChanged)
-        if #available(iOS 10.0, *) {
-            tableView.refreshControl = refreshControl
-        } else {
-            // Fallback on earlier versions
-        }
+        tableView.refreshControl = refreshControl
     }
     
-    func refresh(sender: UIRefreshControl) {
-        if #available(iOS 10.0, *) {
-            // 検索
-            searchText()
-        } else {
-            // Fallback on earlier versions
-        }
+    @objc func refresh(sender: UIRefreshControl) {
+        // 検索
+        searchText()
+        
+        // FirebaseAnalytics（検索ニュース一覧手動更新）
+        FirebaseAnalyticsModel.shared.sendEvent(eventName: .updateSearchNews, params: nil)
     }
     
     /// 入力されたテキストから記事を検索する
@@ -207,10 +211,9 @@ class NewsSearchViewController: UIViewController, UITableViewDelegate, UITableVi
             self.nonArticleView.isHidden = self.viewModel.isNonArticleViewHidden
                         
             // FirebaseAnalytics（どんなワードで検索されているか）
-            Analytics.logEvent("search_news", parameters: [
-                "word": text,
-                "result_count": self.viewModel.newsList.count.description
-                ])
+            let params = ["検索ワード": text,
+                          "HIT件数": self.viewModel.newsList.count.description]
+            FirebaseAnalyticsModel.shared.sendEvent(eventName: .searchWord, params:     params)
         })
     }
     

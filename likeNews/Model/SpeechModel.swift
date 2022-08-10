@@ -9,7 +9,7 @@
 import Foundation
 import AVFoundation
 
-protocol SpeechModelDelegate: class {
+protocol SpeechModelDelegate: AnyObject {
     
     /// 1件読み上げ完了
     ///
@@ -51,7 +51,7 @@ class SpeechModel: NSObject, AVSpeechSynthesizerDelegate {
     override init() {
         super.init()
         
-        try? AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
+        try? AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.playback)
     }
     
     // MARK: - AVSpeechSynthesizerDelegate

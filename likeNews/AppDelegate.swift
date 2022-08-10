@@ -7,23 +7,21 @@
 //
 
 import UIKit
-import HockeySDK
-import Firebase
+import FirebaseCore
+import FirebaseMessaging
 import SVProgressHUD
-import TwitterKit
 import UserNotifications
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+    
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
         
         // 初期設定
         initSetting(application: application)
-        
+
         return true
     }
 
@@ -49,10 +47,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
     
-    func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
-        return Twitter.sharedInstance().application(app, open: url, options: options)
-    }
-    
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         // Push通知設定
         Messaging.messaging().apnsToken = deviceToken
@@ -72,19 +66,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
 
-        // Twitter設定
-        Twitter.sharedInstance().start(withConsumerKey:Bundle.Api(key: .twitterConsumerKey), consumerSecret:Bundle.Api(key: .twitterConsumerSecret))
-        
         // 古い記事を削除
         NewsListModel().removeOldArticles()
         
         // NavigationBarの初期設定
         setNavigationBar()
-        
-        // HockeyAppの初期設定
-        BITHockeyManager.shared().configure(withIdentifier: Bundle.HockeyApp(key: .Id))
-        BITHockeyManager.shared().start()
-        BITHockeyManager.shared().authenticator.authenticateInstallation()
         
         // SVProgressHUDの設定
         SVProgressHUD.setDefaultMaskType(.clear)
@@ -107,16 +93,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 extension AppDelegate: UNUserNotificationCenterDelegate {
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
         // バックグラウンドで来た通知をタップしてアプリ起動
-        let notification = response.notification
-        let eventName = notification.request.trigger is UNPushNotificationTrigger ?
-        "notification_remote" : "notification_local"
-        let notificationBody = notification.request.content.body
-        
         // FirebaseAnalytics（通知がタップされた）
-        Analytics.logEvent(eventName, parameters: [
-            "text": notificationBody
-            ])
-        
+        let notification = response.notification
+        let eventName: FirebaseAnalyticsModel.EventName =
+            notification.request.trigger is UNPushNotificationTrigger ? .tapRemotePush : .tapLocalPush
+        let notificationTitle = notification.request.content.title
+        let notificationBody = notification.request.content.body
+        let params = ["タイトル": notificationTitle, "内容": notificationBody]
+        FirebaseAnalyticsModel.shared.sendEvent(eventName: eventName, params: params)
         completionHandler()
     }
     

@@ -1,24 +1,24 @@
 use_frameworks!
 # Uncomment this line to define a global platform for your project
-platform :ios, '9.0'
-swift_version = ‘3.2’
+platform :ios, '15.0'
+# swift_version = '5'
+
+install! 'cocoapods',
+            :warn_for_unused_master_specs_repo => false
 
 target 'likeNews' do
 
-pod 'R.swift'
-pod 'Alamofire', '~> 4.2.0'
-pod 'SDWebImage'
+pod 'R.swift', '~> 6.1.0'
+pod 'Alamofire', '~> 5.5'
+pod 'SDWebImage', '~> 5.0'
 pod 'NoticeObserveKit'
-pod "Unbox"
-pod 'Realm', '~> 2.10.0’
+pod 'Unbox', '~> 4.0.0'
+pod 'Realm', '~> 10.20.1'
 pod 'CTFeedback'
-pod 'SVProgressHUD'
-pod ‘HockeySDK’
-pod 'Firebase/Core'
-pod 'Firebase/Messaging'
-pod 'NendSDK_iOS'
-
-pod 'TwitterKit'
+pod 'SVProgressHUD', '~> 2.2.5'
+pod 'FirebaseMessaging', '~> 8.10.0'
+pod 'FirebaseAnalytics', '~> 8.10.0'
+pod 'NendSDK_iOS', '~> 7.1.0'
 
   # Pods for likeNews
 

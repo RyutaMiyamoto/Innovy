@@ -29,6 +29,10 @@ extension CGRect {
     ///
     /// - Returns: 縦幅
     func statusBarHeight() -> CGFloat {
-        return UIApplication.shared.statusBarFrame.height
+        let scenes = UIApplication.shared.connectedScenes
+        let windowScene = scenes.first as? UIWindowScene
+        let window = windowScene?.windows.first
+        let statusBarHeight = window?.windowScene?.statusBarManager?.statusBarFrame.height ?? 0
+        return statusBarHeight
     }
 }
