@@ -9,21 +9,12 @@ IOS news application for innovators
 - Swift:5
 - M1 Mac+
 
-# how to begin
-1. Clone the 'Innovy' repository.
-1. Run 'pod install' in a terminal app.
-1. Open 'likeNews.xcworkspace' with XCode.
-1. Comment out the following line in the file 'AppDelegate.swift' in your project.
-- Before
-```
-FirebaseApp.configure()
-```
- 
-- After
-```
-//FirebaseApp.configure()
-```
-1. Run the project. (MenuBar -> Product -> Run)
+# How To Begin
+1. Clone the `Innovy` repository.
+1. Run `pod install` in a terminal app.
+1. Open `likeNews.xcworkspace` with XCode.
+1. Comment out the `FirebaseApp.configure()` part of the file `AppDelegate.swift` in your project.
+1. Run the project. (`MenuBar -> Product -> Run`)
 
 ## Note
 Testing of projects as of Ver. 1.16 allows only actual equipment testing.
