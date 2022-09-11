@@ -100,12 +100,12 @@ class NewsListModel: NewsListType {
     func newsList(condition: GetNewsCondition, completion: @escaping ([Article])->Void) {
         var url = ""
         if condition.word.isEmpty {
-            let genreFileName = getGistGenreFileName(genreName: condition.genre)
+            let genreFileName = getGenreFileName(genreName: condition.genre)
             if genreFileName.isEmpty  {
                 completion([])
                 return
             }
-            url = Bundle.Api(key: .gistHost) + Bundle.Api(key: .gistGenre) + genreFileName
+            url = Bundle.Api(key: .host) + "/news/" + genreFileName
         } else {
             url = createUrlBase(type: .getNews) + createGetNewsCondition(condition: condition)
         }
@@ -261,18 +261,18 @@ class NewsListModel: NewsListType {
         imagePrefetcher.prefetchURLs(urlList)
     }
     
-    /// 指定されたジャンル名によるgistでのファイル名を取得する
+    /// 指定されたジャンル名のファイル名を取得する
     ///
     /// - Parameter genreName: ジャンル名
-    /// - Returns: gist上のファイル名
-    private func getGistGenreFileName(genreName: String) -> String {
-        let gistFileList = ["new", "pop", "startup", "service", "design", "cryptocurrency", "worktechnique",
+    /// - Returns: ファイル名
+    private func getGenreFileName(genreName: String) -> String {
+        let fileList = ["new", "pop", "startup", "service", "design", "cryptocurrency", "worktechnique",
                             "useful", "consideration", "life", "product"]
         if !genreName.isEmpty {
             guard let index = NewsListModel.shared.genreList.firstIndex(of: genreName),
-                let fileName = gistFileList[safe: index] else { return "" }
-            return fileName
+                  let fileName = fileList[safe: index] else { return "" }
+            return fileName + ".json"
         }
-        return "all"
+        return "all.json"
     }
 }
