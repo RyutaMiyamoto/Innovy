@@ -36,10 +36,6 @@ extension Bundle {
         case weatherApiKey = "WeatherApiKey"
         /// Geo APIホスト
         case locationHost = "LocationHost"
-        /// gistホスト
-        case gistHost = "GistHost"
-        /// gist上のジャンル
-        case gistGenre = "GistGenre"
     }
 
     /// 広告（Nend）に関連する値を返却する
