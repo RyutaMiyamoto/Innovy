@@ -4,10 +4,6 @@
 <dict>
 	<key>API</key>
 	<dict>
-		<key>GistGenre</key>
-		<string>/RyutaMiyamoto/a939ea434672c18a39a3487882b923ad/raw/</string>
-		<key>GistHost</key>
-		<string>https://gist.githubusercontent.com</string>
 		<key>Host</key>
 		<string>https://pfslink.xsrv.jp/app/likeNews</string>
 		<key>LocationHost</key>
@@ -36,7 +32,7 @@
 	<key>CFBundleShortVersionString</key>
 	<string>$(MARKETING_VERSION)</string>
 	<key>CFBundleVersion</key>
-	<string>1.0.0</string>
+	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>FirebaseAppDelegateProxyEnabled</key>
 	<false/>
 	<key>HockeyApp</key>
